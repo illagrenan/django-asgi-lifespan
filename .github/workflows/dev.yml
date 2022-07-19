@@ -44,7 +44,7 @@ jobs:
       - name: Run unittests
         run: |
           source "$(poetry env info --path)/bin/activate"
-          task test
+          task coverage
 
       - name: list files
         run: ls -l .
