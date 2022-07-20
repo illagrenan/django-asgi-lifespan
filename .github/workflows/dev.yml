@@ -41,19 +41,9 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v1
 
-      - name: Activate venv
-        if: startsWith(matrix.os, 'windows') == true
-        run: |
-          . "$(poetry env info --path)\Scripts\activate.ps1"
-
-      - name: Activate venv
-        if: startsWith(matrix.os, 'windows') != true
-        run: |
-          source "$(poetry env info --path)/bin/activate"
-
       - name: Run unittests
         run: |
-          task coverage
+          poetry run task coverage
 
       - name: list files
         run: ls -l .
