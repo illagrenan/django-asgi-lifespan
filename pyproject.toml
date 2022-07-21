@@ -31,7 +31,7 @@ black = "^22"
 isort = "^5"
 flake8 = "^4"
 flake8-docstrings = "^1"
-mypy = "^0.961"
+mypy = "^0.971"
 
 # Releases
 twine = "^4.0.1"
