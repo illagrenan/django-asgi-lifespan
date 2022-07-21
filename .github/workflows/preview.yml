@@ -18,22 +18,24 @@ jobs:
 
     strategy:
       matrix:
-        python-versions: [ 3.8 ]
+        python-versions: [ "3.10" ]
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-versions }}
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install poetry tox tox-gh-actions
+          pip install poetry
+          poetry install
 
-      - name: test with tox
-        run:
-          tox
+      - name: Run unittests
+        run: |
+          poetry run task coverage
 
       - name: Build wheels and source tarball
         run: |
