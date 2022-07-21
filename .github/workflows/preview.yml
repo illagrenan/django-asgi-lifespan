@@ -33,6 +33,9 @@ jobs:
           pip install poetry
           poetry install
 
+      - name: Install Task
+        uses: arduino/setup-task@v1
+
       - name: Run unittests
         run: |
           poetry run task coverage
