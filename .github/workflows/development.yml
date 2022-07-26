@@ -25,14 +25,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-versions }}
 
+      - name: Install Poetry
+        run: |
+          python -m pip install --no-input --upgrade pip
+          pip install poetry
+
       - name: Check pyproject.toml
         run: |
           poetry check -vv -n
 
       - name: Install dependencies
         run: |
-          python -m pip install --no-input --upgrade pip
-          pip install poetry
           poetry install -vv -n
 
       - name: Install Task
