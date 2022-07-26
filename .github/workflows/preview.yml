@@ -22,7 +22,7 @@ jobs:
           ref: ${{ github.ref }}
           check-name: "Development"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          wait-interval: 100
 
       - name: Checkout repository
         uses: actions/checkout@v3
