@@ -2,7 +2,7 @@
 
 !!! info "Supported Python and Django versions"
 
-    This package supports only Django release series 4.0+ and Python 3.9+. If you need to support an older version in your project, please contact me or [open a pull request](https://github.com/illagrenan/django-asgi-lifespan/pulls).
+    This package supports only Django release series 4.0+ and Python 3.10. If you need to support an older version in your project, please contact me or [open a pull request](https://github.com/illagrenan/django-asgi-lifespan/pulls).
 
 ## Stable release
 
