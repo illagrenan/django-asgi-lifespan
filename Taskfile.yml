@@ -1,0 +1,126 @@
+# https://taskfile.dev
+
+version: '3'
+
+env:
+  PYTHONUNBUFFERED: 1
+  PYTHONDONTWRITEBYTECODE: 1
+
+vars:
+  SOURCES: django_asgi_lifespan
+
+tasks:
+  test:
+    desc: Run pytests
+    cmds:
+      - pytest
+    silent: false
+
+  coverage:
+    desc: Run coverage
+    cmds:
+      - pytest --cov={{.SOURCES}} --cov-branch --cov-report=xml --cov-report=term-missing tests
+    silent: false
+
+  clean:
+    desc: Clean build files
+    cmds:
+      - >
+        {{if eq OS "windows"}}
+        powershell -Command Remove-Item *.egg-info, dist, .tox, coverage.xml, .coverage, .mypy_cache, .pytest_cache -Recurse -Force -ErrorAction SilentlyContinue
+        {{else}}
+        rm -rf *egg-info dist .tox coverage.xml .coverage .mypy_cache .pytest_cache
+        {{end}}
+    silent: false
+
+  mypy:
+    desc: Check setup
+    cmds:
+      - mypy {{.SOURCES}} tests
+    silent: false
+
+  flake8:
+    desc: Check setup
+    cmds:
+      - flake8 {{.SOURCES}} tests
+    silent: false
+
+  lint:
+    desc: Check setup
+    cmds:
+      - task: mypy
+      - task: flake8
+      - task: isort_check
+      - task: black_check
+    silent: false
+
+  isort:
+    desc: Optimize imports
+    cmds:
+      - isort {{.SOURCES}} tests
+    silent: false
+
+  isort_check:
+    desc: Check isort
+    cmds:
+      - isort --check {{.SOURCES}}
+    silent: false
+
+  black:
+    desc: Format using black
+    cmds:
+      - black {{.SOURCES}} tests
+    silent: false
+
+  black_check:
+    desc: Check black formatting
+    cmds:
+      - black --check {{.SOURCES}} tests
+    silent: false
+
+  format:
+    desc: Check setup
+    cmds:
+      - task: isort
+      - task: black
+    silent: false
+
+  doc:
+    desc: Check distribution
+    cmds:
+      - mkdocs build
+    silent: false
+
+  bump:
+    desc: Check setup
+    cmds:
+      - bump2version {{.CLI_ARGS}}
+    silent: false
+
+  build:
+    desc: Build the package
+    cmds:
+      - poetry build
+    silent: false
+
+  build_check:
+    desc: Check distribution
+    cmds:
+      - twine check dist/*
+    silent: false
+
+  test_install:
+    desc: Try to install local dist
+    vars:
+      PROJECT_NAME: django-asgi-lifespan
+    env:
+      PIP_DISABLE_PIP_VERSION_CHECK: 1
+    deps: [ build ]
+    cmds:
+      - pip uninstall {{.PROJECT_NAME}} --yes
+      - pip install --no-cache-dir --no-index --find-links=file:./dist {{.PROJECT_NAME}}
+      - pip uninstall {{.PROJECT_NAME}} --yes
+    silent: false
+
+
+
