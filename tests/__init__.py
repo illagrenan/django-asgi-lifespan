@@ -9,5 +9,5 @@ from typing import Final
 logger: Final = logging.getLogger(__name__)
 
 if sys.platform == "win32":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())  # type: ignore
-    logger.info("Installed `%r` as a loop policy.", asyncio.WindowsSelectorEventLoopPolicy)  # type: ignore
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    logger.info("Installed `%r` as a loop policy.", asyncio.WindowsSelectorEventLoopPolicy)
