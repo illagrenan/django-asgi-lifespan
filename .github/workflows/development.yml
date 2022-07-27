@@ -4,8 +4,6 @@ on:
   push:
   pull_request:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -30,7 +28,7 @@ jobs:
       - name: Install Poetry
         run: |
           python -m pip install --no-input --upgrade pip
-          pip install poetry
+          pip install --no-input poetry
 
       - name: Check pyproject.toml
         run: |

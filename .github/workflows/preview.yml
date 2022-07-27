@@ -3,8 +3,6 @@ name: "Preview"
 on:
   push:
     branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -17,14 +15,6 @@ jobs:
         python-versions: [ "3.10" ]
 
     steps:
-      - name: Wait for other checks to succeed
-        uses: lewagon/wait-on-check-action@v1.0.0
-        with:
-          ref: ${{ github.ref }}
-          running-workflow-name: "Preview the package"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
