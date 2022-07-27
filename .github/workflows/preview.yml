@@ -23,7 +23,7 @@ jobs:
           ref: ${{ github.ref }}
           running-workflow-name: "Preview the package"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 1000
+          wait-interval: 10
 
       - name: Checkout repository
         uses: actions/checkout@v3
