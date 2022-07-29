@@ -1,0 +1,67 @@
+site_name: Django ASGI Lifespan
+site_url: https://illagrenan.github.io/django-asgi-lifespan
+repo_url: https://github.com/illagrenan/django-asgi-lifespan
+repo_name: illagrenan/django-asgi-lifespan
+strict: true
+watch:
+  - example
+  - CHANGELOG.md
+  - CONTRIBUTING.md
+  - README.md
+  - django_asgi_lifespan
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - Limitations: limitations.md
+  - Development: development.md
+  - Reference: reference.md
+  - Contributing: contributing.md
+  - Credits: credits.md
+  - Changelog: changelog.md
+theme:
+  name: material
+  language: en
+  palette:
+    scheme: preference
+    primary: indigo
+    accent: indigo
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tabs.sticky
+markdown_extensions:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed
+  - attr_list
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      linenums: false
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - admonition
+  - toc:
+      baselevel: 2
+      permalink: true
+      slugify: !!python/name:pymdownx.slugs.uslugify
+  - meta
+plugins:
+  - include-markdown
+  - search:
+      lang: en
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            docstring_style: sphinx

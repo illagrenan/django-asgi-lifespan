@@ -1,0 +1,53 @@
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{py,rst,ini}]
+indent_style = space
+indent_size = 4
+
+[*.py]
+line_length = 119
+max_line_length = 119
+known_first_party = vize,config
+multi_line_output = 3
+default_section = THIRDPARTY
+recursive = true
+skip = venv/
+skip_glob = **/migrations/*.py
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+
+[*.{html,css,scss,json,yml}]
+indent_style = space
+indent_size = 2
+
+[*.csv]
+end_of_line = crlf
+
+[*.bat]
+indent_style = tab
+end_of_line = crlf
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[LICENSE]
+insert_final_newline = false
+
+[Makefile]
+indent_style = tab
+
+[{.travis.yml, package.json}]
+indent_size = 2
+indent_style = space
