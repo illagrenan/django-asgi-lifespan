@@ -1,6 +1,6 @@
 # Django ASGI Lifespan
 
-[![pypi](https://img.shields.io/badge/code%20style-black-000000.svg)](ttps://github.com/psf/black)
+[![pypi](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pypi](https://img.shields.io/pypi/v/django-asgi-lifespan.svg)](https://pypi.org/project/django-asgi-lifespan/)
 [![python](https://img.shields.io/pypi/pyversions/django-asgi-lifespan.svg)](https://pypi.org/project/django-asgi-lifespan/)
 [![Build Status](https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml/badge.svg)](https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml)
