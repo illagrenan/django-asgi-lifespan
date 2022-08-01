@@ -14,9 +14,9 @@ Django ASGI handle with Lifespan Protocol support
 
 ## Features
 
-* This package contains a subclass of the standard Django `ASGIHandler` that can handle [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html). (Note: there is absolutely no change in handling of HTTP requests.)
-* [Startup](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event) and [Shutdown](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event) Lifespan events are translated to standard [Django signals](https://docs.djangoproject.com/en/4.0/topics/signals/).
-* Signal receivers can be awaited. This way it is possible for example to create [aiohttp ClientSession](https://docs.aiohttp.org/en/stable/client_reference.html) / [httpx client](https://www.python-httpx.org/async/) / ... when the application starts and close these resources safely when the application is shutdown. The concept is similar to events in FastAPI (<https://fastapi.tiangolo.com/advanced/events/>).
+* This package contains a subclass of the standard Django `ASGIHandler` that can handle [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html). (Note: there is no change in handling of HTTP requests.)
+* [Startup](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event) and [Shutdown](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event) Lifespan events are converted to [Django signals](https://docs.djangoproject.com/en/4.0/topics/signals/).
+* Signal **receivers can be awaited**. This way it is possible for example to create [aiohttp ClientSession](https://docs.aiohttp.org/en/stable/client_reference.html)/[httpx client](https://www.python-httpx.org/async/) when the application starts and close these resources safely when the application shuts down. This concept is similar to events in FastAPI (<https://fastapi.tiangolo.com/advanced/events/>).
 
 ## Quickstart
 
