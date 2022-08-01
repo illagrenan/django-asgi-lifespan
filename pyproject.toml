@@ -31,7 +31,7 @@ Django = "^4"
 # Formatting & Linting
 black = "^22"
 isort = "^5"
-flake8 = "^4"
+flake8 = "^5"
 flake8-rst-docstrings = "^0.2.7"
 mypy = "^0.971"
 
