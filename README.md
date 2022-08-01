@@ -9,7 +9,6 @@
 Django ASGI handle with Lifespan Protocol support
 
 * Documentation: <https://illagrenan.github.io/django-asgi-lifespan>
-* GitHub: <https://github.com/illagrenan/django-asgi-lifespan>
 * PyPI: <https://pypi.org/project/django-asgi-lifespan/>
 * License: MIT
 
@@ -21,7 +20,8 @@ Django ASGI handle with Lifespan Protocol support
 
 ## Quickstart
 
-1. Install package.
+1. Install the package.
+
     ``` console
     $ pip install --upgrade django-asgi-lifespan
     ```
@@ -92,4 +92,12 @@ Django ASGI handle with Lifespan Protocol support
     
         return HttpResponse(f"{external_api_response.text[:42]}", content_type="text/plain")
 
+    ```
+
+5. Run uvicorn:
+    
+    :warning: Lifespan protocol is not supported if you run uvicorn via gunicorn: `gunicorn -k uvicorn.workers.UvicornWorker`. See other [limittations](https://illagrenan.github.io/django-asgi-lifespan/limitations/) in the documentation.
+
+    ``` console 
+    uvicorn asgi:application --lifespan=on --port=8080
     ```
