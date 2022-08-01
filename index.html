@@ -257,6 +257,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -429,6 +436,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    Quickstart
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -456,7 +470,7 @@
 
 <!-- BEGIN INCLUDE ../README.md -->
 <h2 id="django-asgi-lifespan">Django ASGI Lifespan<a class="headerlink" href="#django-asgi-lifespan" title="Permanent link">&para;</a></h2>
-<p><a href="ttps://github.com/psf/black"><img alt="pypi" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
+<p><a href="https://github.com/psf/black"><img alt="pypi" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
 <a href="https://pypi.org/project/django-asgi-lifespan/"><img alt="pypi" src="https://img.shields.io/pypi/v/django-asgi-lifespan.svg" /></a>
 <a href="https://pypi.org/project/django-asgi-lifespan/"><img alt="python" src="https://img.shields.io/pypi/pyversions/django-asgi-lifespan.svg" /></a>
 <a href="https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml"><img alt="Build Status" src="https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml/badge.svg" /></a>
@@ -474,6 +488,75 @@
 <li><a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event">Startup</a> and <a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event">Shutdown</a> Lifespan events are translated to standard <a href="https://docs.djangoproject.com/en/4.0/topics/signals/">Django signals</a>.</li>
 <li>Signal receivers can be awaited. This way it is possible for example to create <a href="https://docs.aiohttp.org/en/stable/client_reference.html">aiohttp ClientSession</a> / <a href="https://www.python-httpx.org/async/">httpx client</a> / ... when the application starts and close these resources safely when the application is shutdown. The concept is similar to events in FastAPI (<a href="https://fastapi.tiangolo.com/advanced/events/">https://fastapi.tiangolo.com/advanced/events/</a>).</li>
 </ul>
+<h3 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Install package.
+    <div class="highlight"><pre><span></span><code><span class="gp">$ </span>pip install --upgrade django-asgi-lifespan
+</code></pre></div></p>
+</li>
+<li>
+<p>Modify <code>asgi.py</code> to use a ASGI Lifespan compatible handler.</p>
+<div class="highlight"><span class="filename">asgi.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">django_asgi_lifespan.asgi</span> <span class="kn">import</span> <span class="n">get_asgi_application</span>
+
+<span class="n">django_application</span> <span class="o">=</span> <span class="n">get_asgi_application</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">receive</span><span class="p">,</span> <span class="n">send</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">scope</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;http&quot;</span><span class="p">,</span> <span class="s2">&quot;lifespan&quot;</span><span class="p">}:</span>
+        <span class="k">await</span> <span class="n">django_application</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="n">receive</span><span class="p">,</span> <span class="n">send</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown scope type </span><span class="si">{</span><span class="n">scope</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>Subscribe your (async) code to the <code>asgi_startup</code> and <code>asgi_shutdown</code> Django signals that are sent when the server starts/shuts down.</p>
+<div class="highlight"><span class="filename">handlers.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">import</span> <span class="nn">httpx</span>
+
+<span class="n">HTTPX_CLIENT</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">_signal_lock</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">create_httpx_client</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">HTTPX_CLIENT</span>
+
+    <span class="k">async</span> <span class="k">with</span> <span class="n">_signal_lock</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">HTTPX_CLIENT</span><span class="p">:</span>
+            <span class="n">HTTPX_CLIENT</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">http2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">close_httpx_client</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">HTTPX_CLIENT</span><span class="p">,</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">HTTPX_CLIENT</span><span class="o">.</span><span class="n">aclose</span><span class="p">()),</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><span class="filename">apps.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">AppConfig</span>
+
+<span class="kn">from</span> <span class="nn">django_asgi_lifespan.signals</span> <span class="kn">import</span> <span class="n">asgi_shutdown</span><span class="p">,</span> <span class="n">asgi_startup</span>
+<span class="kn">from</span> <span class="nn">.handlers_quickstart</span> <span class="kn">import</span> <span class="n">close_httpx_client</span><span class="p">,</span> <span class="n">create_httpx_client</span>
+
+
+<span class="k">class</span> <span class="nc">ExampleAppConfig</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">asgi_startup</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">create_httpx_client</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">asgi_shutdown</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">close_httpx_client</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>Use some resource e.g. in views:</p>
+<div class="highlight"><span class="filename">views.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">handlers</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">my_library_view</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
+    <span class="n">external_api_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">handlers_quickstart</span><span class="o">.</span><span class="n">HTTPX_CLIENT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.example.com/&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">external_api_response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">42</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">&quot;text/plain&quot;</span><span class="p">)</span>
+</code></pre></div>
+</li>
+</ol>
 <!-- END INCLUDE -->
 
               
