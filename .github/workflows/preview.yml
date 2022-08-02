@@ -1,0 +1,65 @@
+name: "Preview"
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  publish_dev_build:
+    name: Preview the package
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-versions: [ "3.10" ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-versions }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --no-input --upgrade pip
+          pip install poetry
+          poetry install -vv -n
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+
+      - name: Run linters
+        run: |
+          poetry run task lint
+
+      - name: Run unittests
+        run: |
+          poetry run task coverage
+
+      - name: Build wheels and source tarball
+        run: |
+          poetry version $(poetry version --short)-dev.$GITHUB_RUN_NUMBER
+          poetry version --short
+          poetry build
+
+      - name: publish to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN}}
+          repository_url: https://test.pypi.org/legacy/
+          skip_existing: true
+
+      - name: Build documentation
+        run: |
+          poetry run mkdocs build
+
+      - name: Publish documentation
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
