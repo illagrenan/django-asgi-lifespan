@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#django-asgi-lifespan" class="md-skip">
+        <a href="#django-asgi-handler-with-lifespan-protocol-support" class="md-skip">
           Skip to content
         </a>
       
@@ -243,11 +243,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#django-asgi-lifespan" class="md-nav__link">
-    Django ASGI Lifespan
+  <a href="#django-asgi-handler-with-lifespan-protocol-support" class="md-nav__link">
+    Django ASGI Handler with Lifespan protocol support
   </a>
   
-    <nav class="md-nav" aria-label="Django ASGI Lifespan">
+    <nav class="md-nav" aria-label="Django ASGI Handler with Lifespan protocol support">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -422,11 +422,11 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#django-asgi-lifespan" class="md-nav__link">
-    Django ASGI Lifespan
+  <a href="#django-asgi-handler-with-lifespan-protocol-support" class="md-nav__link">
+    Django ASGI Handler with Lifespan protocol support
   </a>
   
-    <nav class="md-nav" aria-label="Django ASGI Lifespan">
+    <nav class="md-nav" aria-label="Django ASGI Handler with Lifespan protocol support">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -469,13 +469,12 @@
   <h1>Home</h1>
 
 <!-- BEGIN INCLUDE ../README.md -->
-<h2 id="django-asgi-lifespan">Django ASGI Lifespan<a class="headerlink" href="#django-asgi-lifespan" title="Permanent link">&para;</a></h2>
+<h2 id="django-asgi-handler-with-lifespan-protocol-support">Django ASGI Handler with Lifespan protocol support<a class="headerlink" href="#django-asgi-handler-with-lifespan-protocol-support" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/psf/black"><img alt="pypi" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
 <a href="https://pypi.org/project/django-asgi-lifespan/"><img alt="pypi" src="https://img.shields.io/pypi/v/django-asgi-lifespan.svg" /></a>
 <a href="https://pypi.org/project/django-asgi-lifespan/"><img alt="python" src="https://img.shields.io/pypi/pyversions/django-asgi-lifespan.svg" /></a>
 <a href="https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml"><img alt="Build Status" src="https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml/badge.svg" /></a>
 <a href="https://codecov.io/github/illagrenan/django-asgi-lifespan"><img alt="codecov" src="https://codecov.io/gh/illagrenan/django-asgi-lifespan/branch/main/graphs/badge.svg" /></a></p>
-<p>Django ASGI handle with Lifespan Protocol support</p>
 <ul>
 <li>Documentation: <a href="https://illagrenan.github.io/django-asgi-lifespan">https://illagrenan.github.io/django-asgi-lifespan</a></li>
 <li>PyPI: <a href="https://pypi.org/project/django-asgi-lifespan/">https://pypi.org/project/django-asgi-lifespan/</a></li>
@@ -483,14 +482,22 @@
 </ul>
 <h3 id="features">Features<a class="headerlink" href="#features" title="Permanent link">&para;</a></h3>
 <ul>
-<li>This package contains a subclass of the standard Django <code>ASGIHandler</code> that can handle <a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html">ASGI Lifespan Protocol</a>. (Note: there is no change in handling of HTTP requests.)</li>
-<li><a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event">Startup</a> and <a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event">Shutdown</a> Lifespan events are converted to <a href="https://docs.djangoproject.com/en/4.0/topics/signals/">Django signals</a>.</li>
-<li>Signal <strong>receivers can be awaited</strong>. This way it is possible for example to create <a href="https://docs.aiohttp.org/en/stable/client_reference.html">aiohttp ClientSession</a>/<a href="https://www.python-httpx.org/async/">httpx client</a> when the application starts and close these resources safely when the application shuts down. This concept is similar to events in FastAPI (<a href="https://fastapi.tiangolo.com/advanced/events/">https://fastapi.tiangolo.com/advanced/events/</a>).</li>
+<li>This package contains a subclass of the standard Django <code>ASGIHandler</code> that can
+  handle <a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html">ASGI Lifespan Protocol</a>. (Note: there is no change in handling HTTP requests.)</li>
+<li><a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event">Startup</a>
+  and <a href="https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event">Shutdown</a> Lifespan events are
+  converted to <a href="https://docs.djangoproject.com/en/4.0/topics/signals/">Django signals</a>.</li>
+<li>Signal <strong>receivers can be awaited</strong>. This way it is possible for example to
+  create <a href="https://docs.aiohttp.org/en/stable/client_reference.html">aiohttp ClientSession</a>
+  /<a href="https://www.python-httpx.org/async/">httpx client</a> when the application starts and close these resources safely when
+  the application shuts down. This concept is similar to events in
+  FastAPI (<a href="https://fastapi.tiangolo.com/advanced/events/">https://fastapi.tiangolo.com/advanced/events/</a>).</li>
 </ul>
 <h3 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h3>
+<p><strong><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:" /> This package is experimental. Lifespan signals work correctly only under uvicorn.</strong></p>
 <ol>
 <li>
-<p>Install the package.</p>
+<p>Install the package. Only Python 3.10 and Django 4 are supported. </p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>pip install --upgrade django-asgi-lifespan
 </code></pre></div>
 </li>
@@ -509,7 +516,7 @@
 </code></pre></div>
 </li>
 <li>
-<p>Subscribe your (async) code to the <code>asgi_startup</code> and <code>asgi_shutdown</code> Django signals that are sent when the server starts/shuts down.</p>
+<p>Subscribe your (async) code to the <code>asgi_startup</code> and <code>asgi_shutdown</code> Django signals that are sent when the server starts/shuts down. <a href="https://illagrenan.github.io/django-asgi-lifespan/usage/">See usage</a> for a more advanced code sample.</p>
 <div class="highlight"><span class="filename">handlers.py</span><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
 
 <span class="kn">import</span> <span class="nn">httpx</span>
@@ -538,12 +545,12 @@
 
 <span class="k">class</span> <span class="nc">ExampleAppConfig</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">asgi_startup</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">create_httpx_client</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-        <span class="n">asgi_shutdown</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">close_httpx_client</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">asgi_startup</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">create_httpx_client</span><span class="p">)</span>
+        <span class="n">asgi_shutdown</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">close_httpx_client</span><span class="p">)</span>
 </code></pre></div>
 </li>
 <li>
-<p>Use some resource e.g. in views:</p>
+<p>Use some resource (in this case the HTTPX client) e.g. in views.</p>
 <div class="highlight"><span class="filename">views.py</span><pre><span></span><code><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">handlers</span>
@@ -557,11 +564,14 @@
 </li>
 <li>
 <p>Run uvicorn:</p>
-<p><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:" /> Lifespan protocol is not supported if you run uvicorn via gunicorn: <code>gunicorn -k uvicorn.workers.UvicornWorker</code>. See other <a href="https://illagrenan.github.io/django-asgi-lifespan/limitations/">limittations</a> in the documentation.</p>
-<div class="highlight"><pre><span></span><code><span class="go">uvicorn asgi:application --lifespan=on --port=8080</span>
-</code></pre></div>
 </li>
 </ol>
+<p><img alt="⚠" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/26a0.svg" title=":warning:" /> Lifespan protocol is not supported if you run uvicorn via gunicorn using <a href="https://docs.gunicorn.org/en/stable/settings.html#worker-class"><code>worker_class</code></a>: <code>gunicorn -k uvicorn.workers.UvicornWorker</code>. See
+   other <a href="https://illagrenan.github.io/django-asgi-lifespan/limitations/">limitations</a> in the documentation.</p>
+<div class="highlight"><pre><span></span><code>``` console 
+uvicorn asgi:application --lifespan=on --port=8080
+```
+</code></pre></div>
 <!-- END INCLUDE -->
 
               

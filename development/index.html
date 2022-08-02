@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#dependencies" class="md-skip">
+        <a href="#get-started" class="md-skip">
           Skip to content
         </a>
       
@@ -303,8 +303,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    Dependencies
+  <a href="#get-started" class="md-nav__link">
+    Get Started!
   </a>
   
 </li>
@@ -416,8 +416,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    Dependencies
+  <a href="#get-started" class="md-nav__link">
+    Get Started!
   </a>
   
 </li>
@@ -456,10 +456,46 @@
 
   <h1>Development</h1>
 
-<h2 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h2>
-<p>Install Python dependencies using <a href="https://python-poetry.org/">Poetry</a>:</p>
+<h3 id="get-started">Get Started!<a class="headerlink" href="#get-started" title="Permanent link">&para;</a></h3>
+<p>Ready to contribute? Here's how to set up <code>django-asgi-lifespan</code> for local development.</p>
+<ol>
+<li>Fork the <code>django-asgi-lifespan</code> repo on GitHub.</li>
+<li>
+<p>Clone your fork locally</p>
+<div class="highlight"><pre><span></span><code>$ git clone git@github.com:your_name_here/django-asgi-lifespan.git
+</code></pre></div>
+</li>
+<li>
+<p>Ensure <a href="https://python-poetry.org/docs/">poetry</a> is installed.</p>
+</li>
+<li>
+<p>Install dependencies and start your virtualenv:</p>
 <div class="highlight"><pre><span></span><code>$ poetry install
 </code></pre></div>
+</li>
+<li>
+<p>Create a branch for local development:</p>
+<div class="highlight"><pre><span></span><code>$ git checkout -b name-of-your-bugfix-or-feature
+</code></pre></div>
+<p>Now you can make your changes locally.</p>
+</li>
+<li>
+<p>When you're done making changes, check that your changes pass the
+   tests, including testing other Python versions, with tox:</p>
+<div class="highlight"><pre><span></span><code>$ poetry run task test
+</code></pre></div>
+</li>
+<li>
+<p>Commit your changes and push your branch to GitHub:</p>
+<div class="highlight"><pre><span></span><code>$ git add .
+$ git commit -m &quot;Your detailed description of your changes.&quot;
+$ git push origin name-of-your-bugfix-or-feature
+</code></pre></div>
+</li>
+<li>
+<p>Submit a pull request through the GitHub website.</p>
+</li>
+</ol>
 <div class="admonition tip">
 <p class="admonition-title">Taskfile</p>
 <p>We recommend installing Task (<a href="https://taskfile.dev/">https://taskfile.dev/</a>) for easy launching of development tasks.</p>
