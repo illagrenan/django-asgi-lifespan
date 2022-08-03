@@ -530,7 +530,7 @@
 
     <span class="k">async</span> <span class="k">with</span> <span class="n">_signal_lock</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">HTTPX_CLIENT</span><span class="p">:</span>
-            <span class="n">HTTPX_CLIENT</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">http2</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">HTTPX_CLIENT</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">close_httpx_client</span><span class="p">():</span>
