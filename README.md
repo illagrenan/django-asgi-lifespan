@@ -64,7 +64,7 @@
     
         async with _signal_lock:
             if not HTTPX_CLIENT:
-                HTTPX_CLIENT = httpx.AsyncClient(http2=True)
+                HTTPX_CLIENT = httpx.AsyncClient()
     
     
     async def close_httpx_client():
