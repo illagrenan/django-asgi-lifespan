@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/changelog/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/contributing/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/credits/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/development/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/installation/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/limitations/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/reference/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://illagrenan.github.io/django-asgi-lifespan/usage/</loc>
-         <lastmod>2022-08-12</lastmod>
+         <lastmod>2022-08-16</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
