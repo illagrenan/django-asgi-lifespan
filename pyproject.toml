@@ -29,7 +29,7 @@ Django = "^4"
 
 [tool.poetry.dev-dependencies]
 # Formatting & Linting
-black = "^22"
+black = "^23"
 isort = "^5"
 flake8 = "^5"
 flake8-rst-docstrings = "^0.2.7"
