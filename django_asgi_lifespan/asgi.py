@@ -18,7 +18,8 @@ __all__ = ["get_asgi_application"]
 
 def get_asgi_application() -> LifespanASGIHandler:
     """
-    The public interface to Django's custom ASGI support that supports the lifespan protocol.
+    The public interface to Django's custom ASGI support
+    that supports the lifespan protocol.
 
     :return: An ASGI 3 callable.
     """

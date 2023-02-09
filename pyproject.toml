@@ -64,7 +64,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-length = 109
+line-length = 88
 skip-string-normalization = false
 target-version = ["py310"]
 include = '\.pyi?$'

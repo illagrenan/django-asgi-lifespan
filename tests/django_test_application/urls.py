@@ -12,5 +12,7 @@ from django.urls import path
 logger: Final = logging.getLogger(__name__)
 
 urlpatterns = [
-    path("", include("tests.django_test_application.test_app.urls", namespace="test_app")),
+    path(
+        "", include("tests.django_test_application.test_app.urls", namespace="test_app")
+    ),
 ]

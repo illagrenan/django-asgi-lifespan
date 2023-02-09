@@ -29,11 +29,14 @@ __all__ = ["LifespanASGIHandler"]
 class LifespanASGIHandler(ASGIHandler):
     """Custom ASGIHandler with LIfespan Protocol support."""
 
-    async def __call__(self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable) -> None:
+    async def __call__(
+        self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
+    ) -> None:
         """
         Handles lifespan request.
 
-        If scope is not lifespan, calls base class. The standard Django `ASGIHandler` can only handle http scopes.
+        If scope is not lifespan, calls base class.
+        The standard Django `ASGIHandler` can only handle http scopes.
 
         :return: Nothing.
         """
@@ -55,15 +58,23 @@ class LifespanASGIHandler(ASGIHandler):
             match message["type"]:
                 case "lifespan.startup":
                     await self._handle_lifespan_event(signals.asgi_startup, scope)
-                    await send(LifespanStartupCompleteEvent(type="lifespan.startup.complete"))
+                    await send(
+                        LifespanStartupCompleteEvent(type="lifespan.startup.complete")
+                    )
                 case "lifespan.shutdown":
                     await self._handle_lifespan_event(signals.asgi_shutdown, scope)
-                    await send(LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete"))
+                    await send(
+                        LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
+                    )
                     return
                 case _:
-                    raise ValueError("Unknown lifespan message type: %s" % message["type"])
+                    raise ValueError(
+                        "Unknown lifespan message type: %s" % message["type"]
+                    )
 
-    async def _handle_lifespan_event(self, signal: Signal, scope: LifespanScope) -> None:
+    async def _handle_lifespan_event(
+        self, signal: Signal, scope: LifespanScope
+    ) -> None:
         """Handle a lifespan event."""
         logger.debug('Sending "%s" signal', signal)
 

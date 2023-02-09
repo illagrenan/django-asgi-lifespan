@@ -15,8 +15,8 @@ indent_style = space
 indent_size = 4
 
 [*.py]
-line_length = 119
-max_line_length = 119
+line_length = 88
+max_line_length = 88
 known_first_party = vize,config
 multi_line_output = 3
 default_section = THIRDPARTY
