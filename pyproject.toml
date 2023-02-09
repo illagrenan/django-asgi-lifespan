@@ -32,7 +32,7 @@ Django = "^4"
 black = "^22"
 isort = "^5"
 flake8 = "^5"
-flake8-rst-docstrings = "^0.2.7"
+flake8-rst-docstrings = "^0.3.0"
 mypy = "^0.971"
 
 # Releases
