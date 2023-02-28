@@ -56,7 +56,7 @@ mkdocs-material-extensions = "^1.0.3"
 mkdocs-autorefs = "^0.4.1"
 
 # Misc
-ipython = "^8.4.0"
+ipython = "^8.11.0"
 ipdb = "^0.13.9"
 
 [build-system]
