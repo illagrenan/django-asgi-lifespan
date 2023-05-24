@@ -57,12 +57,12 @@ class LifespanASGIHandler(ASGIHandler):
 
             match message["type"]:
                 case "lifespan.startup":
-                    await self._handle_lifespan_event(signals.asgi_startup, scope)
+                    await self._process_lifespan_event(signals.asgi_startup, scope)
                     await send(
                         LifespanStartupCompleteEvent(type="lifespan.startup.complete")
                     )
                 case "lifespan.shutdown":
-                    await self._handle_lifespan_event(signals.asgi_shutdown, scope)
+                    await self._process_lifespan_event(signals.asgi_shutdown, scope)
                     await send(
                         LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
                     )
@@ -72,16 +72,19 @@ class LifespanASGIHandler(ASGIHandler):
                         "Unknown lifespan message type: %s" % message["type"]
                     )
 
-    async def _handle_lifespan_event(
+    async def _process_lifespan_event(
         self, signal: Signal, scope: LifespanScope
     ) -> None:
-        """Handle a lifespan event."""
-        logger.debug('Sending "%s" signal', signal)
+        """
+        Dispatch the given signal and process any responses.
+        Async responses are awaited, synchronous responses are called.
+        """
+        logger.debug("Dispatching signal: %s", signal)
 
         # [(receiver, response), ...]
-        results = signal.send(self.__class__, scope=scope)
+        response = signal.send(self.__class__, scope=scope)
 
-        for _, response in results:
+        for _, response in response:
             if not response:
                 continue
 
