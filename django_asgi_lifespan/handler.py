@@ -27,18 +27,16 @@ __all__ = ["LifespanASGIHandler"]
 
 
 class LifespanASGIHandler(ASGIHandler):
-    """Custom ASGIHandler with LIfespan Protocol support."""
+    """A subclass of ASGIHandler that supports the ASGI Lifespan protocol."""
 
     async def __call__(
         self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
     ) -> None:
         """
-        Handles lifespan request.
+        If scope type is lifespan, handle lifespan request.
+        Otherwise, delegate to the superclass' call method.
 
-        If scope is not lifespan, calls base class.
-        The standard Django `ASGIHandler` can only handle http scopes.
-
-        :return: Nothing.
+        The base Django `ASGIHandler` can only handle http scopes.
         """
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
@@ -51,7 +49,7 @@ class LifespanASGIHandler(ASGIHandler):
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
     ):
-        """Handle a lifespan request."""
+        """Process lifespan request events."""
         while True:
             message = await receive()
 
