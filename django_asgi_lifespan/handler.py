@@ -69,7 +69,7 @@ class LifespanASGIHandler(ASGIHandler):
                     return
                 case _:
                     raise ValueError(
-                        "Unknown lifespan message type: %s" % message["type"]
+                        f"Unknown lifespan message type: {message['type']}"
                     )
 
     async def _process_lifespan_event(
