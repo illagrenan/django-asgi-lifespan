@@ -51,7 +51,7 @@ pytest-django = "^4.5.2"
 mkdocs = "^1.4.3"
 mkdocs-include-markdown-plugin = "^4.0.4"
 mkdocs-material = "^9.1.14"
-mkdocstrings = { extras = ["python"], version = "^0.21.2" }
+mkdocstrings = { extras = ["python"], version = "^0.22.0" }
 mkdocs-material-extensions = "^1.1.1"
 mkdocs-autorefs = "^0.4.1"
 
