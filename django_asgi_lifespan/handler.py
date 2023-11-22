@@ -59,6 +59,7 @@ class LifespanASGIHandler(ASGIHandler):
                     await send(
                         LifespanStartupCompleteEvent(type="lifespan.startup.complete")
                     )
+                    return
                 case "lifespan.shutdown":
                     await self._process_lifespan_event(signals.asgi_shutdown, scope)
                     await send(
