@@ -34,11 +34,11 @@ jobs:
       - name: Check pyproject.toml
         run: |
           poetry check -vv -n
-          poetry run pip install django==${{ matrix.django-versions }}
 
       - name: Install dependencies
         run: |
           poetry install -vv -n
+          poetry run pip install django==${{ matrix.django-versions }}
 
       - name: Install Task
         uses: arduino/setup-task@v1
