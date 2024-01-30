@@ -27,10 +27,14 @@
 
 **:warning: This package is experimental. Lifespan signals work correctly only under uvicorn.**
 
-1. Install the package. Only Python 3.10 and Django 4 are supported. 
+1. To install this package run: 
+
+   Python 3.10, 3.11 and 3.12 are supported, with Django 4 and 5.
 
     ``` console
     $ pip install --upgrade django-asgi-lifespan
+    # or
+    $ poetry add django-asgi-lifespan
     ```
 
 2. Modify `asgi.py` to use a ASGI Lifespan compatible handler.
