@@ -32,7 +32,7 @@ Django = "^4"
 
 [tool.poetry.dev-dependencies]
 # Formatting & Linting
-black = "^23.3.0"
+black = "^24.1.1"
 isort = "^5.12.0"
 flake8 = "^6.0.0"
 flake8-rst-docstrings = "^0.3.0"
@@ -69,7 +69,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 88
 skip-string-normalization = false
-target-version = ["py310"]
+target-version = ["py312"]
 include = '\.pyi?$'
 exclude = '''
 /(
