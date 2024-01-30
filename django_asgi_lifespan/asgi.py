@@ -21,6 +21,9 @@ def get_asgi_application() -> LifespanASGIHandler:
     The public interface to Django's custom ASGI support
     that supports the lifespan protocol.
 
+    This is modified copy of:
+        https://github.com/django/django/blob/main/django/core/asgi.py
+
     :return: An ASGI 3 callable.
     """
     django.setup(set_prefix=False)
