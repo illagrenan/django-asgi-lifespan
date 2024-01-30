@@ -34,7 +34,7 @@
     ``` console
     $ pip install --upgrade django-asgi-lifespan
     # or
-    $ poetry add django-asgi-lifespan
+    $ poetry add django-asgi-lifespan@latest
     ```
 
 2. Modify `asgi.py` to use a ASGI Lifespan compatible handler.
