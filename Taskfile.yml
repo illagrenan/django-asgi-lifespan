@@ -67,6 +67,8 @@ tasks:
     silent: false
 
   black:
+    aliases:
+      - fmt
     desc: Format using black
     cmds:
       - black {{.SOURCES}} tests
