@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         python-versions: [ "3.10", "3.11", "3.12" ]
+        django-versions: [ "4.2.9", "5.0.1"]
         os: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
 
@@ -33,6 +34,7 @@ jobs:
       - name: Check pyproject.toml
         run: |
           poetry check -vv -n
+          poetry run pip install django==${{ matrix.django-versions }}
 
       - name: Install dependencies
         run: |
