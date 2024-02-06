@@ -11,9 +11,13 @@ vars:
 
 tasks:
   test:
+    aliases:
+      - tests
+      - pytest
+      - pytests
     desc: Run pytests
     cmds:
-      - pytest
+      - poetry run pytest
     silent: false
 
   coverage:
