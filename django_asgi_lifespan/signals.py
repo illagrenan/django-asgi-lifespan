@@ -7,7 +7,12 @@ from __future__ import annotations
 
 from typing import Annotated, Final
 
-from django.dispatch import Signal
+import django
+
+if django.VERSION > (5, 0):
+    from .dispatcher import PatchedSignal as Signal
+else:
+    from django.dispatch import Signal
 
 __all__ = ["asgi_startup", "asgi_shutdown"]
 

@@ -79,8 +79,10 @@ class LifespanASGIHandler(ASGIHandler):
         """
         logger.debug("Dispatching signal: %s", signal)
 
-        # [(receiver, response), ...]
-        response = signal.send(self.__class__, scope=scope)
+        if callable(getattr(signal, "asend", None)):
+            response = await signal.asend(self.__class__, scope=scope)
+        else:
+            response = signal.send(self.__class__, scope=scope)
 
         for _, response in response:
             if not response:
