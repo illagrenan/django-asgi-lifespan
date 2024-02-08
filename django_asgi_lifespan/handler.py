@@ -73,13 +73,21 @@ class LifespanASGIHandler(ASGIHandler):
         self, signal: Signal, scope: LifespanScope
     ) -> None:
         """
-        Dispatch the given signal. If the signal has an `asend` method, use it.
+        Dispatch the given signal and process any responses.
+        Async responses are awaited, synchronous responses are called.
         """
         logger.debug("Dispatching signal: %s", signal)
 
         if callable(getattr(signal, "asend", None)):
-            logger.debug("Awaiting signal using native `asend` method: %s", signal)
-            await signal.asend(self.__class__, scope=scope)
+            response = await signal.asend(self.__class__, scope=scope)
         else:
-            logger.debug("Sending signal using synchronous `send` method: %s", signal)
-            signal.send(self.__class__, scope=scope)
+            response = signal.send(self.__class__, scope=scope)
+
+        for _, response in response:
+            if not response:
+                continue
+
+            if inspect.isawaitable(response):
+                await response
+            else:
+                response()
