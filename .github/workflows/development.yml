@@ -38,6 +38,15 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install -vv -n
+
+      - uses: actions/cache@v4
+        name: Define a cache for the virtual environment based on the dependencies lock file
+        with:
+          path: ./.venv
+          key: venv-${{ matrix.python-versions }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Install Django
+        run: |
           poetry run pip install --upgrade django==${{ matrix.django-versions }}
 
       - name: Install Task
