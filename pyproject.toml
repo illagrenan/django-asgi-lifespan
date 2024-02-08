@@ -66,6 +66,32 @@ ipdb = "^0.13.13"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.pytest.ini_options]
+minversion = "7.0"
+norecursedirs = [".git", "__pycache__"]
+DJANGO_SETTINGS_MODULE = "tests.django_test_application.settings"
+addopts = "--verbose --color=yes --showlocals -r A --tb=auto -s -x"
+python_files = [
+    "tests.py",
+    "test_*.py",
+    "*_tests.py"
+]
+junit_suite_name = "django-asgi-lifespan"
+junit_family = "xunit2"
+log_cli = true
+log_cli_level = "DEBUG"
+log_cli_format = '%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)'
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+asyncio_mode = "strict"
+testpaths = [
+    "./tests/"
+]
+
+[tool.coverage.run]
+omit = [
+    'django_asgi_lifespan/dispatcher.py'
+]
+
 [tool.black]
 line-length = 88
 skip-string-normalization = false
