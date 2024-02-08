@@ -12,7 +12,7 @@ import django
 if django.VERSION > (5, 0):
     from .dispatcher import PatchedSignal as Signal
 else:
-    from django.dispatch import Signal
+    from django.dispatch import Signal  # type: ignore
 
 __all__ = ["asgi_startup", "asgi_shutdown"]
 
