@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         python-versions: [ "3.10", "3.11", "3.12" ]
-        django-versions: [ "4.2.9", "5.0.1"]
+        django-versions: [ "4.*", "5.*"]
         os: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
 
@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install -vv -n
-          poetry run pip install django==${{ matrix.django-versions }}
+          poetry run pip install --upgrade django==${{ matrix.django-versions }}
 
       - name: Install Task
         uses: arduino/setup-task@v1
