@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import inspect
 import logging
 from typing import Final
 
@@ -74,20 +75,19 @@ class LifespanASGIHandler(ASGIHandler):
     ) -> None:
         """
         Dispatch the given signal and process any responses.
-        Async responses are awaited, synchronous responses are called.
         """
         logger.debug("Dispatching signal: %s", signal)
 
         if callable(getattr(signal, "asend", None)):
-            response = await signal.asend(self.__class__, scope=scope)
+            await signal.asend(self.__class__, scope=scope)
         else:
             response = signal.send(self.__class__, scope=scope)
 
-        for _, response in response:
-            if not response:
-                continue
+            for _, response in response:
+                if not response:
+                    continue
 
-            if inspect.isawaitable(response):
-                await response
-            else:
-                response()
+                if inspect.isawaitable(response):
+                    await response
+                else:
+                    response()
