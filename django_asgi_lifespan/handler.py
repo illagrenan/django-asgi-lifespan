@@ -79,8 +79,10 @@ class LifespanASGIHandler(ASGIHandler):
         logger.debug("Dispatching signal: %s", signal)
 
         if callable(getattr(signal, "asend", None)):
+            logger.debug("Awaiting signal using native `asend` method: %s", signal)
             await signal.asend(self.__class__, scope=scope)
         else:
+            logger.debug("Sending signal using synchronous `send` method: %s", signal)
             response = signal.send(self.__class__, scope=scope)
 
             for _, response in response:
