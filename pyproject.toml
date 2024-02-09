@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "django-asgi-lifespan"
-version = "0.1.0"
+version = "0.2.0"
 homepage = "https://github.com/illagrenan/django-asgi-lifespan"
 description = "Django ASGI handler with Lifespan Protocol support."
 authors = ["Václav Dohnal <vaclav.dohnal@gmail.com>"]
