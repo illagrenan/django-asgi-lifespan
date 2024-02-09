@@ -3,7 +3,6 @@
 import asyncio
 import logging
 import sys
-
 from typing import Final
 
 logger: Final = logging.getLogger(__name__)

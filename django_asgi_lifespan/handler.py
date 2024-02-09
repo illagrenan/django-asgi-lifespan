@@ -11,12 +11,12 @@ from typing import Final
 
 from asgiref.typing import (
     ASGIReceiveCallable,
+    ASGIReceiveEvent,
     ASGISendCallable,
     LifespanScope,
     LifespanShutdownCompleteEvent,
     LifespanStartupCompleteEvent,
     Scope,
-    ASGIReceiveEvent,
 )
 from django.core.asgi import ASGIHandler
 from django.dispatch import Signal

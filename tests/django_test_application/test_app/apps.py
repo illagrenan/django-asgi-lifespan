@@ -6,6 +6,7 @@ from __future__ import annotations
 from django.apps import AppConfig
 
 from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
+
 from .handlers import ASGILifespanSignalHandler
 
 
