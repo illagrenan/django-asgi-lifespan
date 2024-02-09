@@ -9,7 +9,7 @@ Ready to contribute? Here's how to set up `django-asgi-lifespan` for local devel
     $ git clone git@github.com:your_name_here/django-asgi-lifespan.git
     ```
 
-3. Ensure [poetry](https://python-poetry.org/docs/) is installed.
+3. Ensure [Poetry](https://python-poetry.org/docs/) is installed.
 4. Install dependencies and start your virtualenv:
 
     ```
@@ -22,13 +22,13 @@ Ready to contribute? Here's how to set up `django-asgi-lifespan` for local devel
     $ git checkout -b name-of-your-bugfix-or-feature
     ```
 
-    Now you can make your changes locally.
+   Now you can make your changes locally.
 
 6. When you're done making changes, check that your changes pass the
    tests, including testing other Python versions, with tox:
 
     ```
-    $ poetry run task test
+    $ task test
     ```
 
 7. Commit your changes and push your branch to GitHub:
@@ -41,11 +41,9 @@ Ready to contribute? Here's how to set up `django-asgi-lifespan` for local devel
 
 8. Submit a pull request through the GitHub website.
 
-
 !!! tip "Taskfile"
 
     We recommend installing Task (<https://taskfile.dev/>) for easy launching of development tasks.
-
 
 # Formatting and linting
 
@@ -57,4 +55,14 @@ $ poetry task format
 
 ```
 $ poetry task test
+```
+
+# Run a Django test project locally
+
+The tests include a Django test project for integration testing. You can also run this test project locally (like any other Django project), sometimes it's useful to observe how a real application behaves.
+
+```
+$ cd ./tests/
+$ poetry run uvicorn django_test_application.asgi:application --log-level=debug --reload
+$ curl -v http://127.0.0.1:8000/test
 ```
