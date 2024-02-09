@@ -11,6 +11,7 @@ from typing import Final
 
 from asgiref.typing import (
     ASGIReceiveCallable,
+    ASGIReceiveEvent,
     ASGISendCallable,
     LifespanScope,
     LifespanShutdownCompleteEvent,
@@ -36,7 +37,7 @@ class LifespanASGIHandler(ASGIHandler):
         If scope type is lifespan, handle lifespan request.
         Otherwise, delegate to the superclass' call method.
 
-        The base Django `ASGIHandler` can only handle http scopes.
+        The base Django `ASGIHandler` can only handle http scope.
         """
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
@@ -48,10 +49,10 @@ class LifespanASGIHandler(ASGIHandler):
         scope: LifespanScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
-    ):
+    ) -> None:
         """Process lifespan request events."""
         while True:
-            message = await receive()
+            message: ASGIReceiveEvent = await receive()
 
             match message["type"]:
                 case "lifespan.startup":
@@ -60,6 +61,7 @@ class LifespanASGIHandler(ASGIHandler):
                         LifespanStartupCompleteEvent(type="lifespan.startup.complete")
                     )
                 case "lifespan.shutdown":
+                    print("shutdown is called!")
                     await self._process_lifespan_event(signals.asgi_shutdown, scope)
                     await send(
                         LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
@@ -75,18 +77,21 @@ class LifespanASGIHandler(ASGIHandler):
     ) -> None:
         """
         Dispatch the given signal and process any responses.
-        Async responses are awaited, synchronous responses are called.
         """
         logger.debug("Dispatching signal: %s", signal)
 
-        # [(receiver, response), ...]
-        response = signal.send(self.__class__, scope=scope)
+        if callable(getattr(signal, "asend", None)):
+            logger.debug("Awaiting signal using native `asend` method: %s", signal)
+            await signal.asend(self.__class__, scope=scope)
+        else:
+            logger.debug("Sending signal using synchronous `send` method: %s", signal)
+            response = signal.send(self.__class__, scope=scope)
 
-        for _, response in response:
-            if not response:
-                continue
+            for _, response in response:
+                if not response:
+                    continue
 
-            if inspect.isawaitable(response):
-                await response
-            else:
-                response()
+                if inspect.isawaitable(response):
+                    await response
+                else:
+                    response()

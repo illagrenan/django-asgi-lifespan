@@ -7,7 +7,12 @@ from __future__ import annotations
 
 from typing import Annotated, Final
 
-from django.dispatch import Signal
+import django
+
+if django.VERSION > (5, 0):  # pragma: no cover
+    from .dispatcher import PatchedSignal as Signal
+else:
+    from django.dispatch import Signal  # type: ignore
 
 __all__ = ["asgi_startup", "asgi_shutdown"]
 

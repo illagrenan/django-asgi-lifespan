@@ -1,0 +1,2 @@
+[run]
+omit = django_asgi_lifespan/dispatcher.py

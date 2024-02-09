@@ -32,7 +32,7 @@ async def test_lifespan_protocol_handler_sends_django_signals(
 
     response = await async_client.get("/test")
 
-    assert response.status_code == 200
+    assert response.status_code == HTTPStatus.OK
     assert "Example Domain" in response.content.decode("utf-8")
 
     await communicator.send_input({"type": "lifespan.shutdown"})

@@ -11,9 +11,13 @@ vars:
 
 tasks:
   test:
+    aliases:
+      - tests
+      - pytest
+      - pytests
     desc: Run pytests
     cmds:
-      - pytest
+      - poetry run pytest
     silent: false
 
   coverage:
@@ -67,6 +71,8 @@ tasks:
     silent: false
 
   black:
+    aliases:
+      - fmt
     desc: Format using black
     cmds:
       - black {{.SOURCES}} tests
