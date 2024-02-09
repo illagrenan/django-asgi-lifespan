@@ -29,6 +29,7 @@ __all__ = ["LifespanASGIHandler"]
 
 class LifespanASGIHandler(ASGIHandler):
     """A subclass of ASGIHandler that supports the ASGI Lifespan protocol."""
+    lifespan_state = {}
 
     async def __call__(
         self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
@@ -41,6 +42,10 @@ class LifespanASGIHandler(ASGIHandler):
         """
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
+        elif scope['type'] == 'http':
+            # Add the lifespan state to the HTTP scope
+            scope.setdefault('state', {}).update(self.lifespan_state)
+            await super().__call__(scope, receive, send)
         else:
             await super().__call__(scope, receive, send)
 
