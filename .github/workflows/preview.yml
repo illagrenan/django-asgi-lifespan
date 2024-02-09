@@ -30,7 +30,7 @@ jobs:
           poetry install -vv -n
 
       - name: Install Task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
 
       - name: Run linters
         run: |
