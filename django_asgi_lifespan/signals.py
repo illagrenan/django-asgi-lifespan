@@ -9,7 +9,7 @@ from typing import Annotated, Final
 
 import django
 
-if django.VERSION > (5, 0):
+if django.VERSION > (5, 0):  # pragma: no cover
     from .dispatcher import PatchedSignal as Signal
 else:
     from django.dispatch import Signal  # type: ignore
