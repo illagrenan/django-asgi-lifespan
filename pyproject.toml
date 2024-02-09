@@ -87,11 +87,6 @@ testpaths = [
     "./tests/"
 ]
 
-[tool.coverage.run]
-omit = [
-    'django_asgi_lifespan/dispatcher.py'
-]
-
 [tool.black]
 line-length = 88
 skip-string-normalization = false
