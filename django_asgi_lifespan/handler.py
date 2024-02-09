@@ -16,6 +16,7 @@ from asgiref.typing import (
     LifespanShutdownCompleteEvent,
     LifespanStartupCompleteEvent,
     Scope,
+    ASGIReceiveEvent,
 )
 from django.core.asgi import ASGIHandler
 from django.dispatch import Signal
@@ -36,7 +37,7 @@ class LifespanASGIHandler(ASGIHandler):
         If scope type is lifespan, handle lifespan request.
         Otherwise, delegate to the superclass' call method.
 
-        The base Django `ASGIHandler` can only handle http scopes.
+        The base Django `ASGIHandler` can only handle http scope.
         """
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
@@ -48,10 +49,10 @@ class LifespanASGIHandler(ASGIHandler):
         scope: LifespanScope,
         receive: ASGIReceiveCallable,
         send: ASGISendCallable,
-    ):
+    ) -> None:
         """Process lifespan request events."""
         while True:
-            message = await receive()
+            message: ASGIReceiveEvent = await receive()
 
             match message["type"]:
                 case "lifespan.startup":
@@ -60,6 +61,7 @@ class LifespanASGIHandler(ASGIHandler):
                         LifespanStartupCompleteEvent(type="lifespan.startup.complete")
                     )
                 case "lifespan.shutdown":
+                    print("shutdown is called!")
                     await self._process_lifespan_event(signals.asgi_shutdown, scope)
                     await send(
                         LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
