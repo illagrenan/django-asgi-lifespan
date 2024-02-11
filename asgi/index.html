@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://illagrenan.github.io/django-asgi-lifespan/limitations/">
+        <link rel="canonical" href="https://illagrenan.github.io/django-asgi-lifespan/asgi/">
       
       
-        <link rel="prev" href="../asgi/">
+        <link rel="prev" href="../usage/">
       
       
-        <link rel="next" href="../development/">
+        <link rel="next" href="../limitations/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -22,7 +22,7 @@
     
     
       
-        <title>Limitations - Django ASGI Lifespan</title>
+        <title>ASGI servers compatibility - Django ASGI Lifespan</title>
       
     
     
@@ -105,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Limitations
+              ASGI servers compatibility
             
           </span>
         </div>
@@ -279,26 +279,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../asgi/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    ASGI servers compatibility
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -313,12 +293,32 @@
         
   
   <span class="md-ellipsis">
-    Limitations
+    ASGI servers compatibility
   </span>
   
 
       </a>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../limitations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Limitations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -457,13 +457,43 @@
   
 
 
-  <h1>Limitations</h1>
+  <h1>ASGI servers compatibility</h1>
 
-<p>This package has the following two known limitations:</p>
-<ol>
-<li>Django dev server (<code>runserver</code>) does not support the lifespan protocol, it is recommended to use ASGI servers like Uvicorn or Daphne for development.</li>
-<li>I had a trouble with the lifespan protocol when deploying the project via <code>gunicorn -k uvicorn.workers.UvicornWorker</code>. If you use plain uvicorn directly for development and deployment, everything should work fine. There are discussions on the topic Uvicorn vs Gunicorn+Uvicorn as a worker class: <a href="https://stackoverflow.com/questions/66362199/what-is-the-difference-between-uvicorn-and-gunicornuvicorn/71546833">https://stackoverflow.com/questions/66362199/what-is-the-difference-between-uvicorn-and-gunicornuvicorn/71546833</a> or <a href="https://github.com/encode/uvicorn/issues/303">https://github.com/encode/uvicorn/issues/303</a>.</li>
-</ol>
+<p>If you want to serve your project with async support, you need an ASGI server. The following table gives an overview of commonly used ASGI servers and their compatibility with this project.</p>
+<table>
+<thead>
+<tr>
+<th>ASGI server</th>
+<th>Compatibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/encode/uvicorn">Uvicorn</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 7 9 19l-5.5-5.5 1.41-1.41L9 16.17 19.59 5.59 21 7Z"/></svg></span> Compatible</td>
+</tr>
+<tr>
+<td><a href="https://www.uvicorn.org/deployment/#gunicorn">gunicorn with UvicornWorker</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"/></svg></span> Not compatible</td>
+</tr>
+<tr>
+<td><a href="https://docs.djangoproject.com/en/dev/ref/django-admin/#django-admin-runserver">Django runserver</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19h3v3h-3v-3m2-17c5.35.22 7.68 5.62 4.5 9.67-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6Z"/></svg></span> Unknown / not tested yet</td>
+</tr>
+<tr>
+<td><a href="https://github.com/pgjones/hypercorn">Hypercorn</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19h3v3h-3v-3m2-17c5.35.22 7.68 5.62 4.5 9.67-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6Z"/></svg></span> Unknown / not tested yet</td>
+</tr>
+<tr>
+<td><a href="https://github.com/django/daphne">Daphne</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19h3v3h-3v-3m2-17c5.35.22 7.68 5.62 4.5 9.67-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6Z"/></svg></span> Unknown / not tested yet</td>
+</tr>
+<tr>
+<td><a href="https://github.com/emmett-framework/granian">Granian</a></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19h3v3h-3v-3m2-17c5.35.22 7.68 5.62 4.5 9.67-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6Z"/></svg></span> Unknown / not tested yet</td>
+</tr>
+</tbody>
+</table>
 
 
 
