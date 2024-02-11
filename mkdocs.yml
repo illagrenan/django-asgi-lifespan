@@ -13,6 +13,7 @@ nav:
   - Home: index.md
   - Installation: installation.md
   - Usage: usage.md
+  - ASGI servers compatibility: asgi.md
   - Limitations: limitations.md
   - Development: development.md
   - Reference: reference.md
@@ -35,6 +36,7 @@ theme:
     - content.code.copy
     - content.code.select
 markdown_extensions:
+  - tables
   - footnotes
   - admonition
   - pymdownx.critic
