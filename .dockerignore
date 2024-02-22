@@ -1,0 +1,10 @@
+# Ignore everything
+**/*.*
+
+# ... except for dependencies and source
+# Ref.: https://github.com/moby/moby/issues/30018
+!poetry.lock
+!pyproject.toml
+
+!django_asgi_lifespan/**/*.py
+!tests/**/*.py
