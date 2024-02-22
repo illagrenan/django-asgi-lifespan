@@ -5,12 +5,37 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Final
+from contextlib import asynccontextmanager
+from typing import Final, Any, Dict
 
 import httpx
 from django.apps import AppConfig
 
 logger: Final = logging.getLogger(__name__)
+
+
+@asynccontextmanager
+async def httpx_lifespan_manager() -> Dict[str, Any]:
+    logger.info("Lifespan: Initializing HTTPX client.")
+    state = {"httpx_client_from_user": httpx.AsyncClient(http2=False)}
+
+    try:
+        yield state
+    finally:
+        logger.info("Lifespan: Closing HTTPX client.")
+        try:
+            await asyncio.wait_for(
+                asyncio.create_task(state["httpx_client_from_user"].aclose()),
+                timeout=5.0,
+            )
+        except asyncio.TimeoutError:
+            logger.info("Timeouted when waiting to close HTTPX client.", exc_info=True)
+
+
+@asynccontextmanager
+async def dummy_lifespan_manager() -> Dict[str, Any]:
+    state = {"correct_number": 42}
+    yield state
 
 
 class ASGILifespanSignalHandler:
