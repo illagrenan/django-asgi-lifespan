@@ -5,16 +5,13 @@
 
 from __future__ import annotations
 
-from typing import Annotated, Final
+from typing import Final
 
-import django
+from django.dispatch import Signal
+from typing_extensions import Annotated
 
-if django.VERSION > (5, 0):  # pragma: no cover
-    from .dispatcher import PatchedSignal as Signal
-else:
-    from django.dispatch import Signal  # type: ignore
-
-__all__ = ["asgi_startup", "asgi_shutdown"]
+__all__ = ["asgi_startup", "asgi_state", "asgi_shutdown"]
 
 asgi_startup: Final[Annotated[Signal, "asgi lifespan startup"]] = Signal()
+asgi_state: Final[Annotated[Signal, "asgi state registration"]] = Signal()
 asgi_shutdown: Final[Annotated[Signal, "asgi lifespan shutdown"]] = Signal()
