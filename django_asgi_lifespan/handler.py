@@ -10,7 +10,7 @@ import functools
 import logging
 from collections import ChainMap
 from contextlib import AsyncExitStack
-from typing import Final, Callable, Any
+from typing import Final, Callable, Any, List
 
 from asgiref.typing import (
     ASGIReceiveCallable,
@@ -25,6 +25,7 @@ from django.core.asgi import ASGIHandler
 
 from . import signals
 from .events import dispatch_lifespan_event, dispatch_lifespan_state_context_event
+from .types import State
 
 logger: Final = logging.getLogger("uvicorn.error")
 __all__ = ["LifespanASGIHandler"]
@@ -56,7 +57,7 @@ class LifespanASGIHandler(ASGIHandler):
     ) -> None:
         """
         If scope type is lifespan, handle lifespan request.
-        Otherwise, delegate to the superclass' call method.
+        Otherwise, delegate to the superclass call method.
 
         The base Django `ASGIHandler` can only handle http scope.
         """
@@ -100,14 +101,14 @@ class LifespanASGIHandler(ASGIHandler):
         context_managers = await dispatch_lifespan_state_context_event(
             signals.asgi_lifespan, scope
         )
-        context_states = await asyncio.gather(
+        context_states: List[State] = await asyncio.gather(
             *(
                 self.exit_stack.enter_async_context(single_context_manager())
                 for single_context_manager in context_managers
             )
         )
-
-        scope["state"].update(dict(ChainMap(*context_states)))
+        combined_states = ChainMap(*context_states)
+        scope["state"].update(combined_states)
 
         await send(LifespanStartupCompleteEvent(type="lifespan.startup.complete"))
 
