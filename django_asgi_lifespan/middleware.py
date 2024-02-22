@@ -23,6 +23,10 @@ class AsyncMiddleware:
         if iscoroutinefunction(self.get_response):
             markcoroutinefunction(self)
 
-    async def __call__(self, request: ASGIRequest) -> HttpResponseBase:
-        setattr(request, "state", request.scope["state"])
+    async def __call__(self, request: HttpRequest) -> HttpResponseBase:
+        if isinstance(request, ASGIRequest):
+            setattr(request, "state", request.scope["state"])
+        else:
+            setattr(request, "state", {})
+
         return await self.get_response(request)
