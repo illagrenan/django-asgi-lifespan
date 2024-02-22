@@ -8,10 +8,9 @@ from __future__ import annotations
 from typing import Final
 
 from django.dispatch import Signal
-from typing_extensions import Annotated
 
-__all__ = ["asgi_startup", "asgi_state", "asgi_shutdown"]
+__all__ = ["asgi_startup", "asgi_lifespan", "asgi_shutdown"]
 
-asgi_startup: Final[Annotated[Signal, "asgi lifespan startup"]] = Signal()
-asgi_state: Final[Annotated[Signal, "asgi state registration"]] = Signal()
-asgi_shutdown: Final[Annotated[Signal, "asgi lifespan shutdown"]] = Signal()
+asgi_startup: Final[Signal] = Signal()
+asgi_lifespan: Final[Signal] = Signal()
+asgi_shutdown: Final[Signal] = Signal()
