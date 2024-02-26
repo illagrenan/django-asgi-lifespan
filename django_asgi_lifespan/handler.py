@@ -27,7 +27,7 @@ from .errors import MissingScopeStateError
 from .events import dispatch_lifespan_event, dispatch_lifespan_state_context_event
 from .types import State
 
-logger: Final = logging.getLogger("uvicorn.error")
+logger: Final = logging.getLogger(__name__)
 __all__ = ["LifespanASGIHandler"]
 
 
