@@ -6,6 +6,7 @@ from __future__ import annotations
 import contextlib
 import threading
 import time
+from http import HTTPStatus
 
 import httpx
 import pytest
@@ -52,4 +53,7 @@ def server(config):
 @pytest.mark.asyncio
 async def test_uvicorn_reponds(server, execution_number):
     """A simple websocket test"""
-    assert httpx.get("http://127.0.0.1:8080/test").status_code == 200
+    assert (
+        httpx.get("http://127.0.0.1:8080/client-from-app-config").status_code
+        == HTTPStatus.OK
+    )

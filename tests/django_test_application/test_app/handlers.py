@@ -46,8 +46,11 @@ class ASGILifespanSignalHandler:
         logger.info("Lifespan->Startup. Initializing HTTPX client.")
         self.app_config.httpx_client = httpx.AsyncClient(http2=False)
 
+        return "this is return value from startup handler"
+
     async def shutdown(self, **kwargs):
         logger.info("Lifespan->Shutdown. Closing HTTPX client.")
+
 
         try:
             await asyncio.wait_for(

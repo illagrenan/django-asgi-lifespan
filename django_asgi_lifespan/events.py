@@ -10,6 +10,7 @@ from typing import Final, List, Callable, Tuple, Any
 from asgiref.typing import LifespanScope
 from django.dispatch import Signal
 
+from django_asgi_lifespan.errors import MissingScopeStateError
 from django_asgi_lifespan.types import LifespanManager
 
 logger: Final = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ async def dispatch_lifespan_event(*, signal: Signal, scope: LifespanScope) -> No
     """
     logger.debug("Dispatching signal: %s", signal)
 
+
     if callable(getattr(signal, "asend", None)):
         logger.debug("Awaiting signal using native `asend` method: %s", signal)
         await signal.asend(sender=LifespanSender, scope=scope)
@@ -33,6 +35,7 @@ async def dispatch_lifespan_event(*, signal: Signal, scope: LifespanScope) -> No
         logger.debug("Sending signal using synchronous `send` method: %s", signal)
         response = signal.send(sender=LifespanSender, scope=scope)
 
+        # Synchronous send method returns coroutine objects, that need to be awaited
         for _, response in response:
             if not response:
                 continue
@@ -55,7 +58,7 @@ async def dispatch_lifespan_state_context_event(
 
     if "state" not in scope:
         logger.warning("Missing state in scope. Cannot dispatch signal.")
-        raise NotImplementedError("Missing state in scope. Cannot dispatch signal.")
+        raise MissingScopeStateError("Missing state in scope. Cannot dispatch signal.")
 
     if signal.receivers and not callable(getattr(signal, "asend", None)):
         raise NotImplementedError("Synchronous signal dispatch is not supported.")

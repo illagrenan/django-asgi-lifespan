@@ -24,6 +24,7 @@ from asgiref.typing import (
 from django.core.asgi import ASGIHandler
 
 from . import signals
+from .errors import MissingScopeStateError
 from .events import dispatch_lifespan_event, dispatch_lifespan_state_context_event
 from .types import State
 
@@ -61,6 +62,7 @@ class LifespanASGIHandler(ASGIHandler):
 
         The base Django `ASGIHandler` can only handle http scope.
         """
+
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
         else:
@@ -80,7 +82,22 @@ class LifespanASGIHandler(ASGIHandler):
 
             match message["type"]:
                 case "lifespan.startup":
-                    await self._handle_startup_event(scope, send)
+
+                    await dispatch_lifespan_event(
+                        signal=signals.asgi_startup, scope=scope
+                    )
+
+                    try:
+                        await self._handle_startup_event(scope, send)
+                    except MissingScopeStateError:
+                        logger.warning(
+                            "Missing state in scope. Cannot dispatch signal."
+                        )
+
+                    await send(
+                        LifespanStartupCompleteEvent(type="lifespan.startup.complete")
+                    )
+
                 case "lifespan.shutdown":
                     await self._handle_shutdown_event(scope, send)
                     # The return statement is important here to break the while loop
@@ -96,11 +113,11 @@ class LifespanASGIHandler(ASGIHandler):
     async def _handle_startup_event(
         self, scope: LifespanScope, send: ASGISendCallable
     ) -> None:
-        await dispatch_lifespan_event(signal=signals.asgi_startup, scope=scope)
-
         context_managers = await dispatch_lifespan_state_context_event(
             signals.asgi_lifespan, scope
         )
+
+        # noinspection PyTypeChecker
         context_states: List[State] = await asyncio.gather(
             *(
                 self.exit_stack.enter_async_context(single_context_manager())
@@ -109,8 +126,6 @@ class LifespanASGIHandler(ASGIHandler):
         )
         combined_states = ChainMap(*context_states)
         scope["state"].update(combined_states)
-
-        await send(LifespanStartupCompleteEvent(type="lifespan.startup.complete"))
 
     async def _handle_shutdown_event(
         self, scope: LifespanScope, send: ASGISendCallable

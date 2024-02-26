@@ -45,19 +45,19 @@ Ready to contribute? Here's how to set up `django-asgi-lifespan` for local devel
 
     We recommend installing Task (<https://taskfile.dev/>) for easy launching of development tasks.
 
-# Formatting and linting
+## Formatting and linting
 
 ```
 $ poetry task format
 ```
 
-# Tests
+## Tests
 
 ```
 $ poetry task test
 ```
 
-# Run a Django test project locally
+## Run a Django test project locally
 
 The tests include a Django test project for integration testing. You can also run this test project locally (like any other Django project), sometimes it's useful to observe how a real application behaves.
 
@@ -65,4 +65,15 @@ The tests include a Django test project for integration testing. You can also ru
 $ cd ./tests/
 $ poetry run uvicorn django_test_application.asgi:application --log-level=debug --reload
 $ curl -v http://127.0.0.1:8000/test
+
+## Test ASGI servers
+
 ```
+$ cd ./tests/
+$ poetry run uvicorn django_test_application.asgi:application --log-level=debug --reload
+$ poetry run hypercorn django_test_application.asgi:application --log-level debug --reload
+$ poetry run daphne django_test_application.asgi:application
+$ poetry run granian --interface asgi django_test_application.asgi:application
+$ poetry run gunicorn django_test_application.asgi:application -k uvicorn.workers.UvicornWorker --log-level debug --reload
+```
+

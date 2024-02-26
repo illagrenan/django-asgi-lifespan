@@ -15,23 +15,13 @@ from django.utils import timezone
 logger: Final = logging.getLogger(__name__)
 
 
-async def my_library_view(request) -> HttpResponse:
-    # Access state:
-    assert request.state
-    assert request.state["httpx_client_from_user"]
-    assert isinstance(request.state["httpx_client_from_user"], httpx.AsyncClient)
-    assert not request.state[
-        "httpx_client_from_user"
-    ].is_closed, "HTTPX Client is closed"
-    # ---------
-
-    # Access app config:
+async def app_config_view(*_) -> HttpResponse:
     httpx_client: httpx.AsyncClient = apps.get_app_config("test_app").httpx_client
-    # ---------
+    assert isinstance(httpx_client, httpx.AsyncClient)
 
     if httpx_client.is_closed:
         return HttpResponse(
-            "HTTPX Client is closed",
+            "HTTPX Client from app config is closed",
             status=HTTPStatus.INTERNAL_SERVER_ERROR,
             content_type="text/plain",
         )
@@ -40,7 +30,31 @@ async def my_library_view(request) -> HttpResponse:
         await httpx_client.head("https://www.example.com/")
 
         return HttpResponse(
-            f"OK ✅ ({timezone.now()})",
+            f"OK app config ✅ ({timezone.now()})",
+            status=HTTPStatus.OK,
+            content_type="text/plain; charset=utf-8",
+        )
+
+
+async def scope_state_view(request) -> HttpResponse:
+    assert request.state
+    assert request.state["httpx_client_from_user"]
+    assert isinstance(request.state["httpx_client_from_user"], httpx.AsyncClient)
+
+    httpx_client = request.state["httpx_client_from_user"]
+
+    if httpx_client.is_closed:
+        return HttpResponse(
+            "HTTPX Client from state is closed",
+            status=HTTPStatus.INTERNAL_SERVER_ERROR,
+            content_type="text/plain",
+        )
+    else:
+        assert not httpx_client.is_closed, "HTTPX Client is closed"
+        await httpx_client.head("https://www.example.com/")
+
+        return HttpResponse(
+            f"OK state ✅ ({timezone.now()})",
             status=HTTPStatus.OK,
             content_type="text/plain; charset=utf-8",
         )
