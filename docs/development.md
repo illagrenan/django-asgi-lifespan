@@ -65,6 +65,7 @@ The tests include a Django test project for integration testing. You can also ru
 $ cd ./tests/
 $ poetry run uvicorn django_test_application.asgi:application --log-level=debug --reload
 $ curl -v http://127.0.0.1:8000/test
+```
 
 ## Test ASGI servers
 
