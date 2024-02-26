@@ -86,6 +86,9 @@ class LifespanASGIHandler(ASGIHandler):
 
                 case "lifespan.shutdown":
                     await self._handle_shutdown_event(scope, send)
+                    await send(
+                        LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
+                    )
                     # The return statement is important here to break the while loop
                     # and prevent the function from processing any further messages
                     # after the shutdown event.
@@ -118,4 +121,3 @@ class LifespanASGIHandler(ASGIHandler):
     ) -> None:
         await dispatch_lifespan_event(signal=signals.asgi_shutdown, scope=scope)
         await self.exit_stack.aclose()
-        await send(LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete"))
