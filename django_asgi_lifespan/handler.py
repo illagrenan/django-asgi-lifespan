@@ -6,11 +6,10 @@
 from __future__ import annotations
 
 import asyncio
-import functools
 import logging
 from collections import ChainMap
 from contextlib import AsyncExitStack
-from typing import Final, Callable, Any, List
+from typing import Final, List
 
 from asgiref.typing import (
     ASGIReceiveCallable,
@@ -30,18 +29,6 @@ from .types import State
 
 logger: Final = logging.getLogger("uvicorn.error")
 __all__ = ["LifespanASGIHandler"]
-
-
-def exception_logger_decorator(func: Callable[..., Any]) -> Callable[..., Any]:
-    @functools.wraps(func)
-    async def wrapper(*args: Any, **kwargs: Any) -> Any:
-        try:
-            return await func(*args, **kwargs)
-        except Exception:
-            logger.debug("Some error", exc_info=True)
-            raise
-
-    return wrapper
 
 
 class LifespanASGIHandler(ASGIHandler):
@@ -68,7 +55,6 @@ class LifespanASGIHandler(ASGIHandler):
         else:
             await super().__call__(scope, receive, send)
 
-    @exception_logger_decorator
     async def _handle_lifespan(
         self,
         scope: LifespanScope,
