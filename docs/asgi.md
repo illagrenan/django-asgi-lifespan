@@ -18,6 +18,13 @@ If you want to serve your project with async support, you need an ASGI server. T
 
 [^1]: Please note that gunicorn does not support Windows (<https://github.com/benoitc/gunicorn/issues/524>).
 
+## Uvicorn :material-star:
+
+Uvicorn is the most tested ASGI server by the author of this plugin. The author uses uvicorn for development, testing and production. In production it is perfectly fine to use uvicorn without gunicorn, see:
+
+* <https://stackoverflow.com/questions/66362199/what-is-the-difference-between-uvicorn-and-gunicornuvicorn/71546833>
+* <https://github.com/encode/uvicorn/issues/303>
+
 ## Hypercorn
 
 Hypercorn supports lifespan protocol. It does not support _lifespan scope state_, see these PRs:

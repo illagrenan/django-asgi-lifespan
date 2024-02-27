@@ -14,7 +14,6 @@ nav:
   - Installation: installation.md
   - Usage: usage.md
   - ASGI servers compatibility: asgi.md
-  - Limitations: limitations.md
   - Development: development.md
   - Reference: reference.md
   - Contributing: contributing.md

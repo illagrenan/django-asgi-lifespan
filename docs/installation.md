@@ -1,23 +1,11 @@
 # Installation
 
-!!! info "Supported Python and Django versions"
-
-    This package supports only Django release series 4.0+ and Python 3.10. If you need to support an older version in your project, please contact me or [open a pull request](https://github.com/illagrenan/django-asgi-lifespan/pulls).
-
-## Stable release
-
-!!! danger "Important warning"
-
-    This is an experimental package and a hobby project. Although I use this package in my production projects without any problems, it does not mean that everything will work with your project.
-
-    Please read [other limitations](limitations.md) – especially those related to the deployment.
-
-
-To install Django ASGI Lifespan, run this command in your
-terminal:
+To install Django ASGI Lifespan, run this command in your terminal:
 
 ``` console
 $ pip install --upgrade django-asgi-lifespan
+# or
+$ poetry add django-asgi-lifespan@latest
 ```
 
 **Do not** add `django-asgi-lifespan` to `INSTALLED_APPS`.
