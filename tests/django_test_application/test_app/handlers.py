@@ -51,7 +51,6 @@ class ASGILifespanSignalHandler:
     async def shutdown(self, **kwargs):
         logger.info("Lifespan->Shutdown. Closing HTTPX client.")
 
-
         try:
             await asyncio.wait_for(
                 asyncio.create_task(self.app_config.httpx_client.aclose()), timeout=5.0
