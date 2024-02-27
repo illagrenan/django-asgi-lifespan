@@ -15,7 +15,7 @@ logger: Final = logging.getLogger(__name__)
 class LifespanContextManagerSignalWrapper:
     context_manager: LifespanManager
 
-    def receiver(self, **_) -> LifespanManager:
+    async def receiver(self, **_) -> LifespanManager:
         return self.context_manager
 
 
