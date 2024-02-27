@@ -5,11 +5,8 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
-from collections import ChainMap
-from contextlib import AsyncExitStack
-from typing import Final, List
+from typing import Final
 
 from asgiref.typing import (
     ASGIReceiveCallable,
@@ -17,15 +14,14 @@ from asgiref.typing import (
     ASGISendCallable,
     LifespanScope,
     LifespanShutdownCompleteEvent,
+    LifespanShutdownFailedEvent,
     LifespanStartupCompleteEvent,
     Scope,
+    LifespanStartupFailedEvent,
 )
 from django.core.asgi import ASGIHandler
 
-from . import signals
-from .errors import MissingScopeStateError
-from .events import dispatch_lifespan_event, dispatch_lifespan_state_context_event
-from .types import State
+from .dispatcher import LifespanEventDispatcher
 
 logger: Final = logging.getLogger(__name__)
 __all__ = ["LifespanASGIHandler"]
@@ -34,11 +30,11 @@ __all__ = ["LifespanASGIHandler"]
 class LifespanASGIHandler(ASGIHandler):
     """A subclass of ASGIHandler that supports the ASGI Lifespan protocol."""
 
-    exit_stack: AsyncExitStack
+    _lifespan_event_dispatcher: LifespanEventDispatcher
 
     def __init__(self):
         super().__init__()
-        self.exit_stack = AsyncExitStack()
+        self._lifespan_event_dispatcher = LifespanEventDispatcher()
 
     async def __call__(
         self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
@@ -69,55 +65,46 @@ class LifespanASGIHandler(ASGIHandler):
             match message["type"]:
                 case "lifespan.startup":
 
-                    await dispatch_lifespan_event(
-                        signal=signals.asgi_startup, scope=scope
-                    )
-
                     try:
-                        await self._handle_startup_event(scope, send)
-                    except MissingScopeStateError:
-                        logger.warning(
-                            "Missing state in scope. Cannot dispatch signal."
+                        await self._lifespan_event_dispatcher.startup(scope)
+                    except Exception as exc:
+                        await send(
+                            LifespanStartupFailedEvent(
+                                type="lifespan.startup.failed", message=str(exc)
+                            )
+                        )
+                        raise
+                    else:
+                        await send(
+                            LifespanStartupCompleteEvent(
+                                type="lifespan.startup.complete"
+                            )
                         )
 
-                    await send(
-                        LifespanStartupCompleteEvent(type="lifespan.startup.complete")
-                    )
-
                 case "lifespan.shutdown":
-                    await self._handle_shutdown_event(scope, send)
-                    await send(
-                        LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
-                    )
-                    # The return statement is important here to break the while loop
-                    # and prevent the function from processing any further messages
-                    # after the shutdown event.
-                    # Ref.: https://asgi.readthedocs.io/en/latest/specs/lifespan.html
-                    return
+                    try:
+                        await self._lifespan_event_dispatcher.shutdown(scope)
+                    except Exception as exc:
+                        await send(
+                            LifespanShutdownFailedEvent(
+                                type="lifespan.shutdown.failed", message=str(exc)
+                            )
+                        )
+                        raise
+                    else:
+                        await send(
+                            LifespanShutdownCompleteEvent(
+                                type="lifespan.shutdown.complete"
+                            )
+                        )
+                        # The return statement is important here to break the while loop
+                        # and prevent the function from processing any further messages
+                        # after the shutdown event.
+                        # Ref.:
+                        # https://asgi.readthedocs.io/en/latest/specs/lifespan.html
+                        return
+
                 case _:
                     raise ValueError(
                         f"Unknown lifespan message type: {message['type']}"
                     )
-
-    async def _handle_startup_event(
-        self, scope: LifespanScope, send: ASGISendCallable
-    ) -> None:
-        context_managers = await dispatch_lifespan_state_context_event(
-            signals.asgi_lifespan, scope
-        )
-
-        # noinspection PyTypeChecker
-        context_states: List[State] = await asyncio.gather(
-            *(
-                self.exit_stack.enter_async_context(single_context_manager())
-                for single_context_manager in context_managers
-            )
-        )
-        combined_states = ChainMap(*context_states)
-        scope["state"].update(combined_states)
-
-    async def _handle_shutdown_event(
-        self, scope: LifespanScope, send: ASGISendCallable
-    ) -> None:
-        await dispatch_lifespan_event(signal=signals.asgi_shutdown, scope=scope)
-        await self.exit_stack.aclose()

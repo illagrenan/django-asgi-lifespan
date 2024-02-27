@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # ! python3
+
 from __future__ import annotations
 
 import inspect
@@ -21,12 +22,11 @@ class LifespanSender:
     pass
 
 
-async def dispatch_lifespan_event(*, signal: Signal, scope: LifespanScope) -> None:
+async def send_lifespan_signal_compat(*, signal: Signal, scope: LifespanScope) -> None:
     """
     Dispatches the given signal.
     """
     logger.debug("Dispatching signal: %s", signal)
-
 
     if callable(getattr(signal, "asend", None)):
         logger.debug("Awaiting signal using native `asend` method: %s", signal)
@@ -48,7 +48,7 @@ async def dispatch_lifespan_event(*, signal: Signal, scope: LifespanScope) -> No
     logger.debug("Signal: %s dispatched", signal)
 
 
-async def dispatch_lifespan_state_context_event(
+async def send_lifespan_signal_collecting_contexts(
     signal: Signal, scope: LifespanScope
 ) -> List[Callable[[], LifespanManager]]:
     """
