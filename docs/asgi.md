@@ -1,5 +1,4 @@
-If you want to serve your project with async support, you need an ASGI server. The following table gives an overview of commonly used ASGI servers and their compatibility with this project.
-
+To provide asynchronous support for the project, an ASGI server is necessary. The table below presents a summary of popular ASGI servers and their compatibility with this project.
 
 !!! tip "ASGI compatibility"
 
@@ -9,10 +8,10 @@ If you want to serve your project with async support, you need an ASGI server. T
 
 | ASGI server                                                                                        | Lifespan support                | Lifespan scope state support             |
 |----------------------------------------------------------------------------------------------------|---------------------------------|------------------------------------------|
-| [Uvicorn](https://github.com/encode/uvicorn)                                                       | :fontawesome-solid-check: OK    | :fontawesome-solid-check: OK             |
-| [gunicorn with UvicornWorker](https://www.uvicorn.org/deployment/#gunicorn)[^1]                    | :fontawesome-solid-check: OK    | :fontawesome-solid-check: OK             |
-| [Granian](https://github.com/emmett-framework/granian)                                             | :fontawesome-solid-check: OK    | :fontawesome-solid-check: OK             |
-| [Hypercorn](https://github.com/pgjones/hypercorn)                                                  | :fontawesome-solid-check: OK    | :fontawesome-solid-xmark: Not compatible |
+| [Uvicorn](https://github.com/encode/uvicorn)                                                       | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
+| [gunicorn with UvicornWorker](https://www.uvicorn.org/deployment/#gunicorn)[^1]                    | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
+| [Granian](https://github.com/emmett-framework/granian)                                             | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
+| [Hypercorn](https://github.com/pgjones/hypercorn)                                                  | :fontawesome-solid-check: Yes   | :fontawesome-solid-xmark: Not compatible |
 | [Daphne](https://github.com/django/daphne)                                                         | :material-alert: Not compatible | _not relevant_                           |
 | [Django runserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#django-admin-runserver) | :material-alert: Not compatible | _not relevant_                           |
 

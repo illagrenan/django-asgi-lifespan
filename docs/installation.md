@@ -1,44 +1,42 @@
-# Installation
+# Using package manager
 
-To install Django ASGI Lifespan, run this command in your terminal:
+To install Django ASGI Lifespan, run following command in your terminal:
 
-``` console
-$ pip install --upgrade django-asgi-lifespan
-# or
-$ poetry add django-asgi-lifespan@latest
-```
+=== ":simple-poetry: Poetry" 
+
+    ```console linenums="0"
+    $ poetry add django-asgi-lifespan@latest
+    ```
+
+=== ":simple-python: pip"
+
+    ```console linenums="0"
+    $ pip install --upgrade django-asgi-lifespan
+    ```
 
 **Do not** add `django-asgi-lifespan` to `INSTALLED_APPS`.
 
-This is the preferred method to install Django ASGI Lifespan, as it will always install the most recent stable release.
+This is the preferred method to install this package, as it will always install the most recent stable release.
 
-If you don't have [pip][] installed, this [Python installation guide][]
-can guide you through the process.
-
-## From source
+# From source
 
 The source for Django ASGI Lifespan can be downloaded from
-the [Github repo][].
+the [Github repo](https://github.com/illagrenan/django-asgi-lifespan).
 
 You can either clone the public repository:
 
-``` console
+``` console linenums="0"
 $ git clone git://github.com/illagrenan/django-asgi-lifespan
 ```
 
-Or download the [tarball][]:
+Or download the [tarball](https://github.com/illagrenan/django-asgi-lifespan/tarball/master):
 
-``` console
-$ curl -OJL https://github.com/illagrenan/django-asgi-lifespan/tarball/master
+``` console linenums="0"
+$ curl --proto '=https' --tlsv1.3 -fsSL -OJ https://github.com/illagrenan/django-asgi-lifespan/tarball/main
 ```
 
 Once you have a copy of the source, you can install it with:
 
-``` console
+``` console linenums="0"
 $ pip install .
 ```
-
-  [pip]: https://pip.pypa.io
-  [Python installation guide]: http://docs.python-guide.org/en/latest/starting/installation/
-  [Github repo]: https://github.com/illagrenan/django-asgi-lifespan
-  [tarball]: https://github.com/illagrenan/django-asgi-lifespan/tarball/master
