@@ -15,16 +15,18 @@
 
 ## Main features
 
-* This package contains a subclass of the standard Django `ASGIHandler` that can
-  handle [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html). (Note: there is no change in handling HTTP requests.)
+``` py hl_lines="4"  linenums="1"
+async def example_view(request) -> HttpResponse:
+    # The client is intanciated just once when the application starts,
+    # and closed when the server shuts down
+    httpx_client: httpx.AsyncClient = request.state["httpx_client"]
+```
+
+* The package includes a Django `ASGIHandler` subclass that handles the [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html) without affecting HTTP request handling.
 * [Startup](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event)
   and [Shutdown](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event) Lifespan events are
   converted to [Django signals](https://docs.djangoproject.com/en/4.0/topics/signals/).
-* Signal **receivers can be awaited**. This way it is possible for example to
-  create [aiohttp ClientSession](https://docs.aiohttp.org/en/stable/client_reference.html)
-  /[httpx client](https://www.python-httpx.org/async/) when the application starts and close these resources safely when
-  the application shuts down. This concept is similar to events in
-  FastAPI (<https://fastapi.tiangolo.com/advanced/events/>).
+* The package allows for awaiting on signal receivers. This means you can set up things like an [aiohttp `ClientSession`](https://docs.aiohttp.org/en/stable/client_reference.html) or an [HTTPX `AsyncClient`](https://www.python-httpx.org/async/) when your app starts, and close them properly when your app ends. This concept is similar to [events in FastAPI](https://fastapi.tiangolo.com/advanced/events/).
 
 ## Quickstart for Django `^5.0.3`
 
@@ -53,7 +55,9 @@
         if scope["type"] in {"http", "lifespan"}:
             await django_application(scope, receive, send)
         else:
-            raise NotImplementedError(f"Unknown scope type {scope['type']}")
+            raise NotImplementedError(
+                f"Unknown scope type {scope['type']}"
+            ) 
     ```
 
 3. Add state middleware:
@@ -65,7 +69,7 @@
         # ...
     ]
     ```
-4. Register async context manager:
+4. Register [async context manager](https://docs.python.org/3/reference/datamodel.html#async-context-managers):
 
     ``` py hl_lines="8-17" title="context.py" 
     from contextlib import asynccontextmanager
