@@ -27,12 +27,15 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.10.0 || ^3.11.0 || ^3.12.0"
-Django = "^4 || ^5"
+python = "^3.10 || ^3.11 || ^3.12"
+#Django = "^4.2 || ^5.0.3"
+Django = { git = "https://github.com/django/django.git", branch = "main" }
+asgiref = "^3"
+pyright = "^1.1.352"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 # Formatting & Linting
-black = "^24.1.1"
+black = "==24.2.0"
 isort = "^5.13.2"
 flake8 = "^7.0.0"
 flake8-rst-docstrings = "^0.3.0"
@@ -43,9 +46,9 @@ twine = "^4.0.2"
 bump2version = "^1.0.1"
 
 # Tests
-pytest = "^7.4,<8"
+pytest = "^8.0.2"
 pytest-cov = "^4.1.0"
-pytest-asyncio = "==0.21.1"
+pytest-asyncio = "==0.23.5"
 httpx = "^0.26.0"
 uvicorn = { version = "==0.21.1", extras = ["standard"] }
 pytest-django = "^4.8.0"
@@ -61,11 +64,13 @@ mkdocs-autorefs = "^0.5.0"
 # Misc
 ipython = "^8.21.0"
 ipdb = "^0.13.13"
+mkdocs-glightbox = "^0.3.7"
 
 [tool.poetry.group.tests.dependencies]
 daphne = "^4.1.0"
 hypercorn = "^0.16.0"
 granian = "^1.1.0"
+gunicorn = { version = "^21.2.0", platform = "linux" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -87,7 +92,7 @@ log_cli = true
 log_cli_level = "DEBUG"
 log_cli_format = '%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)'
 log_cli_date_format = "%Y-%m-%d %H:%M:%S"
-asyncio_mode = "strict"
+asyncio_mode = "auto"
 testpaths = [
     "./tests/"
 ]

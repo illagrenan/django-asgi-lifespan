@@ -13,7 +13,10 @@ from asgiref.typing import LifespanScope
 
 from django_asgi_lifespan import signals
 from django_asgi_lifespan.errors import MissingScopeStateError
-from django_asgi_lifespan.events import send_lifespan_signal_collecting_contexts, send_lifespan_signal_compat
+from django_asgi_lifespan.events import (
+    send_lifespan_signal_collecting_contexts,
+    send_lifespan_signal_compat,
+)
 from django_asgi_lifespan.types import State
 
 logger: Final = logging.getLogger(__name__)
