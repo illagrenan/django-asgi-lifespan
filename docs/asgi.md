@@ -6,14 +6,15 @@ To provide asynchronous support for the project, an ASGI server is necessary. Th
 
     The same should be valid for other ASGI servers not listed here. If you run into any problems, [please file a Github issue](https://github.com/illagrenan/django-asgi-lifespan/issues/new).
 
-| ASGI server                                                                                        | Lifespan support                | Lifespan scope state support             |
-|----------------------------------------------------------------------------------------------------|---------------------------------|------------------------------------------|
-| [Uvicorn](https://github.com/encode/uvicorn)                                                       | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
-| [gunicorn with UvicornWorker](https://www.uvicorn.org/deployment/#gunicorn)[^1]                    | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
-| [Granian](https://github.com/emmett-framework/granian)                                             | :fontawesome-solid-check: Yes   | :fontawesome-solid-check: Yes            |
-| [Hypercorn](https://github.com/pgjones/hypercorn)                                                  | :fontawesome-solid-check: Yes   | :fontawesome-solid-xmark: Not compatible |
-| [Daphne](https://github.com/django/daphne)                                                         | :material-alert: Not compatible | _not relevant_                           |
-| [Django runserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#django-admin-runserver) | :material-alert: Not compatible | _not relevant_                           |
+| ASGI server                                                                                        | Lifespan support                            | Lifespan scope state support             |
+|----------------------------------------------------------------------------------------------------|---------------------------------------------|------------------------------------------|
+| [Uvicorn](https://github.com/encode/uvicorn)                                                       | :fontawesome-solid-check: Yes               | :fontawesome-solid-check: Yes            |
+| [gunicorn with UvicornWorker](https://www.uvicorn.org/deployment/#gunicorn)[^1]                    | :fontawesome-solid-check: Yes               | :fontawesome-solid-check: Yes            |
+| [Granian](https://github.com/emmett-framework/granian)                                             | :fontawesome-solid-check: Yes               | :fontawesome-solid-check: Yes            |
+| [Hypercorn](https://github.com/pgjones/hypercorn)                                                  | :fontawesome-solid-check: Yes               | :fontawesome-solid-xmark: Not compatible |
+| [Daphne](https://github.com/django/daphne)                                                         | :material-alert: Not compatible             | _not relevant_                           |
+| [Django runserver](https://docs.djangoproject.com/en/dev/ref/django-admin/#django-admin-runserver) | :material-alert: Not compatible             | _not relevant_                           |
+| [NGINX Unit](https://github.com/nginx/unit)       | :fontawesome-solid-question: Not yet tested | :fontawesome-solid-question: Not yet tested                           |
 
 [^1]: Please note that gunicorn does not support Windows (<https://github.com/benoitc/gunicorn/issues/524>).
 

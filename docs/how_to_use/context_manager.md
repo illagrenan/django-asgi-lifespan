@@ -1,10 +1,17 @@
 !!! warning "Supported Django versions"
 
-    This feature requires Django version `^5.0.3`.  On older versions, you must use [the signals directly](signals.md).
+    This feature requires Django version `^5.0.3` (due to [this bug](https://code.djangoproject.com/ticket/35174) versions `>=5.0.0, <5.0.3` are not supported). Django&nbsp;`^4.2` does not support async signal dispatch, support for this was [added in Django 5](https://docs.djangoproject.com/en/5.0/releases/5.0/#signals). On older versions, you must use [the signals directly](signals.md).
 
 ## How does it work
 
+<figure markdown>
+  ![Sequence diagram simplified](./../images/sequence.simple.light.svg#only-light){ loading=lazy }
+  ![Sequence diagram simplified](./../images/sequence.simple.light.svg#only-dark){ loading=lazy }
+  <figcaption>Simplified sequence diagram. <a href="#sequence-diagram">See the full version of the diagram</a>.</figcaption>
+</figure>
+
 When you execute the Django project using the ASGI server (like uvicorn), it sends lifespan events at its startup. These lifespan events are ignored by the standard Django ASGI handler. The lifespan events include the lifespan scope state, which is a Python dictionary that is preserved by the ASGI server and allowed to be modified by the developer. Hence, it's a suitable location for storing global application states or shared objects. For instance, one could create a shared HTTPX async client to implement connection pooling.
+
 
 ## Accessing the shared state
 
@@ -41,3 +48,11 @@ After the above steps, you can access the shared state in the views.
 ``` py hl_lines="8" title="views.py"
 --8<-- "example/managers_view.py"
 ```
+
+## Sequence diagram
+
+<figure markdown>
+  ![Sequence diagram](./../images/sequence.full.light.svg#only-light){ loading=lazy }
+  ![Sequence diagram](./../images/sequence.full.light.svg#only-dark){ loading=lazy }
+  <figcaption>Sequence diagram. Please note that the error handling (<code>lifespan.startup.failed</code>, <code>lifespan.shutdown.failed</code>) is not documented in the diagram.</figcaption>
+</figure>

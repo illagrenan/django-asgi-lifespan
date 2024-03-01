@@ -13,8 +13,8 @@ nav:
   - index.md
   - installation.md
   - How to use:
-      - how_to_use/context_manager.md
-      - how_to_use/signals.md
+      - State manager (preferred): how_to_use/context_manager.md
+      - Lifespan signals (legacy): how_to_use/signals.md
       - ASGI servers compatibility: asgi.md
   - Development:
       - development.md
@@ -26,9 +26,26 @@ theme:
   name: material
   language: en
   palette:
-    scheme: preference
-    primary: indigo
-    accent: indigo
+
+    # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
   icon:
     repo: fontawesome/brands/github
   features:
@@ -70,6 +87,7 @@ markdown_extensions:
       alternate_style: true
 plugins:
   - include-markdown
+  - glightbox
   - search:
       lang: en
   - mkdocstrings:
