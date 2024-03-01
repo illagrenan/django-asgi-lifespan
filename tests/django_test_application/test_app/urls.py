@@ -7,7 +7,7 @@ from typing import Final
 
 from django.urls import path
 
-from .views import scope_state_view, app_config_view
+from .views import app_config_view, scope_state_view
 
 app_name: Final = "test_app"
 urlpatterns: Final = [

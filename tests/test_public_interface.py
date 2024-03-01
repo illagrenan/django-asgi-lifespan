@@ -9,7 +9,7 @@ from django.core.handlers.asgi import ASGIHandler
 from django.dispatch import Signal
 
 from django_asgi_lifespan.asgi import get_asgi_application
-from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup, asgi_lifespan
+from django_asgi_lifespan.signals import asgi_lifespan, asgi_shutdown, asgi_startup
 
 
 def test_custom_get_asgi_application_returns_asgi_handler():

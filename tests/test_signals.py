@@ -9,7 +9,6 @@ import pytest
 from asgiref.testing import ApplicationCommunicator
 
 from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
-from tests.conftest import application
 
 
 @pytest.mark.asyncio

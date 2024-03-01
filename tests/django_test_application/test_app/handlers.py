@@ -6,7 +6,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from contextlib import asynccontextmanager
-from typing import Final, Any, Dict
+from typing import Final
 
 import httpx
 from django.apps import AppConfig
@@ -15,7 +15,7 @@ logger: Final = logging.getLogger(__name__)
 
 
 @asynccontextmanager
-async def httpx_lifespan_manager() -> Dict[str, Any]:
+async def httpx_lifespan_manager():
     logger.info("Lifespan: Initializing HTTPX client.")
     state = {"httpx_client_from_user": httpx.AsyncClient(http2=False)}
 
@@ -33,7 +33,7 @@ async def httpx_lifespan_manager() -> Dict[str, Any]:
 
 
 @asynccontextmanager
-async def dummy_lifespan_manager() -> Dict[str, Any]:
+async def dummy_lifespan_manager():
     state = {"correct_number": 42}
     yield state
 

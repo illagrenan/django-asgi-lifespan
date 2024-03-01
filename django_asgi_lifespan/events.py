@@ -6,7 +6,7 @@ from __future__ import annotations
 import inspect
 import logging
 from dataclasses import dataclass
-from typing import Final, List, Callable, Tuple, Any
+from typing import Any, Callable, Final, List, Tuple
 
 from asgiref.typing import LifespanScope
 from django.dispatch import Signal

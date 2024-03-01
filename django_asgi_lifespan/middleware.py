@@ -2,7 +2,7 @@
 # ! python3
 
 import logging
-from typing import Final, Callable, Awaitable
+from typing import Awaitable, Callable, Final
 
 from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 from django.core.handlers.asgi import ASGIRequest

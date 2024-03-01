@@ -14,7 +14,7 @@ ROOT_URLCONF = "tests.django_test_application.urls"
 SECRET_KEY = "se3ret"
 MIDDLEWARE = [
     # ...
-    'django_asgi_lifespan.middleware.AsyncMiddleware',
+    "django_asgi_lifespan.middleware.AsyncMiddleware",
     # ...
 ]
 LOGGING = {

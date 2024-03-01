@@ -16,8 +16,8 @@ from asgiref.typing import (
     LifespanShutdownCompleteEvent,
     LifespanShutdownFailedEvent,
     LifespanStartupCompleteEvent,
-    Scope,
     LifespanStartupFailedEvent,
+    Scope,
 )
 from django.core.asgi import ASGIHandler
 
