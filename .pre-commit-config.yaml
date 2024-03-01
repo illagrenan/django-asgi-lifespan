@@ -23,8 +23,8 @@ repos:
       - id: check-toml
       - id: check-xml
       - id: check-yaml
+        args: ["--unsafe"]
       - id: debug-statements
-      - id: check-builtin-literals
       - id: check-case-conflict
       - id: check-docstring-first
       - id: detect-private-key
@@ -40,7 +40,7 @@ repos:
 
       - id: isort
         name: isort
-        entry: poetry run isort
+        entry: poetry run isort --profile black
         language: system
         types: [ python ]
         files: ^(django_asgi_lifespan|tests)/

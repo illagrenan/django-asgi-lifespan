@@ -127,6 +127,3 @@ tasks:
       - pip install --no-cache-dir --no-index --find-links=file:./dist {{.PROJECT_NAME}}
       - pip uninstall {{.PROJECT_NAME}} --yes
     silent: false
-
-
-

@@ -2,7 +2,7 @@ Contributions are welcome, and they are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
 You can contribute in many ways:
- 
+
 1. Report bugs at <https://github.com/illagrenan/django-asgi-lifespan/issues>.
 2. Fix bugs.
 3. Implement Features.

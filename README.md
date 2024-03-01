@@ -36,9 +36,9 @@ async def example_view(request) -> HttpResponse:
     ```console linenums="0"
     $ poetry add django-asgi-lifespan@latest
     ```
-   
+
     _or_
-   
+
     ```console linenums="0"
     $ pip install --upgrade django-asgi-lifespan
     ```
@@ -47,17 +47,17 @@ async def example_view(request) -> HttpResponse:
 
     ``` py title="asgi.py"
     from django_asgi_lifespan.asgi import get_asgi_application
-    
+
     django_application = get_asgi_application()
-    
-    
+
+
     async def application(scope, receive, send):
         if scope["type"] in {"http", "lifespan"}:
             await django_application(scope, receive, send)
         else:
             raise NotImplementedError(
                 f"Unknown scope type {scope['type']}"
-            ) 
+            )
     ```
 
 3. Add state middleware:
@@ -71,57 +71,57 @@ async def example_view(request) -> HttpResponse:
     ```
 4. Register [async context manager](https://docs.python.org/3/reference/datamodel.html#async-context-managers):
 
-    ``` py hl_lines="8-17" title="context.py" 
+    ``` py hl_lines="8-17" title="context.py"
     from contextlib import asynccontextmanager
-    
+
     import httpx
-    
+
     from django_asgi_lifespan.types import State
-    
-    
+
+
     @asynccontextmanager
     async def httpx_lifespan_manager() -> State:
         state = {
             "httpx_client": httpx.AsyncClient()
         }
-    
+
         try:
             yield state
         finally:
             await state["httpx_client"].aclose()
     ```
 
-    ``` py hl_lines="12-14" title="apps.py" 
+    ``` py hl_lines="12-14" title="apps.py"
     from django.apps import AppConfig
-    
+
     from django_asgi_lifespan.register import register_lifespan_manager
     from .context import (
         httpx_lifespan_manager,
     )
-    
-    
+
+
     class ExampleAppConfig(AppConfig):
-    
+
         def ready(self):
             register_lifespan_manager(
                 context_manager=httpx_lifespan_manager
-            ) 
+            )
     ```
 
 5. Use some resource (in this case the HTTPX client) in views.
 
-    ``` py hl_lines="8" title="views.py" 
+    ``` py hl_lines="8" title="views.py"
     from http import HTTPStatus
-    
+
     import httpx
     from django.http import HttpResponse
-    
-    
+
+
     async def example_view(request) -> HttpResponse:
         httpx_client: httpx.AsyncClient = request.state["httpx_client"]
-    
+
         await httpx_client.head("https://www.example.com/")
-    
+
         return HttpResponse(
             "OK",
             status=HTTPStatus.OK,
