@@ -11,11 +11,7 @@ from django_asgi_lifespan.register import register_lifespan_manager
 from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
 from django_asgi_lifespan.types import LifespanManager
 
-from .handlers import (
-    ASGILifespanSignalHandler,
-    dummy_lifespan_manager,
-    httpx_lifespan_manager,
-)
+from .handlers import ASGILifespanSignalHandler, dummy_lifespan_manager, httpx_lifespan_manager
 
 
 class TestAppConfig(AppConfig):
