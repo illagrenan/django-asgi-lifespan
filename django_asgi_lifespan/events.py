@@ -60,7 +60,7 @@ async def send_lifespan_signal_collecting_contexts(
         logger.warning("Missing state in scope. Cannot dispatch signal.")
         raise MissingScopeStateError("Missing state in scope. Cannot dispatch signal.")
 
-    if signal.receivers and not callable(getattr(signal, "asend", None)):
+    if callable(getattr(signal, "asend", None)):
         raise NotImplementedError("Synchronous signal dispatch is not supported.")
 
     logger.debug("Awaiting signal using native `asend` method: %s", signal)

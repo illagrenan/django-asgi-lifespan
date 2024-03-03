@@ -49,6 +49,8 @@ class LifespanEventDispatcher:
             context_managers = send_collecting_task.result()
         except MissingScopeStateError:
             logger.warning("Missing state in scope.")
+        except NotImplementedError:
+            logger.warning("Async signal dispatch is not supported.")
         else:
             # noinspection PyTypeChecker
             context_states: List[State] = await asyncio.gather(
