@@ -34,10 +34,10 @@ async def send_lifespan_signal_compat(*, signal: Signal, scope: LifespanScope) -
         await signal.asend(sender=LifespanSender, scope=scope)
     else:
         logger.debug("Sending signal using synchronous `send` method: %s", signal)
-        response = signal.send(sender=LifespanSender, scope=scope)
+        responses = signal.send(sender=LifespanSender, scope=scope)
 
         # Synchronous send method returns coroutine objects, that need to be awaited
-        for _, response in response:
+        for _, response in responses:
             if not response:
                 continue
 
