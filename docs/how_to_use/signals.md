@@ -1,10 +1,10 @@
 !!! tip
 
-    Developers are advised to [prefer asynchronous context managers](context_manager.md). Using signals directly is fully supported, and until v0.2.0 this was the only way to use this plugin - the only downside is that it is a more low-level way to use it.
+    Developers are advised to [prefer asynchronous context managers](context_manager.md). Using signals directly is fully supported, and until `v0.2.0` this was the only way to use this plugin &mdash; the only downside is that it is a more low-level way to use it.
 
 ## Before you start
 
-This legacy approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. If you are using Django version `^5.0.3`, use the more modern approach via [context manager](context_manager.md) - the global state will be managed by the ASGI server.
+This legacy approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. Prefer the more modern approach via [context manager](context_manager.md) &mdash; the global state will be managed by the ASGI server.
 
 ## Example use case for lifespan signals
 

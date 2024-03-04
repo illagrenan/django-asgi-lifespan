@@ -1,7 +1,3 @@
-!!! warning "Supported Django versions"
-
-    This feature requires Django version `^5.0.3` (due to [this bug](https://code.djangoproject.com/ticket/35174) versions `>=5.0.0, <5.0.3` are not supported). Django&nbsp;`^4.2` does not support async signal dispatch, support for this was [added in Django 5](https://docs.djangoproject.com/en/5.0/releases/5.0/#signals). On older versions, you must use [the signals directly](signals.md).
-
 ## How does it work
 
 <figure markdown>

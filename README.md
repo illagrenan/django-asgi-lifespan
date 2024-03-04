@@ -28,9 +28,7 @@ async def example_view(request) -> HttpResponse:
   converted to [Django signals](https://docs.djangoproject.com/en/4.0/topics/signals/).
 * The package allows for awaiting on signal receivers. This means you can set up things like an [aiohttp `ClientSession`](https://docs.aiohttp.org/en/stable/client_reference.html) or an [HTTPX `AsyncClient`](https://www.python-httpx.org/async/) when your app starts, and close them properly when your app ends. This concept is similar to [events in FastAPI](https://fastapi.tiangolo.com/advanced/events/).
 
-## Quickstart for Django `^5.0.3`
-
-:material-hand-pointing-right: If you use Django `^4.2` use [signals directly](https://illagrenan.github.io/how_to_use/signals/).
+## Quickstart
 
 1. Python `^3.10 || ^3.11 || ^3.12` and Django `^4.2 || ^5.0.3` are supported. To install this package run:
     ```console linenums="0"
