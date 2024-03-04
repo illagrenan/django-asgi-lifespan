@@ -30,7 +30,6 @@ packages = [
 python = "^3.10 || ^3.11 || ^3.12"
 Django = "^4.2 || ^5.0.3"
 asgiref = "^3"
-pyright = "^1.1.352"
 
 [tool.poetry.group.dev.dependencies]
 # Formatting & Linting
@@ -41,34 +40,34 @@ flake8-rst-docstrings = "^0.3.0"
 mypy = "^1.8.0"
 
 # Releases
-twine = "^4.0.2"
+twine = "^5.0.0"
 bump2version = "^1.0.1"
 
 # Tests
-pytest = "^8.0.2"
+pytest = "^8.1.0"
 pytest-cov = "^4.1.0"
 pytest-asyncio = "==0.23.5"
-httpx = "^0.26.0"
+httpx = "^0.27.0"
 uvicorn = { version = "==0.21.1", extras = ["standard"] }
 pytest-django = "^4.8.0"
 
 # Documentation
 mkdocs = "^1.5.3"
 mkdocs-include-markdown-plugin = "^6.0.4"
-mkdocs-material = "^9.5.8"
-mkdocstrings = { extras = ["python"], version = "^0.24.0" }
+mkdocs-material = "^9.5.12"
+mkdocstrings = { extras = ["python"], version = "^0.24.1" }
 mkdocs-material-extensions = "^1.3.1"
-mkdocs-autorefs = "^0.5.0"
+mkdocs-autorefs = "^1.0.1"
 
 # Misc
-ipython = "^8.21.0"
+ipython = "^8.22.2"
 ipdb = "^0.13.13"
 mkdocs-glightbox = "^0.3.7"
 
 [tool.poetry.group.tests.dependencies]
 daphne = "^4.1.0"
 hypercorn = "^0.16.0"
-granian = "^1.1.0"
+granian = "^1.1.1"
 gunicorn = { version = "^21.2.0", platform = "linux" }
 
 [build-system]
