@@ -49,18 +49,11 @@ tasks:
       - ruff check {{.SOURCES}}
     silent: false
 
-  flake8:
-    desc: Run flake8
-    cmds:
-      - flake8 {{.SOURCES}} tests
-    silent: false
-
   lint:
     desc: Check setup
     cmds:
       - task: mypy
       - task: ruff
-      - task: flake8
       - task: isort_check
       - task: black_check
     silent: false
