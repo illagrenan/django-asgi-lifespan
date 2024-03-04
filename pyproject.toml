@@ -78,7 +78,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-minversion = "7.0"
+minversion = "8.0"
 norecursedirs = [".git", "__pycache__"]
 DJANGO_SETTINGS_MODULE = "tests.django_test_application.settings"
 addopts = "--verbose --color=yes --showlocals -r A --tb=auto -s -x"
@@ -101,7 +101,7 @@ testpaths = [
 [tool.black]
 line-length = 88
 skip-string-normalization = false
-target-version = ["py312"]
+target-version = ["py310", "py311", "py312"]
 include = '\.pyi?$'
 exclude = '''
 /(
