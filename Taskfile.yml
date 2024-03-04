@@ -43,6 +43,12 @@ tasks:
       - mypy {{.SOURCES}} tests
     silent: false
 
+  ruff:
+    desc: Run ruff
+    cmds:
+      - ruff check {{.SOURCES}} tests
+    silent: false
+
   flake8:
     desc: Check setup
     cmds:
@@ -53,6 +59,7 @@ tasks:
     desc: Check setup
     cmds:
       - task: mypy
+      - task: ruff
       - task: flake8
       - task: isort_check
       - task: black_check
