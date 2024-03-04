@@ -24,7 +24,7 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_DEFAULT_TIMEOUT=60 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_VERSION=1.7.1 \
+    POETRY_VERSION=1.8.2 \
     POETRY_CACHE_DIR="/opt/poetry/.cache"
 SHELL ["/bin/bash", "-EeuxoC", "pipefail", "-c"]
 
