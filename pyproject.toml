@@ -1,3 +1,7 @@
+[project]
+# Support Python 3.10+.
+requires-python = ">=3.10"
+
 [tool.poetry]
 name = "django-asgi-lifespan"
 version = "0.3.0"
@@ -115,6 +119,33 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle
+    "F", # Pyflakes
+    "B", # flake8-bugbear
+    "SIM", # flake8-simplify
+    "I", # isort
+    "RUF", # ruff
+    "LOG", # flake8-logging
+    "ASYNC", # flake8-async
+    "S", # flake8-bandit
+    "BLE", # flake8-blind-except
+    "A", # flake8-builtins
+    "C4", # flake8-comprehensions
+    "FA", # flake8-future-annotations
+    "ISC", # flake8-implicit-str-concat
+    "ICN", # flake8-import-conventions
+    "G", # flake8-logging-format
+    "PIE", # flake8-pie
+    "ERA", # eradicate
+    "PL", # pylint
+    "PERF", # perflint
+]
+ignore = [
+    "TRY003"
+]
 
 [tool.isort]
 multi_line_output = 3

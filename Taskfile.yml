@@ -46,11 +46,11 @@ tasks:
   ruff:
     desc: Run ruff
     cmds:
-      - ruff check {{.SOURCES}} tests
+      - ruff check {{.SOURCES}}
     silent: false
 
   flake8:
-    desc: Check setup
+    desc: Run flake8
     cmds:
       - flake8 {{.SOURCES}} tests
     silent: false
