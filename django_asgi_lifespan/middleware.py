@@ -25,8 +25,8 @@ class AsyncMiddleware:
 
     async def __call__(self, request: HttpRequest) -> HttpResponseBase:
         if isinstance(request, ASGIRequest):
-            setattr(request, "state", request.scope["state"])
+            request.state = request.scope["state"]
         else:
-            setattr(request, "state", {})
+            request.state = {}
 
         return await self.get_response(request)
