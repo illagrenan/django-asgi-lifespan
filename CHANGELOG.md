@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Lifespan async context managers are now supported (inspired by [Lifespan events in FastAPI](https://fastapi.tiangolo.com/advanced/events/#lifespan>)). Global variables are no longer necessary for the state management; objects required throughout the application lifecycle are now held in the lifespan scope state. Further details can be found in [the ASGI spec](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#scope). Previous signals (startup and shutdown) remain supported with no plans for their removal. The new, preferred method to manage state is via an async context manager.
 - All major ASGI servers have been tested, [an overview of their support is in separate page](docs/asgi.md). It&nbsp;is worth mentioning that the gunicorn+uvicorn combo is now working without problems.
+- Development: Add support for [pre-commit](https://pre-commit.com/).
 
 ### Changed
 
