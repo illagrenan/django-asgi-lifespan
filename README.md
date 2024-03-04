@@ -11,7 +11,7 @@
 
 * Documentation: <https://illagrenan.github.io/django-asgi-lifespan>
 * PyPI: <https://pypi.org/project/django-asgi-lifespan/>
-* License: MIT
+* License: [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Main features
 
