@@ -28,8 +28,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10 || ^3.11 || ^3.12"
-#Django = "^4.2 || ^5.0.3"
-Django = { git = "https://github.com/django/django.git", branch = "main" }
+Django = "^4.2 || ^5.0.3"
 asgiref = "^3"
 pyright = "^1.1.352"
 
