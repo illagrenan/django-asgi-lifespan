@@ -5,8 +5,6 @@ import logging
 from dataclasses import dataclass
 from typing import Final
 
-import django
-
 from django_asgi_lifespan.signals import asgi_lifespan
 from django_asgi_lifespan.types import LifespanManager
 
