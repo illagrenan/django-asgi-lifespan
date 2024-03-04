@@ -38,6 +38,7 @@ isort = "^5.13.2"
 flake8 = "^7.0.0"
 flake8-rst-docstrings = "^0.3.0"
 mypy = "^1.8.0"
+ruff = "^0.3.0"
 
 # Releases
 twine = "^5.0.0"
