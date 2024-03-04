@@ -62,7 +62,7 @@ async def send_lifespan_signal_collecting_contexts(
         raise MissingScopeStateError("Missing state in scope. Cannot dispatch signal.")
 
     logger.debug(
-        "Awaiting signal using compat `compat_asend_async_only` method: %s", signal
+        "Awaiting signal `%s` using compat `compat_asend_async_only` method.", signal
     )
 
     # List of tuple pairs [(receiver, response), ...].
