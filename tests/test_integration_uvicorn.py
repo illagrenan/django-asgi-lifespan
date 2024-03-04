@@ -53,7 +53,7 @@ def server(config):
 @pytest.mark.asyncio
 async def test_uvicorn_reponds(server, execution_number):
     """A simple websocket test"""
-    assert (
-        httpx.get("http://127.0.0.1:8080/client-from-app-config").status_code
-        == HTTPStatus.OK
-    )
+    async with httpx.AsyncClient() as client:
+        assert (
+            await client.get("http://127.0.0.1:8080/client-from-app-config")
+        ).status_code == HTTPStatus.OK
