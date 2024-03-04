@@ -5,7 +5,6 @@ from __future__ import annotations
 
 from http import HTTPStatus
 
-import django
 import pytest
 import pytest_asyncio
 from asgiref.testing import ApplicationCommunicator
@@ -50,9 +49,6 @@ async def test_integration_with_app_config(
     assert "HTTPX Client from app config is closed" in response.content.decode("utf-8")
 
 
-@pytest.mark.skipif(
-    django.get_version().startswith("4."), reason="Test not compatible with Django 4"
-)
 @pytest.mark.asyncio
 async def test_integration_with_scope_state(
     communicator: ApplicationCommunicator, async_client: AsyncClient

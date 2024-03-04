@@ -11,6 +11,7 @@ from typing import Any, Callable, Final, List, Tuple
 from asgiref.typing import LifespanScope
 from django.dispatch import Signal
 
+from django_asgi_lifespan.compat import CompatAsyncSignal
 from django_asgi_lifespan.errors import MissingScopeStateError
 from django_asgi_lifespan.types import LifespanManager
 
@@ -49,7 +50,7 @@ async def send_lifespan_signal_compat(*, signal: Signal, scope: LifespanScope) -
 
 
 async def send_lifespan_signal_collecting_contexts(
-    signal: Signal, scope: LifespanScope
+    signal: CompatAsyncSignal, scope: LifespanScope
 ) -> List[Callable[[], LifespanManager]]:
     """
     Dispatches the given signal. Returns a list of async context managers.
@@ -60,17 +61,16 @@ async def send_lifespan_signal_collecting_contexts(
         logger.warning("Missing state in scope. Cannot dispatch signal.")
         raise MissingScopeStateError("Missing state in scope. Cannot dispatch signal.")
 
-    if not callable(getattr(signal, "asend", None)):
-        raise NotImplementedError("Synchronous signal dispatch is not supported.")
-    else:
-        logger.debug("Awaiting signal using native `asend` method: %s", signal)
+    logger.debug(
+        "Awaiting signal using compat `compat_asend_async_only` method: %s", signal
+    )
 
-        # List of tuple pairs [(receiver, response), ...].
-        receiver_responses: List[Tuple[Any, Callable[[], LifespanManager]]] = (
-            await signal.asend(LifespanSender, scope=scope, state=scope["state"])
+    # List of tuple pairs [(receiver, response), ...].
+    receiver_responses: List[Tuple[Any, Callable[[], LifespanManager]]] = (
+        await signal.compat_asend_async_only(
+            LifespanSender, scope=scope, state=scope["state"]
         )
-        context_managers = [
-            context_manager for _, context_manager in receiver_responses
-        ]
+    )
+    context_managers = [context_manager for _, context_manager in receiver_responses]
 
-        return context_managers
+    return context_managers
