@@ -53,4 +53,4 @@ class CompatAsyncSignal(Signal):
         )
 
         # Return a list of tuple pairs with the receiver and the response
-        return list(zip(async_receivers, async_responses))
+        return list(zip(async_receivers, async_responses, strict=True))
