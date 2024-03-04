@@ -18,8 +18,7 @@ logger: Final = logging.getLogger(__name__)
 class CompatAsyncSignal(Signal):
     def _get_async_only_live_receivers(self, sender: Any) -> List[Awaitable[Any]]:
         if not django.get_version().startswith("4."):
-            msg = "Unsupported Django version"
-            raise ValueError(msg)
+            raise ValueError("Unsupported Django version")
 
         non_weak_receivers = self._live_receivers(sender)
         non_weak_async_receivers = [
