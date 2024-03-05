@@ -97,12 +97,6 @@ tasks:
       - mkdocs build
     silent: false
 
-  bump:
-    desc: Check setup
-    cmds:
-      - bump2version {{.CLI_ARGS}}
-    silent: false
-
   build:
     desc: Build the package
     cmds:
