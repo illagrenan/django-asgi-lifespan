@@ -4,7 +4,7 @@
 
 ## Before you start
 
-This legacy approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. Prefer the more modern approach via [context manager](context_manager.md) &mdash; the global state will be managed by the ASGI server.
+This low-level approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. Prefer the more modern approach via [context manager](context_manager.md) &mdash; the global state will be managed by the ASGI server.
 
 ## Example use case for lifespan signals
 

@@ -14,7 +14,7 @@ nav:
   - installation.md
   - How to use:
       - State manager (preferred): how_to_use/context_manager.md
-      - Lifespan signals (legacy): how_to_use/signals.md
+      - Lifespan signals (low-level): how_to_use/signals.md
       - ASGI servers compatibility: asgi.md
   - Development:
       - development.md
