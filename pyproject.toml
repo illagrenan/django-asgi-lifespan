@@ -32,7 +32,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10 || ^3.11 || ^3.12"
-Django = "^4.2 || ^5.0.3"
+Django = ">=4.2,<5.0 || >=5.0.3,<6.0"
 asgiref = "^3"
 
 [tool.poetry.group.dev.dependencies]
