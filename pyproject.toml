@@ -147,6 +147,14 @@ ignore = [
     "TRY003"
 ]
 
+[tool.mypy]
+python_version = "3.10"
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
