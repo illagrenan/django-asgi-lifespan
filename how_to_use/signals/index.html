@@ -22,7 +22,7 @@
     
     
       
-        <title>Lifespan signals (legacy) - Django ASGI Lifespan</title>
+        <title>Lifespan signals (low-level) - Django ASGI Lifespan</title>
       
     
     
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lifespan signals (legacy)
+              Lifespan signals (low-level)
             
           </span>
         </div>
@@ -396,7 +396,7 @@
           
   
   <span class="md-ellipsis">
-    Lifespan signals (legacy)
+    Lifespan signals (low-level)
   </span>
   
 
@@ -407,7 +407,7 @@
         
   
   <span class="md-ellipsis">
-    Lifespan signals (legacy)
+    Lifespan signals (low-level)
   </span>
   
 
@@ -752,14 +752,14 @@
   
 
 
-  <h1>Lifespan signals (legacy)</h1>
+  <h1>Lifespan signals (low-level)</h1>
 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>Developers are advised to <a href="../context_manager/">prefer asynchronous context managers</a>. Using signals directly is fully supported, and until <code>v0.2.0</code> this was the only way to use this plugin &mdash; the only downside is that it is a more low-level way to use it.</p>
 </div>
 <h3 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h3>
-<p>This legacy approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. Prefer the more modern approach via <a href="../context_manager/">context manager</a> &mdash; the global state will be managed by the ASGI server.</p>
+<p>This low-level approach uses ASGI lifespan signals directly. The disadvantage is that the developer has to figure out where to store the global shared state. Prefer the more modern approach via <a href="../context_manager/">context manager</a> &mdash; the global state will be managed by the ASGI server.</p>
 <h3 id="example-use-case-for-lifespan-signals">Example use case for lifespan signals<a class="headerlink" href="#example-use-case-for-lifespan-signals" title="Permanent link">&para;</a></h3>
 <p>Consider a <a href="https://docs.djangoproject.com/en/dev/ref/applications/">Django application</a> named <code>library</code>. This application retrieves book information from an external API using <a href="https://www.python-httpx.org/">HTTPX</a>. To ensure efficient utilization of network resources (e.g., connection pooling, see: <a href="https://www.python-httpx.org/advanced/#why-use-a-client">https://www.python-httpx.org/advanced/#why-use-a-client</a>), we intend to use the HTTPX client.</p>
 <h2 id="typehinting">Typehinting<a class="headerlink" href="#typehinting" title="Permanent link">&para;</a></h2>
