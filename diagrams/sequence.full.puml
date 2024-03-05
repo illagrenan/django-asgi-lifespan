@@ -1,0 +1,117 @@
+@startuml
+
+'!include https://raw.githubusercontent.com/patrik-csak/one-dark-plantuml-theme/main/theme.puml
+
+!pragma teoz true
+hide circle
+show class circle
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Calibri
+skinparam defaultMonospacedFontName Consolas
+skinparam linetype ortho
+skinparam groupInheritance 2
+
+actor "Developer" as user
+
+box ASGI server
+participant "Server" as uvicorn
+endbox
+
+box This package #PowderBlue
+participant "Django ASGI lifespan handler" as plugin
+endbox
+
+box ASGI server
+participant "Lifespan state" as state
+endbox
+
+box This package #PowderBlue
+participant "Middleware" as middleware
+endbox
+
+box User code #Wheat
+participant "View" as view
+participant "Context Manager" as manager
+endbox
+
+note over uvicorn: For example uvicorn
+/ note over state: Managed by ASGI server
+'/ note over middleware: Your code
+/ note over view: Your code with views
+/ note over manager: Your code
+
+autonumber "<b>[0]"
+
+user -> uvicorn : start
+group #White startup
+uvicorn -> plugin : send  ""lifespan.startup""
+plugin -> manager : ""~__aenter__()""
+activate manager #SkyBlue
+
+note right
+    This part of code is executed:
+
+    <code>
+    @asynccontextmanager
+    async def manager():
+        ->  state = {
+        ->     ...
+        -> }
+        ->
+        -> yield state
+        ...
+    </code>
+endnote
+
+
+manager -> manager : ""yield""
+manager --> plugin : collect states
+note right
+    There can be multiple context managers,
+    each managing its own
+    ""~__aenter~__()""  and ""~__aexit__()"".
+endnote
+plugin -> state : update state
+end
+
+loop #White On each incoming HTTP request
+middleware -> state : read state
+middleware <-- state : state
+middleware -> view : pass state
+note over view
+    <code>
+    async def view(request):
+        var = request.state["..."]
+    </code>
+endnote
+end
+
+group #White shutdown
+hnote over uvicorn
+    When uvicorn stops
+    (CTRL+C, TERM signal, ...)
+endhnote
+user -> uvicorn : SIGTERM
+uvicorn -> plugin : send  ""lifespan.shutdown""
+plugin -> manager : ""~__aexit__()""
+note right
+    This part of code is executed:
+
+    <code>
+    @asynccontextmanager
+    async def manager():
+        ...
+        yield state
+        -> ...
+        -> ...
+        -> ...
+    </code>
+endnote
+manager -> manager : close
+||0||
+deactivate manager
+||12||
+end
+
+@enduml
