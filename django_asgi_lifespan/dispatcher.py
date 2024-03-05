@@ -1,58 +1,67 @@
 # -*- encoding: utf-8 -*-
 # ! python3
 
+from __future__ import annotations
+
 import asyncio
 import logging
-from typing import Final
+from collections import ChainMap
+from contextlib import AsyncExitStack
+from typing import Final, List
 
-from asgiref.sync import sync_to_async
-from django.dispatch import Signal
-from django.dispatch.dispatcher import NO_RECEIVERS
+from asgiref.typing import LifespanScope
+
+from django_asgi_lifespan import signals
+from django_asgi_lifespan.errors import MissingScopeStateError
+from django_asgi_lifespan.events import (
+    send_lifespan_signal_collecting_contexts,
+    send_lifespan_signal_compat,
+)
+from django_asgi_lifespan.types import State
 
 logger: Final = logging.getLogger(__name__)
 
 
-class PatchedSignal(Signal):
-    async def asend(self, sender, **named):
-        """
-        For details see:
+class LifespanEventDispatcher:
+    _exit_stack: AsyncExitStack
 
-            * https://code.djangoproject.com/ticket/35174
-            * https://stackoverflow.com/q/77811591/752142
-        """
-        if (
-            not self.receivers
-            or self.sender_receivers_cache.get(sender) is NO_RECEIVERS
-        ):
-            return []
-        sync_receivers, async_receivers = self._live_receivers(sender)
-        if sync_receivers:
+    def __init__(self):
+        self._exit_stack = AsyncExitStack()
 
-            @sync_to_async
-            def sync_send():
-                responses = []
-                for receiver in sync_receivers:
-                    response = receiver(signal=self, sender=sender, **named)
-                    responses.append((receiver, response))
-                return responses
-
-        else:
-            # >>>>>>
-            # THIS IS THE PATCHED PART:
-            async def sync_send():
-                return []
-
-            # <<<<<<
-
-        responses, async_responses = await asyncio.gather(
-            sync_send(),
-            asyncio.gather(
-                *(
-                    receiver(signal=self, sender=sender, **named)
-                    for receiver in async_receivers
-                )
-            ),
+    async def startup(self, scope: LifespanScope) -> None:
+        send_compat_task = asyncio.create_task(
+            send_lifespan_signal_compat(signal=signals.asgi_startup, scope=scope)
         )
-        responses.extend(zip(async_receivers, async_responses))
+        send_collecting_task = asyncio.create_task(
+            send_lifespan_signal_collecting_contexts(signals.asgi_lifespan, scope)
+        )
 
-        return responses
+        done, _ = await asyncio.wait(
+            [send_compat_task, send_collecting_task],
+            return_when=asyncio.ALL_COMPLETED,
+        )
+
+        # Raise exception if any, from send_compat_task
+        send_compat_task.result()
+
+        # Handle result or catch exception from send_collecting_task
+        try:
+            context_managers = send_collecting_task.result()
+        except MissingScopeStateError:
+            logger.warning("Missing state in scope.")
+        else:
+            # noinspection PyTypeChecker
+            context_states: List[State] = await asyncio.gather(
+                *(
+                    self._exit_stack.enter_async_context(single_context_manager())
+                    for single_context_manager in context_managers
+                )
+            )
+            combined_states = ChainMap(*context_states)
+            scope["state"].update(combined_states)
+
+    async def shutdown(self, scope: LifespanScope) -> None:
+        await asyncio.gather(
+            send_lifespan_signal_compat(signal=signals.asgi_shutdown, scope=scope),
+            self._exit_stack.aclose(),
+        )

@@ -1,115 +1,134 @@
-# Django ASGI Handler with Lifespan protocol support
+<h1>Django ASGI Handler with Lifespan protocol support</h1>
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![pypi](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![pypi](https://img.shields.io/pypi/v/django-asgi-lifespan.svg)](https://pypi.org/project/django-asgi-lifespan/)
-[![python](https://img.shields.io/pypi/pyversions/django-asgi-lifespan.svg)](https://pypi.org/project/django-asgi-lifespan/)
+[![Python version](https://img.shields.io/pypi/pyversions/django-asgi-lifespan.svg?logo=python&logoColor=white&label=python)](https://pypi.org/project/django-asgi-lifespan/)
+![Supported Django](https://img.shields.io/badge/django%20versions-%5E4.2%20||%20%5E5.0.3-blue.svg?logo=django&logoColor=white)
+<br>
 [![Build Status](https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml/badge.svg)](https://github.com/illagrenan/django-asgi-lifespan/actions/workflows/development.yml)
 [![codecov](https://codecov.io/gh/illagrenan/django-asgi-lifespan/branch/main/graphs/badge.svg)](https://codecov.io/github/illagrenan/django-asgi-lifespan)
 
 * Documentation: <https://illagrenan.github.io/django-asgi-lifespan>
 * PyPI: <https://pypi.org/project/django-asgi-lifespan/>
-* License: MIT
-    
-## Features
+* License: [MIT](https://choosealicense.com/licenses/mit/)
 
-* This package contains a subclass of the standard Django `ASGIHandler` that can
-  handle [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html). (Note: there is no change in handling HTTP requests.)
+## Main features
+
+``` py hl_lines="4"  linenums="1"
+async def example_view(request) -> HttpResponse:
+    # The client is intanciated just once when the application starts,
+    # and closed when the server shuts down
+    httpx_client: httpx.AsyncClient = request.state["httpx_client"]
+```
+
+* The package includes a Django `ASGIHandler` subclass that handles the [ASGI Lifespan Protocol](https://asgi.readthedocs.io/en/latest/specs/lifespan.html) without affecting HTTP request handling.
 * [Startup](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#startup-receive-event)
   and [Shutdown](https://asgi.readthedocs.io/en/latest/specs/lifespan.html#shutdown-receive-event) Lifespan events are
   converted to [Django signals](https://docs.djangoproject.com/en/4.0/topics/signals/).
-* Signal **receivers can be awaited**. This way it is possible for example to
-  create [aiohttp ClientSession](https://docs.aiohttp.org/en/stable/client_reference.html)
-  /[httpx client](https://www.python-httpx.org/async/) when the application starts and close these resources safely when
-  the application shuts down. This concept is similar to events in
-  FastAPI (<https://fastapi.tiangolo.com/advanced/events/>).
+* The package allows for awaiting on signal receivers. This means you can set up things like an [aiohttp `ClientSession`](https://docs.aiohttp.org/en/stable/client_reference.html) or an [HTTPX `AsyncClient`](https://www.python-httpx.org/async/) when your app starts, and close them properly when your app ends. This concept is similar to [events in FastAPI](https://fastapi.tiangolo.com/advanced/events/).
 
 ## Quickstart
 
-**:warning: This package is experimental. Lifespan signals work correctly only under uvicorn.**
-
-1. To install this package run: 
-
-   Python 3.10, 3.11 and 3.12 are supported, with Django 4 and 5.
-
-    ``` console
-    $ pip install --upgrade django-asgi-lifespan
-    # or
+1. Python `^3.10 || ^3.11 || ^3.12` and Django `^4.2 || ^5.0.3` are supported. To install this package run:
+    ```console linenums="0"
     $ poetry add django-asgi-lifespan@latest
+    ```
+
+    _or_
+
+    ```console linenums="0"
+    $ pip install --upgrade django-asgi-lifespan
     ```
 
 2. Modify `asgi.py` to use a ASGI Lifespan compatible handler.
 
     ``` py title="asgi.py"
     from django_asgi_lifespan.asgi import get_asgi_application
-    
+
     django_application = get_asgi_application()
-    
-    
+
+
     async def application(scope, receive, send):
         if scope["type"] in {"http", "lifespan"}:
             await django_application(scope, receive, send)
         else:
-            raise NotImplementedError(f"Unknown scope type {scope['type']}")
+            raise NotImplementedError(
+                f"Unknown scope type {scope['type']}"
+            )
     ```
 
-3. Subscribe your (async) code to the `asgi_startup` and `asgi_shutdown` Django signals that are sent when the server starts/shuts down. [See usage](https://illagrenan.github.io/django-asgi-lifespan/usage/) for a more advanced code sample.
+3. Add state middleware:
 
-    ``` py title="handlers.py" 
-    import asyncio
-    
+    ``` python hl_lines="3"
+    MIDDLEWARE = [
+        # ...
+        'django_asgi_lifespan.middleware.AsyncMiddleware',
+        # ...
+    ]
+    ```
+4. Register [async context manager](https://docs.python.org/3/reference/datamodel.html#async-context-managers):
+
+    ``` py hl_lines="8-17" title="context.py"
+    from contextlib import asynccontextmanager
+
     import httpx
-    
-    HTTPX_CLIENT = None
-    _signal_lock = asyncio.Lock()
-    
-    
-    async def create_httpx_client():
-        global HTTPX_CLIENT
-    
-        async with _signal_lock:
-            if not HTTPX_CLIENT:
-                HTTPX_CLIENT = httpx.AsyncClient()
-    
-    
-    async def close_httpx_client():
-        if isinstance(HTTPX_CLIENT, httpx.AsyncClient):
-            await asyncio.wait_for(asyncio.create_task(HTTPX_CLIENT.aclose()), timeout=5.0)
- 
+
+    from django_asgi_lifespan.types import State
+
+
+    @asynccontextmanager
+    async def httpx_lifespan_manager() -> State:
+        state = {
+            "httpx_client": httpx.AsyncClient()
+        }
+
+        try:
+            yield state
+        finally:
+            await state["httpx_client"].aclose()
     ```
 
-    ``` py title="apps.py" 
+    ``` py hl_lines="12-14" title="apps.py"
     from django.apps import AppConfig
 
-    from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
-    from .handlers_quickstart import close_httpx_client, create_httpx_client
-    
-    
+    from django_asgi_lifespan.register import register_lifespan_manager
+    from .context import (
+        httpx_lifespan_manager,
+    )
+
+
     class ExampleAppConfig(AppConfig):
+
         def ready(self):
-            asgi_startup.connect(create_httpx_client)
-            asgi_shutdown.connect(close_httpx_client)
+            register_lifespan_manager(
+                context_manager=httpx_lifespan_manager
+            )
     ```
 
-4. Use some resource (in this case the HTTPX client) e.g. in views.
+5. Use some resource (in this case the HTTPX client) in views.
 
-    ``` py title="views.py" 
+    ``` py hl_lines="8" title="views.py"
+    from http import HTTPStatus
+
+    import httpx
     from django.http import HttpResponse
 
-    from . import handlers
-    
-    
-    async def my_library_view(*_) -> HttpResponse:
-        external_api_response = await handlers_quickstart.HTTPX_CLIENT.get("https://www.example.com/")
-    
-        return HttpResponse(f"{external_api_response.text[:42]}", content_type="text/plain")
 
+    async def example_view(request) -> HttpResponse:
+        httpx_client: httpx.AsyncClient = request.state["httpx_client"]
+
+        await httpx_client.head("https://www.example.com/")
+
+        return HttpResponse(
+            "OK",
+            status=HTTPStatus.OK,
+            content_type="text/plain; charset=utf-8",
+        )
     ```
 
-5. Run uvicorn:
+6. Run uvicorn:
 
-   :warning: Lifespan protocol is not supported if you run uvicorn via gunicorn using [`worker_class`](https://docs.gunicorn.org/en/stable/settings.html#worker-class): `gunicorn -k uvicorn.workers.UvicornWorker`. See
-   other [limitations](https://illagrenan.github.io/django-asgi-lifespan/limitations/) in the documentation.
-
-    ``` console 
+    ```console
     uvicorn asgi:application --lifespan=on --port=8080
     ```

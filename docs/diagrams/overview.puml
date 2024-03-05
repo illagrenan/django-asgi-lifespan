@@ -1,0 +1,30 @@
+@startuml
+
+hide circle
+show class circle
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Calibri
+skinparam defaultMonospacedFontName Consolas
+skinparam linetype ortho
+skinparam groupInheritance 2
+'left to right direction
+
+node "ASGI server" as ASGI #APPLICATION {
+    node "Lifespan state" as state <<dict>>
+}
+
+package "ASGI lifespan handler" as package {
+    [Middleware] as middleware
+}
+
+package "Django application" as Django {
+    [State context manager] as manager
+    [View] as view
+    middleware --> view : sets
+}
+
+manager --> state : sets
+middleware --> state : reads
+
+@enduml

@@ -8,13 +8,7 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from asgiref.testing import ApplicationCommunicator
 
-from django_asgi_lifespan.asgi import get_asgi_application
 from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
-
-
-@pytest.fixture(scope="session")
-def application():
-    return get_asgi_application()
 
 
 @pytest.mark.asyncio

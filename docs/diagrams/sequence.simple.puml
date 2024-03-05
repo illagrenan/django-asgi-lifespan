@@ -1,0 +1,33 @@
+@startuml
+
+hide circle
+show class circle
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Calibri
+skinparam defaultMonospacedFontName Consolas
+skinparam linetype ortho
+skinparam groupInheritance 2
+
+actor "Developer" as user
+participant "ASGI Server" as server
+participant "Lifespan handler" as package
+participant "User Code" as userCode
+
+autonumber "<b>[0]"
+user -> server : start
+group #White startup
+server -> package : send  ""lifespan.startup""
+package -> userCode : ""~__aenter__()""
+package --> server : collect state
+end
+loop #White On each incoming HTTP request
+package -> userCode : pass state
+end
+group #White shutdown
+user -> server : SIGTERM
+server -> package : send  ""lifespan.shutdown""
+package -> userCode : ""~__aexit__()""
+deactivate userCode
+end
+@enduml

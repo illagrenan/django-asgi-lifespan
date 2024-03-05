@@ -22,7 +22,7 @@ def get_asgi_application() -> LifespanASGIHandler:
     that supports the lifespan protocol.
 
     This is modified copy of:
-        https://github.com/django/django/blob/main/django/core/asgi.py
+        <https://github.com/django/django/blob/main/django/core/asgi.py>
 
     :return: An ASGI 3 callable.
     """

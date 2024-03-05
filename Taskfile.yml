@@ -43,17 +43,17 @@ tasks:
       - mypy {{.SOURCES}} tests
     silent: false
 
-  flake8:
-    desc: Check setup
+  ruff:
+    desc: Run ruff
     cmds:
-      - flake8 {{.SOURCES}} tests
+      - ruff check {{.SOURCES}}
     silent: false
 
   lint:
     desc: Check setup
     cmds:
       - task: mypy
-      - task: flake8
+      - task: ruff
       - task: isort_check
       - task: black_check
     silent: false
@@ -127,6 +127,3 @@ tasks:
       - pip install --no-cache-dir --no-index --find-links=file:./dist {{.PROJECT_NAME}}
       - pip uninstall {{.PROJECT_NAME}} --yes
     silent: false
-
-
-

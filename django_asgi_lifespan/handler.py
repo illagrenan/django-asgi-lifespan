@@ -5,7 +5,6 @@
 
 from __future__ import annotations
 
-import inspect
 import logging
 from typing import Final
 
@@ -15,13 +14,14 @@ from asgiref.typing import (
     ASGISendCallable,
     LifespanScope,
     LifespanShutdownCompleteEvent,
+    LifespanShutdownFailedEvent,
     LifespanStartupCompleteEvent,
+    LifespanStartupFailedEvent,
     Scope,
 )
 from django.core.asgi import ASGIHandler
-from django.dispatch import Signal
 
-from . import signals
+from .dispatcher import LifespanEventDispatcher
 
 logger: Final = logging.getLogger(__name__)
 __all__ = ["LifespanASGIHandler"]
@@ -30,15 +30,22 @@ __all__ = ["LifespanASGIHandler"]
 class LifespanASGIHandler(ASGIHandler):
     """A subclass of ASGIHandler that supports the ASGI Lifespan protocol."""
 
+    _lifespan_event_dispatcher: LifespanEventDispatcher
+
+    def __init__(self):
+        super().__init__()
+        self._lifespan_event_dispatcher = LifespanEventDispatcher()
+
     async def __call__(
         self, scope: Scope, receive: ASGIReceiveCallable, send: ASGISendCallable
     ) -> None:
         """
         If scope type is lifespan, handle lifespan request.
-        Otherwise, delegate to the superclass' call method.
+        Otherwise, delegate to the superclass call method.
 
         The base Django `ASGIHandler` can only handle http scope.
         """
+
         if scope["type"] == "lifespan":
             await self._handle_lifespan(scope, receive, send)
         else:
@@ -51,47 +58,53 @@ class LifespanASGIHandler(ASGIHandler):
         send: ASGISendCallable,
     ) -> None:
         """Process lifespan request events."""
+
         while True:
             message: ASGIReceiveEvent = await receive()
 
             match message["type"]:
                 case "lifespan.startup":
-                    await self._process_lifespan_event(signals.asgi_startup, scope)
-                    await send(
-                        LifespanStartupCompleteEvent(type="lifespan.startup.complete")
-                    )
+
+                    try:
+                        await self._lifespan_event_dispatcher.startup(scope)
+                    except Exception as exc:
+                        await send(
+                            LifespanStartupFailedEvent(
+                                type="lifespan.startup.failed", message=str(exc)
+                            )
+                        )
+                        raise
+                    else:
+                        await send(
+                            LifespanStartupCompleteEvent(
+                                type="lifespan.startup.complete"
+                            )
+                        )
+
                 case "lifespan.shutdown":
-                    print("shutdown is called!")
-                    await self._process_lifespan_event(signals.asgi_shutdown, scope)
-                    await send(
-                        LifespanShutdownCompleteEvent(type="lifespan.shutdown.complete")
-                    )
-                    return
+                    try:
+                        await self._lifespan_event_dispatcher.shutdown(scope)
+                    except Exception as exc:
+                        await send(
+                            LifespanShutdownFailedEvent(
+                                type="lifespan.shutdown.failed", message=str(exc)
+                            )
+                        )
+                        raise
+                    else:
+                        await send(
+                            LifespanShutdownCompleteEvent(
+                                type="lifespan.shutdown.complete"
+                            )
+                        )
+                        # The return statement is important here to break the while loop
+                        # and prevent the function from processing any further messages
+                        # after the shutdown event.
+                        # Ref.:
+                        # https://asgi.readthedocs.io/en/latest/specs/lifespan.html
+                        return
+
                 case _:
                     raise ValueError(
                         f"Unknown lifespan message type: {message['type']}"
                     )
-
-    async def _process_lifespan_event(
-        self, signal: Signal, scope: LifespanScope
-    ) -> None:
-        """
-        Dispatch the given signal and process any responses.
-        """
-        logger.debug("Dispatching signal: %s", signal)
-
-        if callable(getattr(signal, "asend", None)):
-            logger.debug("Awaiting signal using native `asend` method: %s", signal)
-            await signal.asend(self.__class__, scope=scope)
-        else:
-            logger.debug("Sending signal using synchronous `send` method: %s", signal)
-            response = signal.send(self.__class__, scope=scope)
-
-            for _, response in response:
-                if not response:
-                    continue
-
-                if inspect.isawaitable(response):
-                    await response
-                else:
-                    response()

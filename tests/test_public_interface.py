@@ -9,7 +9,7 @@ from django.core.handlers.asgi import ASGIHandler
 from django.dispatch import Signal
 
 from django_asgi_lifespan.asgi import get_asgi_application
-from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
+from django_asgi_lifespan.signals import asgi_lifespan, asgi_shutdown, asgi_startup
 
 
 def test_custom_get_asgi_application_returns_asgi_handler():
@@ -28,3 +28,4 @@ def test_custom_get_asgi_application_returns_asgi_handler_calls_django_setup(
 def test_signals_are_defined():
     assert isinstance(asgi_startup, Signal)
     assert isinstance(asgi_shutdown, Signal)
+    assert isinstance(asgi_lifespan, Signal)
