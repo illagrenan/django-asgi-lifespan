@@ -32,13 +32,13 @@ async def example_view(request) -> HttpResponse:
 
 1. Python `^3.10 || ^3.11 || ^3.12` and Django `^4.2 || ^5.0.3` are supported. To install this package run:
     ```console linenums="0"
-    $ poetry add django-asgi-lifespan@latest
+    poetry add django-asgi-lifespan@latest
     ```
 
     _or_
 
     ```console linenums="0"
-    $ pip install --upgrade django-asgi-lifespan
+    pip install --upgrade django-asgi-lifespan
     ```
 
 2. Modify `asgi.py` to use a ASGI Lifespan compatible handler.
