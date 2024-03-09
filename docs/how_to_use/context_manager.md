@@ -16,7 +16,7 @@ To access the shared state within a view, your project must include middleware. 
 ```python hl_lines="3"
 MIDDLEWARE = [
     # ...
-    'django_asgi_lifespan.middleware.AsyncMiddleware',
+    'django_asgi_lifespan.middleware.LifespanStateMiddleware',
     # ...
 ]
 ```
