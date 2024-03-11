@@ -33,4 +33,5 @@ class LifespanStateMiddleware:
         return await self.get_response(request)
 
 
+# Leave this alias here for backwards compatibility
 AsyncMiddleware: Final = LifespanStateMiddleware
