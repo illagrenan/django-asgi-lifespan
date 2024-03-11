@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2024-03-11
+
+[:material-github: Github release](https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.1)
+
+### Changed
+
+- `AsyncMiddleware` is now called `LifespanStateMiddleware`, the original name was too generic (it was a copy-paste from the Django documentation). The original name will remain as an alias for `LifespanStateMiddleware`, so existing installations should not be affected.
+
 ## [0.3.0] - 2024-03-05
 
 [:material-github: Github release](https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.0)

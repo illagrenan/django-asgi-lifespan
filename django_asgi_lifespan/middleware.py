@@ -9,9 +9,10 @@ from django.core.handlers.asgi import ASGIRequest
 from django.http import HttpRequest, HttpResponseBase
 
 logger: Final = logging.getLogger(__name__)
+__all__ = ["AsyncMiddleware", "LifespanStateMiddleware"]
 
 
-class AsyncMiddleware:
+class LifespanStateMiddleware:
     async_capable = True
     sync_capable = False
 
@@ -30,3 +31,7 @@ class AsyncMiddleware:
             request.state = {}
 
         return await self.get_response(request)
+
+
+# Leave this alias here for backwards compatibility
+AsyncMiddleware: Final = LifespanStateMiddleware
