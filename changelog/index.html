@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.12">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
@@ -85,7 +85,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#030-2024-03-05" class="md-skip">
+        <a href="#031-2024-03-11" class="md-skip">
           Skip to content
         </a>
       
@@ -573,6 +573,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#031-2024-03-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      [0.3.1] - 2024-03-11
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.3.1] - 2024-03-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#030-2024-03-05" class="md-nav__link">
     <span class="md-ellipsis">
       [0.3.0] - 2024-03-05
@@ -592,7 +616,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       Changed
     </span>
@@ -720,6 +744,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#031-2024-03-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      [0.3.1] - 2024-03-11
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.3.1] - 2024-03-11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changed
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#030-2024-03-05" class="md-nav__link">
     <span class="md-ellipsis">
       [0.3.0] - 2024-03-05
@@ -739,7 +787,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#changed" class="md-nav__link">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       Changed
     </span>
@@ -819,6 +867,12 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h3 id="031-2024-03-11">[0.3.1] - 2024-03-11<a class="headerlink" href="#031-2024-03-11" title="Permanent link">&para;</a></h3>
+<p><a href="https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> Github release</a></p>
+<h4 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>AsyncMiddleware</code> is now called <code>LifespanStateMiddleware</code>, the original name was too generic (it was a copy-paste from the Django documentation). The original name will remain as an alias for <code>LifespanStateMiddleware</code>, so existing installations should not be affected.</li>
+</ul>
 <h3 id="030-2024-03-05">[0.3.0] - 2024-03-05<a class="headerlink" href="#030-2024-03-05" title="Permanent link">&para;</a></h3>
 <p><a href="https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.0"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"/></svg></span> Github release</a></p>
 <h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h4>
@@ -827,7 +881,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <li>All major ASGI servers have been tested, <a href="../asgi/">an overview of their support is in separate page</a>. It&nbsp;is worth mentioning that the gunicorn+uvicorn combo is now working without problems.</li>
 <li>Development: Add support for <a href="https://pre-commit.com/">pre-commit</a>.</li>
 </ul>
-<h4 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h4>
+<h4 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>More tests.</li>
 <li>Better documentation.</li>
