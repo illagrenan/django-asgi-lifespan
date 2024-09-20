@@ -11,7 +11,6 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-        exclude: '^version.txt$'
       - id: check-json
       - id: check-toml
       - id: check-xml
