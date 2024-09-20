@@ -6,14 +6,6 @@ exclude: '^docs/'
 default_stages: [ commit ]
 
 repos:
-  - repo: https://github.com/python-poetry/poetry
-    rev: '1.8.3'
-    hooks:
-      - id: poetry-check
-      - id: poetry-lock
-      - id: poetry-install
-        args: [ "-with", "dev,tests" ]
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
@@ -33,7 +25,6 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.9
     hooks:
-      - id: ruff
       - id: ruff-format
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date

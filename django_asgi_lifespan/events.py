@@ -66,10 +66,10 @@ async def send_lifespan_signal_collecting_contexts(
     )
 
     # List of tuple pairs [(receiver, response), ...].
-    receiver_responses: List[Tuple[Any, Callable[[], LifespanManager]]] = (
-        await signal.compat_asend_async_only(
-            LifespanSender, scope=scope, state=scope["state"]
-        )
+    receiver_responses: List[
+        Tuple[Any, Callable[[], LifespanManager]]
+    ] = await signal.compat_asend_async_only(
+        LifespanSender, scope=scope, state=scope["state"]
     )
     context_managers = [context_manager for _, context_manager in receiver_responses]
 
