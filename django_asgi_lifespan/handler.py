@@ -64,7 +64,6 @@ class LifespanASGIHandler(ASGIHandler):
 
             match message["type"]:
                 case "lifespan.startup":
-
                     try:
                         await self._lifespan_event_dispatcher.startup(scope)
                     except Exception as exc:
