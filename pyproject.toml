@@ -40,10 +40,8 @@ asgiref = "^3"
 
 [tool.poetry.group.dev.dependencies]
 # Formatting & Linting
-black = "==24.2.0"
-isort = "^5.13.2"
-mypy = "^1.8.0"
-ruff = "^0.3.0"
+mypy = "^1.11.2"
+ruff = "^0.6.6"
 
 # Releases
 twine = "^5.0.0"
@@ -100,26 +98,6 @@ testpaths = [
     "./tests/"
 ]
 
-[tool.black]
-line-length = 88
-skip-string-normalization = false
-target-version = ["py310", "py311", "py312"]
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-
 [tool.ruff.lint]
 select = [
     "E", # pycodestyle
@@ -134,7 +112,7 @@ select = [
     "BLE", # flake8-blind-except
     "A", # flake8-builtins
     "C4", # flake8-comprehensions
-    "FA", # flake8-future-annotations
+    "FA", # flake8-future-annotationsruff
     "ISC", # flake8-implicit-str-concat
     "ICN", # flake8-import-conventions
     "G", # flake8-logging-format
@@ -144,7 +122,9 @@ select = [
     "PERF", # perflint
 ]
 ignore = [
-    "TRY003"
+    "TRY003",
+    "S101",
+    "ISC001",
 ]
 
 [tool.mypy]
@@ -154,15 +134,3 @@ ignore_missing_imports = true
 warn_unused_ignores = true
 warn_redundant_casts = true
 warn_unused_configs = true
-
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-ensure_newline_before_comments = true
-line_length = 88
-skip_gitignore = true
-profile = "black"
-# you can skip files as below
-#skip_glob = docs/conf.py
