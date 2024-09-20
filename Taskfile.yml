@@ -61,13 +61,13 @@ tasks:
   isort:
     desc: Optimize imports
     cmds:
-      - isort {{.SOURCES}} tests
+      - ruff check --select I,F401 {{.SOURCES}} tests
     silent: false
 
   isort_check:
     desc: Check isort
     cmds:
-      - isort --check {{.SOURCES}}
+      - ruff check --select I,F401 --fix {{.SOURCES}} tests
     silent: false
 
   black:
@@ -75,13 +75,13 @@ tasks:
       - fmt
     desc: Format using black
     cmds:
-      - black {{.SOURCES}} tests
+      - ruff format {{.SOURCES}} tests
     silent: false
 
   black_check:
     desc: Check black formatting
     cmds:
-      - black --check {{.SOURCES}} tests
+      - ruff format --check {{.SOURCES}} tests
     silent: false
 
   format:
