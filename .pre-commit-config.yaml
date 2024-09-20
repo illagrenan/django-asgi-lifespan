@@ -24,6 +24,8 @@ repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.4.9
     hooks:
+      - id: ruff
+        files: ^django_asgi_lifespan/
       - id: ruff-format
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
