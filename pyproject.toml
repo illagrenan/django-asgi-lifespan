@@ -112,7 +112,7 @@ select = [
     "BLE", # flake8-blind-except
     "A", # flake8-builtins
     "C4", # flake8-comprehensions
-    "FA", # flake8-future-annotationsruff
+    "FA", # flake8-future-annotations
     "ISC", # flake8-implicit-str-concat
     "ICN", # flake8-import-conventions
     "G", # flake8-logging-format
