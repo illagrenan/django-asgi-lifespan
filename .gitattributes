@@ -14,7 +14,6 @@
 *.sh    text eol=lf
 *.txt   text eol=lf
 *.xml   text eol=lf
-*.bat   text eol=crlf
 
 # Source files
 # ============
@@ -38,6 +37,4 @@
 # LFS
 # ===
 *.whl filter=lfs diff=lfs merge=lfs -text
-*.zip filter=lfs diff=lfs merge=lfs -text
-*.bz2 filter=lfs diff=lfs merge=lfs -text
-*.gz  filter=lfs diff=lfs merge=lfs -text
+*.h5  filter=lfs diff=lfs merge=lfs -text

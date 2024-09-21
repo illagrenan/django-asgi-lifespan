@@ -7,7 +7,9 @@ from django_asgi_lifespan.types import State
 
 @asynccontextmanager
 async def httpx_lifespan_manager() -> State:
-    state = {"httpx_client": httpx.AsyncClient()}
+    state = {
+        "httpx_client": httpx.AsyncClient()
+    }
 
     try:
         yield state

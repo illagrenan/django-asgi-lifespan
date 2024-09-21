@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.10
+# syntax=docker/dockerfile:1.6
 # https://hub.docker.com/r/docker/dockerfile
 # ======================================================================================================================
 # Build Image:
@@ -12,7 +12,7 @@
 #   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
 #
 # ======================================================================================================================
-FROM python:3.12.6-bookworm
+FROM python:3.12.6
 
 ARG POETRY_EXTRA_OPTIONS=--with=dev,tests
 ENV PYTHONFAULTHANDLER=1 \
