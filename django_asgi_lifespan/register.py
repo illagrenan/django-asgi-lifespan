@@ -2,24 +2,27 @@
 # ! python3
 
 import logging
+from contextlib import AbstractAsyncContextManager
 from dataclasses import dataclass
-from typing import Final
+from typing import Callable, Final
 
 from django_asgi_lifespan.signals import asgi_lifespan
-from django_asgi_lifespan.types import LifespanManager
+from django_asgi_lifespan.types import State
 
 logger: Final = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
 class LifespanContextManagerSignalWrapper:
-    context_manager: LifespanManager
+    context_manager: Callable[[], AbstractAsyncContextManager[State]]
 
-    async def receiver(self, **_) -> LifespanManager:
+    async def receiver(self, **_) -> Callable[[], AbstractAsyncContextManager[State]]:
         return self.context_manager
 
 
-def register_lifespan_manager(*, context_manager: LifespanManager) -> None:
+def register_lifespan_manager(
+    *, context_manager: Callable[[], AbstractAsyncContextManager[State]]
+) -> None:
     """
     Registers a context manager for lifecycle events
     """
