@@ -17,7 +17,7 @@
 
 ``` py hl_lines="4"  linenums="1"
 async def example_view(request) -> HttpResponse:
-    # The client is intanciated just once when the application starts,
+    # The client is instanciated just once when the application starts,
     # and closed when the server shuts down
     httpx_client: httpx.AsyncClient = request.state["httpx_client"]
 ```
