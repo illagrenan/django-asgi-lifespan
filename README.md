@@ -30,7 +30,7 @@ async def example_view(request) -> HttpResponse:
 
 ## Quickstart
 
-1. Python `^3.10 || ^3.11 || ^3.12` and Django `^4.2 || ^5.0.3` are supported. To install this package run:
+1. Python `^3.10 || ^3.11 || ^3.12 || ^3.13` and Django `^4.2 || ^5.0.3 || ^5.1` are supported. To install this package run:
     ```console linenums="0"
     poetry add django-asgi-lifespan@latest
     ```
@@ -74,11 +74,11 @@ async def example_view(request) -> HttpResponse:
 
     import httpx
 
-    from django_asgi_lifespan.types import State
+    from django_asgi_lifespan.types import LifespanManager
 
 
     @asynccontextmanager
-    async def httpx_lifespan_manager() -> State:
+    async def httpx_lifespan_manager() -> LifespanManager:
         state = {
             "httpx_client": httpx.AsyncClient()
         }
