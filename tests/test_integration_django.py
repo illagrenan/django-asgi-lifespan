@@ -12,8 +12,8 @@ from django.test import AsyncClient
 
 
 @pytest.fixture
-def scope_state():
-    return dict()
+def scope_state() -> dict:
+    return {}
 
 
 @pytest.fixture
