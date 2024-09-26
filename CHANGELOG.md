@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2024-09-26
+
+[:material-github: Github release](https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.2)
+
+### Added
+
+- Add support for Django 5.1.
+- Test examples using Pyright.
+
+### Changed
+
+- Fix and improve typehints. Use `AbstractAsyncContextManager` type for lifespan manager function (this should fix Pyright errors as reported in the [issue 99](https://github.com/illagrenan/django-asgi-lifespan/issues/99)).
+
 ## [0.3.1] - 2024-03-11
 
 [:material-github: Github release](https://github.com/illagrenan/django-asgi-lifespan/releases/tag/v0.3.1)
