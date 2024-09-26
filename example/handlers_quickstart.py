@@ -11,7 +11,7 @@ _signal_lock = asyncio.Lock()
 
 
 async def create_httpx_client():
-    global HTTPX_CLIENT
+    global HTTPX_CLIENT  # noqa: PLW0603
 
     async with _signal_lock:
         if not HTTPX_CLIENT:

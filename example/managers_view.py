@@ -10,7 +10,7 @@ async def example_view(request) -> HttpResponse:
     await httpx_client.head("https://www.example.com/")
 
     return HttpResponse(
-        "OK",
+        b"OK",
         status=HTTPStatus.OK,
         content_type="text/plain; charset=utf-8",
     )

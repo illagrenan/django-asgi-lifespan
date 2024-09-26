@@ -11,7 +11,7 @@ INSTALLED_APPS = [
 ]
 USE_TZ = True
 ROOT_URLCONF = "tests.django_test_application.urls"
-SECRET_KEY = "se3ret"
+SECRET_KEY = "se3ret"  # noqa: S105
 MIDDLEWARE = [
     # ...
     "django_asgi_lifespan.middleware.LifespanStateMiddleware",

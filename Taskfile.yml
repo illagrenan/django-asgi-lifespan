@@ -7,7 +7,7 @@ env:
   PYTHONDONTWRITEBYTECODE: 1
 
 vars:
-  SOURCES: django_asgi_lifespan
+  SOURCES: ./django_asgi_lifespan/ ./example/ ./tests/
 
 tasks:
   test:
@@ -23,7 +23,7 @@ tasks:
   coverage:
     desc: Run coverage
     cmds:
-      - pytest --cov={{.SOURCES}} --cov-branch --cov-report=xml --cov-report=term-missing tests
+      - pytest --cov=./django_asgi_lifespan/ --cov-branch --cov-report=xml --cov-report=term-missing ./tests/
     silent: false
 
   clean:
@@ -40,7 +40,8 @@ tasks:
   mypy:
     desc: Check setup
     cmds:
-      - mypy {{.SOURCES}} tests
+      - mypy {{.SOURCES}}
+      - pyright ./example/
     silent: false
 
   ruff:
@@ -61,13 +62,13 @@ tasks:
   isort:
     desc: Optimize imports
     cmds:
-      - ruff check --select I,F401 {{.SOURCES}} tests
+      - ruff check --select I,F401 {{.SOURCES}}
     silent: false
 
   isort_check:
     desc: Check isort
     cmds:
-      - ruff check --select I,F401 --fix {{.SOURCES}} tests
+      - ruff check --select I,F401 --fix {{.SOURCES}}
     silent: false
 
   black:
@@ -75,13 +76,13 @@ tasks:
       - fmt
     desc: Format using black
     cmds:
-      - ruff format {{.SOURCES}} tests
+      - ruff format {{.SOURCES}}
     silent: false
 
   black_check:
     desc: Check black formatting
     cmds:
-      - ruff format --check {{.SOURCES}} tests
+      - ruff format --check {{.SOURCES}}
     silent: false
 
   format:

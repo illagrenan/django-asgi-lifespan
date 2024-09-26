@@ -12,6 +12,6 @@ async def my_library_view(*_) -> HttpResponse:
     external_api_response = await httpx_client.get("https://www.example.com/")
 
     return HttpResponse(
-        f"{external_api_response.text[:42]}",
+        f"{external_api_response.text[:42]}",  # pyright: ignore
         content_type="text/plain",
     )

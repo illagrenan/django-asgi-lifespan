@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import inspect
 import logging
+from contextlib import AbstractAsyncContextManager
 from dataclasses import dataclass
 from typing import Any, Callable, Final, List, Tuple
 
@@ -13,7 +14,7 @@ from django.dispatch import Signal
 
 from django_asgi_lifespan.compat import CompatAsyncSignal
 from django_asgi_lifespan.errors import MissingScopeStateError
-from django_asgi_lifespan.types import LifespanManager
+from django_asgi_lifespan.types import State
 
 logger: Final = logging.getLogger(__name__)
 
@@ -51,7 +52,7 @@ async def send_lifespan_signal_compat(*, signal: Signal, scope: LifespanScope) -
 
 async def send_lifespan_signal_collecting_contexts(
     signal: CompatAsyncSignal, scope: LifespanScope
-) -> List[Callable[[], LifespanManager]]:
+) -> List[Callable[[], AbstractAsyncContextManager[State]]]:
     """
     Dispatches the given signal. Returns a list of async context managers.
     """
@@ -67,7 +68,7 @@ async def send_lifespan_signal_collecting_contexts(
 
     # List of tuple pairs [(receiver, response), ...].
     receiver_responses: List[
-        Tuple[Any, Callable[[], LifespanManager]]
+        Tuple[Any, Callable[[], AbstractAsyncContextManager[State]]]
     ] = await signal.compat_asend_async_only(
         LifespanSender, scope=scope, state=scope["state"]
     )

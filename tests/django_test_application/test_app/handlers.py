@@ -11,11 +11,13 @@ from typing import Final
 import httpx
 from django.apps import AppConfig
 
+from django_asgi_lifespan.types import LifespanManager
+
 logger: Final = logging.getLogger(__name__)
 
 
 @asynccontextmanager
-async def httpx_lifespan_manager():
+async def httpx_lifespan_manager() -> LifespanManager:
     logger.info("Lifespan: Initializing HTTPX client.")
     state = {"httpx_client_from_user": httpx.AsyncClient(http2=False)}
 

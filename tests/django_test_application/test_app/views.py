@@ -51,10 +51,12 @@ async def scope_state_view(request) -> HttpResponse:
         )
     else:
         assert not httpx_client.is_closed, "HTTPX Client is closed"
-        await httpx_client.head("https://www.example.com/")
+
+        response = await httpx_client.head("https://www.example.com/")
+        response.raise_for_status()
 
         return HttpResponse(
-            f"OK state ✅ ({timezone.now()})",
+            f"OK state ✅ ({timezone.now()}); ID of client: {id(httpx_client)}",
             status=HTTPStatus.OK,
             content_type="text/plain; charset=utf-8",
         )

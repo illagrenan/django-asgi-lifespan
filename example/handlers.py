@@ -13,4 +13,4 @@ class ASGILifespanSignalHandler:
         self.app_config.httpx_client = httpx.AsyncClient()
 
     async def shutdown(self, **_):
-        self.app_config.httpx_client.aclose()
+        await self.app_config.httpx_client.aclose()

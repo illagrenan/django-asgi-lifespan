@@ -1,6 +1,6 @@
 [project]
 # Support Python 3.10+.
-requires-python = ">=3.10"
+requires-python = ">=3.10, <3.14"
 
 [tool.poetry]
 name = "django-asgi-lifespan"
@@ -33,7 +33,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.10 || ^3.11 || ^3.12"
+python = "^3.10 || ^3.11 || ^3.12 || ^3.13"
 # this would be nice, but it is not supported by PyPI: ^4.2 || ^5.0.3
 Django = ">=4.2,<6, !=5.0.0,!=5.0.1,!=5.0.2"
 asgiref = "^3"
@@ -42,6 +42,7 @@ asgiref = "^3"
 # Formatting & Linting
 mypy = "^1.11.2"
 ruff = "^0.6.6"
+pyright = "^1.1.382.post0"
 
 # Releases
 twine = "^5.1.1"
