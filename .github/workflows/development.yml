@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         python-versions: [ "3.10", "3.11", "3.12" ]
-        django-versions: [ "4.*", "5.*"]
+        django-versions: [ "4.2.*", "5.0.*", "5.1.*"]
         os: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.os }}
 
