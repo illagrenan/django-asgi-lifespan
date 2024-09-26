@@ -42,6 +42,7 @@ asgiref = "^3"
 # Formatting & Linting
 mypy = "^1.11.2"
 ruff = "^0.6.6"
+pyright = "^1.1.382.post0"
 
 # Releases
 twine = "^5.1.1"

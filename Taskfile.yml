@@ -41,6 +41,7 @@ tasks:
     desc: Check setup
     cmds:
       - mypy {{.SOURCES}}
+      - pyright ./example/
     silent: false
 
   ruff:

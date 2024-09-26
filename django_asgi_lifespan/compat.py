@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Awaitable, Final, List, Tuple
+from typing import Any, Awaitable, Callable, Final, List, Tuple
 
 import django
 from asgiref.sync import iscoroutinefunction
@@ -16,7 +16,9 @@ logger: Final = logging.getLogger(__name__)
 
 
 class CompatAsyncSignal(Signal):
-    def _get_async_only_live_receivers(self, sender: Any) -> List[Awaitable[Any]]:
+    def _get_async_only_live_receivers(
+        self, sender: Any
+    ) -> List[Callable[..., Awaitable[Any]]]:
         if not django.get_version().startswith("4."):
             raise ValueError("Unsupported Django version")
 
