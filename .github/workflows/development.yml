@@ -63,7 +63,7 @@ jobs:
           poetry run task coverage
 
       - name: Build wheels and source tarball
-        run: >-
+        run: |
           poetry build -vv -n
 
       - name: Check project build
