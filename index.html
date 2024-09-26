@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.38">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.06209087.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.8c3ca2c6.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -717,7 +717,7 @@
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
 <span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">example_view</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="c1"># The client is intanciated just once when the application starts,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="c1"># The client is instanciated just once when the application starts,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="c1"># and closed when the server shuts down</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="hll">    <span class="n">httpx_client</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;httpx_client&quot;</span><span class="p">]</span>
 </span></span></code></pre></div></td></tr></table></div>
@@ -731,7 +731,7 @@
 <h3 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>Python <code>^3.10 || ^3.11 || ^3.12</code> and Django <code>^4.2 || ^5.0.3</code> are supported. To install this package run:
+<p>Python <code>^3.10 || ^3.11 || ^3.12 || ^3.13</code> and Django <code>^4.2 || ^5.0.3 || ^5.1</code> are supported. To install this package run:
     <div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="go">poetry add django-asgi-lifespan@latest</span>
 </span></code></pre></div></p>
 <p><em>or</em></p>
@@ -798,11 +798,11 @@
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="kn">import</span> <span class="nn">httpx</span>
 </span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">from</span> <span class="nn">django_asgi_lifespan.types</span> <span class="kn">import</span> <span class="n">State</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5"></a><span class="kn">from</span> <span class="nn">django_asgi_lifespan.types</span> <span class="kn">import</span> <span class="n">LifespanManager</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6"></a>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7"></a>
 </span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8"></a><span class="hll"><span class="nd">@asynccontextmanager</span>
-</span></span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">httpx_lifespan_manager</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">State</span><span class="p">:</span>
+</span></span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="hll"><span class="k">async</span> <span class="k">def</span> <span class="nf">httpx_lifespan_manager</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">LifespanManager</span><span class="p">:</span>
 </span></span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="hll">    <span class="n">state</span> <span class="o">=</span> <span class="p">{</span>
 </span></span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11"></a><span class="hll">        <span class="s2">&quot;httpx_client&quot;</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">()</span>
 </span></span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12"></a><span class="hll">    <span class="p">}</span>
@@ -932,7 +932,7 @@
     <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.instant", "navigation.instant.prefetch", "navigation.path", "content.code.copy", "content.code.select"], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="assets/javascripts/bundle.d6f25eb3.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
