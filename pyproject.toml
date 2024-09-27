@@ -4,7 +4,7 @@ requires-python = ">=3.10, <3.14"
 
 [tool.poetry]
 name = "django-asgi-lifespan"
-version = "0.3.1"
+version = "0.3.2"
 homepage = "https://github.com/illagrenan/django-asgi-lifespan"
 description = "Django ASGI handler with Lifespan Protocol support."
 authors = ["Václav Dohnal <vaclav.dohnal@gmail.com>"]
