@@ -36,8 +36,7 @@ COPY ./django_asgi_lifespan /usr/src/app/django_asgi_lifespan/
 COPY ./tests /usr/src/app/tests/
 COPY pyproject.toml poetry.lock /usr/src/app/
 RUN touch README.md
-RUN --mount=type=cache,target=$POETRY_CACHE_DIR/cache \
-    --mount=type=cache,target=$POETRY_CACHE_DIR/artifacts \
+RUN --mount=type=cache,target=${POETRY_CACHE_DIR} \
     poetry install -vv ${POETRY_EXTRA_OPTIONS} --no-interaction --no-ansi
 ENV PATH="/usr/src/app/.venv/bin:$PATH"
 
