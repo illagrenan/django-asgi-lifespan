@@ -57,6 +57,7 @@ uvicorn = { version = "==0.21.1", extras = ["standard"] }
 pytest-django = "^4.9.0"
 
 # Compatibility with Python 3.13
+uvloop = { version = "0.21.0b1", markers = "sys_platform != 'win32' and python_version == '3.13'" }
 httptools = "^0.6.2"
 
 # Documentation
