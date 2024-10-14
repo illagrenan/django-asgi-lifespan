@@ -12,7 +12,7 @@
 #   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
 #
 # ======================================================================================================================
-FROM python:3.12.6-bookworm
+FROM python:3.13.0-bookworm
 
 ARG POETRY_EXTRA_OPTIONS=--with=dev,tests
 ENV PYTHONFAULTHANDLER=1 \
@@ -24,7 +24,7 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_DEFAULT_TIMEOUT=60 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_VERSION=1.8.2 \
+    POETRY_VERSION=1.8.3 \
     POETRY_CACHE_DIR="/opt/poetry/.cache"
 SHELL ["/bin/bash", "-EeuxoC", "pipefail", "-c"]
 
@@ -36,8 +36,7 @@ COPY ./django_asgi_lifespan /usr/src/app/django_asgi_lifespan/
 COPY ./tests /usr/src/app/tests/
 COPY pyproject.toml poetry.lock /usr/src/app/
 RUN touch README.md
-RUN --mount=type=cache,target=$POETRY_CACHE_DIR/cache \
-    --mount=type=cache,target=$POETRY_CACHE_DIR/artifacts \
+RUN --mount=type=cache,target=${POETRY_CACHE_DIR} \
     poetry install -vv ${POETRY_EXTRA_OPTIONS} --no-interaction --no-ansi
 ENV PATH="/usr/src/app/.venv/bin:$PATH"
 
