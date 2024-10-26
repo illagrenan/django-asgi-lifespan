@@ -19,6 +19,7 @@ nav:
   - Development:
       - development.md
       - Contributing: contributing.md
+      - Releasing: release.md
   - Changelog: changelog.md
   - Credits: credits.md
   - Reference: reference.md
@@ -95,3 +96,5 @@ plugins:
         python:
           selection:
             docstring_style: sphinx
+extra_css:
+  - stylesheets/extra.css
