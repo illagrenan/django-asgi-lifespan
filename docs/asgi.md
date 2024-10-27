@@ -20,7 +20,7 @@ To provide asynchronous support for the project, an ASGI server is necessary. Th
 
 ## Uvicorn :material-star:
 
-Uvicorn is the most tested ASGI server by the author of this plugin. The author uses uvicorn for development, testing and production. In production it is perfectly fine to use uvicorn without gunicorn, see:
+Uvicorn is the most tested ASGI server by the author of this plugin. The author uses uvicorn for development, testing and production. In production it is perfectly fine to use uvicorn without gunicorn, see:
 
 * <https://stackoverflow.com/questions/66362199/what-is-the-difference-between-uvicorn-and-gunicornuvicorn/71546833>
 * <https://github.com/encode/uvicorn/issues/303>

@@ -2,15 +2,15 @@
 
 To install Django ASGI Lifespan, run following command in your terminal:
 
-=== ":simple-poetry: Poetry" 
+=== ":simple-poetry: Poetry"
 
-    ```console linenums="0"
+    ``` console linenums="0"
     poetry add django-asgi-lifespan@latest
     ```
 
 === ":simple-python: pip"
 
-    ```console linenums="0"
+    ``` console linenums="0"
     pip install --upgrade django-asgi-lifespan
     ```
 
@@ -21,12 +21,12 @@ This is the preferred method to install this package, as it will always install 
 # From source
 
 The source for Django ASGI Lifespan can be downloaded from
-the [Github repo](https://github.com/illagrenan/django-asgi-lifespan).
+the [Github repository](https://github.com/illagrenan/django-asgi-lifespan).
 
 You can either clone the public repository:
 
 ``` console linenums="0"
-$ git clone git://github.com/illagrenan/django-asgi-lifespan
+ git clone git://github.com/illagrenan/django-asgi-lifespan
 ```
 
 Or download the [tarball](https://github.com/illagrenan/django-asgi-lifespan/tarball/master):
@@ -42,5 +42,5 @@ curl --proto '=https' --tlsv1.3 -fsSL \
 Once you have a copy of the source, you can install it with:
 
 ``` console linenums="0"
-$ pip install .
+pip install .
 ```
