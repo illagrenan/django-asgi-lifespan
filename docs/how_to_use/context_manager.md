@@ -6,7 +6,7 @@
   <figcaption>Simplified sequence diagram. <a href="#sequence-diagram">See the full version of the diagram</a>.</figcaption>
 </figure>
 
-When you execute the Django project using the ASGI server (like uvicorn), it sends lifespan events at its startup. These lifespan events are ignored by the standard Django ASGI handler. The lifespan events include the lifespan scope state, which is a Python dictionary that is preserved by the ASGI server and allowed to be modified by the developer. Hence, it's a suitable location for storing global application states or shared objects. For instance, one could create a shared HTTPX async client to implement connection pooling.
+When you execute the Django project using the ASGI server (like uvicorn), it sends lifespan events at its startup. These lifespan events are ignored by the standard Django ASGI handler. The lifespan events include the lifespan scope state, which is a Python dictionary that is preserved by the ASGI server and allowed to be modified by the developer. Hence, it's a suitable location for storing global application states or shared objects. For instance, one could create a shared HTTPX async client to implement connection pooling.
 
 
 ## Accessing the shared state
@@ -31,7 +31,7 @@ You must define an [async context manager](https://docs.python.org/3/reference/d
 
 ## Registering the context manager
 
-The manager that you have just defined needs to be registered. The most suitable location for registration is [Django AppConfig](https://docs.djangoproject.com/en/dev/ref/applications/#application-configuration).
+The manager that you have just defined needs to be registered. The most suitable location for registration is [Django AppConfig](https://docs.djangoproject.com/en/dev/ref/applications/#application-configuration).
 
 ``` py hl_lines="12-14" title="apps.py"
 --8<-- "example/managers_app.py"

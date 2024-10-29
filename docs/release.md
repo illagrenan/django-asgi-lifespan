@@ -8,7 +8,7 @@
       --verbose --allow-dirty --dry-run
     ```
    This uses [bump-my-version](https://github.com/callowayproject/bump-my-version).
-4. If everything looks OK, run the same command as in the previous step, but without the `--dry-run`switch.
+4. If everything looks OK, run the same command as in the previous step, but without the `--dry-run` switch.
 5. Push the newly created tag:
     ``` console linenums="0"
     git push --verbose origin --tags
