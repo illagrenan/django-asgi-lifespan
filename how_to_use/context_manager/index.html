@@ -804,7 +804,7 @@
   </p>
 <figcaption>Simplified sequence diagram. <a href="#sequence-diagram">See the full version of the diagram</a>.</figcaption>
 </figure>
-<p>When you execute the Django project using the ASGI server (like uvicorn), it sends lifespan events at its startup. These lifespan events are ignored by the standard Django ASGI handler. The lifespan events include the lifespan scope state, which is a Python dictionary that is preserved by the ASGI server and allowed to be modified by the developer. Hence, it's a suitable location for storing global application states or shared objects. For instance, one could create a shared HTTPX async client to implement connection pooling.</p>
+<p>When you execute the Django project using the ASGI server (like uvicorn), it sends lifespan events at its startup. These lifespan events are ignored by the standard Django ASGI handler. The lifespan events include the lifespan scope state, which is a Python dictionary that is preserved by the ASGI server and allowed to be modified by the developer. Hence, it's a suitable location for storing global application states or shared objects. For instance, one could create a shared HTTPX async client to implement connection pooling.</p>
 <h3 id="accessing-the-shared-state">Accessing the shared state<a class="headerlink" href="#accessing-the-shared-state" title="Permanent link">&para;</a></h3>
 <p>To access the shared state within a view, your project must include middleware. This middleware assigns a new attribute to the request object, using the state it receives from the ASGI server.</p>
 <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
@@ -850,7 +850,7 @@
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a>        <span class="k">await</span> <span class="n">state</span><span class="p">[</span><span class="s2">&quot;httpx_client&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">aclose</span><span class="p">()</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="registering-the-context-manager">Registering the context manager<a class="headerlink" href="#registering-the-context-manager" title="Permanent link">&para;</a></h3>
-<p>The manager that you have just defined needs to be registered. The most suitable location for registration is <a href="https://docs.djangoproject.com/en/dev/ref/applications/#application-configuration">Django AppConfig</a>.</p>
+<p>The manager that you have just defined needs to be registered. The most suitable location for registration is <a href="https://docs.djangoproject.com/en/dev/ref/applications/#application-configuration">Django AppConfig</a>.</p>
 <div class="language-py highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">apps.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
