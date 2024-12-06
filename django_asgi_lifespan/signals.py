@@ -11,7 +11,7 @@ from django.dispatch import Signal
 
 from .compat import CompatAsyncSignal
 
-__all__ = ["asgi_startup", "asgi_lifespan", "asgi_shutdown"]
+__all__ = ["asgi_lifespan", "asgi_shutdown", "asgi_startup"]
 
 asgi_startup: Final[Signal] = Signal()
 asgi_lifespan: Final[CompatAsyncSignal] = CompatAsyncSignal()
