@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.10
+# syntax=docker/dockerfile:1.12
 # https://hub.docker.com/r/docker/dockerfile
 # ======================================================================================================================
 # Build Image:
