@@ -2,7 +2,7 @@
 # pre-commit autoupdate
 # pre-commit run --all-files
 
-exclude: '^.docs/'
+exclude: '^docs/'
 default_stages: [ pre-commit ]
 
 repos:
