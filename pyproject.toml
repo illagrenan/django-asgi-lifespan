@@ -26,7 +26,8 @@ classifiers = [
     "Framework :: AsyncIO",
     "Framework :: Django",
     "Framework :: Django :: 4",
-    "Framework :: Django :: 5.0"
+    "Framework :: Django :: 5.0",
+    "Framework :: Django :: 5.1"
 ]
 packages = [
     { include = "django_asgi_lifespan" },
@@ -41,8 +42,8 @@ asgiref = "^3"
 
 [tool.poetry.group.dev.dependencies]
 # Formatting & Linting
-mypy = "^1.11.2"
-ruff = "^0.6.9"
+mypy = "^1.13"
+ruff = "^0.8.1"
 pyright = "^1.1.386"
 
 # Releases
