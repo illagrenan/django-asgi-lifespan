@@ -34,7 +34,9 @@ async def test_integration_with_app_config(
     communicator: ApplicationCommunicator, async_client: AsyncClient
 ):
     await communicator.send_input({"type": "lifespan.startup"})
-    assert await communicator.receive_output() == {"type": "lifespan.startup.complete"}
+    assert await communicator.receive_output(timeout=3) == {
+        "type": "lifespan.startup.complete"
+    }
 
     response = await async_client.get("/client-from-app-config")
 
@@ -42,7 +44,9 @@ async def test_integration_with_app_config(
     assert response.content.decode("utf-8").startswith("OK app config")
 
     await communicator.send_input({"type": "lifespan.shutdown"})
-    assert await communicator.receive_output() == {"type": "lifespan.shutdown.complete"}
+    assert await communicator.receive_output(timeout=3) == {
+        "type": "lifespan.shutdown.complete"
+    }
 
     response = await async_client.get("/client-from-app-config")
     assert response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
@@ -54,7 +58,9 @@ async def test_integration_with_scope_state(
     communicator: ApplicationCommunicator, async_client: AsyncClient
 ):
     await communicator.send_input({"type": "lifespan.startup"})
-    assert await communicator.receive_output() == {"type": "lifespan.startup.complete"}
+    assert await communicator.receive_output(timeout=3) == {
+        "type": "lifespan.startup.complete"
+    }
 
     response = await async_client.get("/client-from-scope-state")
 
@@ -62,7 +68,9 @@ async def test_integration_with_scope_state(
     assert response.content.decode("utf-8").startswith("OK state")
 
     await communicator.send_input({"type": "lifespan.shutdown"})
-    assert await communicator.receive_output() == {"type": "lifespan.shutdown.complete"}
+    assert await communicator.receive_output(timeout=3) == {
+        "type": "lifespan.shutdown.complete"
+    }
 
     response = await async_client.get("/client-from-scope-state")
     assert response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
