@@ -20,6 +20,9 @@ jobs:
             django-versions: "4.2.*"
           - python-versions: "3.13"
             django-versions: "5.0.*"
+    defaults:
+      run:
+        shell: bash
     runs-on: ${{ matrix.os }}
 
     steps:
