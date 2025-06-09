@@ -180,18 +180,19 @@ files = [
 
 [[package]]
 name = "bump-my-version"
-version = "0.28.3"
+version = "1.2.0"
 description = "Version bump your Python project"
 optional = false
 python-versions = ">=3.8"
 groups = ["dev"]
 files = [
-    {file = "bump_my_version-0.28.3-py3-none-any.whl", hash = "sha256:d853bf0e92bf83beed88e129b9cb7e20eeacc87617bf4a7c2d78f6154cf2ba16"},
-    {file = "bump_my_version-0.28.3.tar.gz", hash = "sha256:37086aaae3e1a0ffcfa82111cf271850d5ffbe1997a17b1630f2437d8a9a5160"},
+    {file = "bump_my_version-1.2.0-py3-none-any.whl", hash = "sha256:201e6b103ff0f2b240c9d0a6eb83db382840b1f78eb78f6d77726bed39a326d8"},
+    {file = "bump_my_version-1.2.0.tar.gz", hash = "sha256:5120d798aaf26468a37ca0f127992dc036688b8e5e106adc8870b13c2a2df22d"},
 ]
 
 [package.dependencies]
 click = "*"
+httpx = ">=0.28.1"
 pydantic = ">=2.0.0"
 pydantic-settings = "*"
 questionary = "*"
@@ -3369,4 +3370,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10, <3.15"
-content-hash = "671acb6c8069cd15a896c8265aef3d8e8d7d2541ab2361fb6e294336198ff31b"
+content-hash = "eb8535981e5e23977b12ba54d9885028c088f016d139336ed35d6958dc575bd4"
