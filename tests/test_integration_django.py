@@ -11,6 +11,33 @@ from asgiref.testing import ApplicationCommunicator
 from django.test import AsyncClient
 
 
+class LifespanAwareAsyncClient(AsyncClient):
+    """
+    A custom AsyncClient that correctly handles the 'state' parameter
+    for lifespan-aware testing in Django 5.2+ without it being
+    misinterpreted as an HTTP header.
+
+    This is fix for this commit:
+        https://github.com/django/django/commit/083e6239538cbc34ae9781c2e70a8a8dbfcf2817
+    """
+
+    def __init__(self, state: dict, **defaults):
+        super().__init__(**defaults)
+        # Store the state separately to prevent it from being processed as a header.
+        self.state = state
+
+    def _base_scope(self, **request):
+        """
+        Accepts request kwargs, passes them to the parent method, and then
+        injects the lifespan state into the resulting scope.
+        """
+        # Get the default scope from the parent class, passing along all request kwargs.
+        scope = super()._base_scope(**request)
+        # Reliably inject our separated state into the final scope.
+        scope["state"] = self.state
+        return scope
+
+
 @pytest.fixture
 def scope_state() -> dict:
     return {}
@@ -18,7 +45,8 @@ def scope_state() -> dict:
 
 @pytest.fixture
 def async_client(scope_state):
-    return AsyncClient(state=scope_state)
+    # Use the new, corrected client class
+    return LifespanAwareAsyncClient(state=scope_state)
 
 
 @pytest_asyncio.fixture
