@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry install -vv --no-interaction
+          poetry install --with dev,tests -vv --no-interaction
 
       - name: Install Task
         uses: arduino/setup-task@v2
