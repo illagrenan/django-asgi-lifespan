@@ -33,8 +33,8 @@ class LifespanAwareAsyncClient(AsyncClient):
         """
         # Get the default scope from the parent class, passing along all request kwargs.
         scope = super()._base_scope(**request)
-        # Reliably inject our separated state into the final scope.
         scope["state"] = self.state
+
         return scope
 
 
@@ -45,7 +45,6 @@ def scope_state() -> dict:
 
 @pytest.fixture
 def async_client(scope_state):
-    # Use the new, corrected client class
     return LifespanAwareAsyncClient(state=scope_state)
 
 
