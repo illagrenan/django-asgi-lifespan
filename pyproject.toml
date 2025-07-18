@@ -1,16 +1,14 @@
 [project]
 name = "django-asgi-lifespan"
-# Support Python 3.10+.
-requires-python = ">=3.10, <3.15"
-
-[tool.poetry]
-name = "django-asgi-lifespan"
 version = "0.4.0"
-homepage = "https://github.com/illagrenan/django-asgi-lifespan"
 description = "Django ASGI handler with Lifespan Protocol support."
-authors = ["Václav Dohnal <vaclav.dohnal@gmail.com>"]
+authors = [
+    { name = "Václav Dohnal", email = "vaclav.dohnal@gmail.com" }
+]
+urls = { "homepage" = "https://github.com/illagrenan/django-asgi-lifespan" }
 license = "MIT"
 readme = "README.md"
+requires-python = ">=3.10, <3.14"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -30,16 +28,26 @@ classifiers = [
     "Framework :: Django :: 5.0",
     "Framework :: Django :: 5.1"
 ]
+
+dependencies = [
+    # this would be nice, but it is not supported by PyPI: ^4.2 || ^5.0.3
+    "Django>=4.2,<6,!=5.0.0,!=5.0.1,!=5.0.2",
+    "asgiref>=3.0.0"
+]
+
+[tool.poetry]
+include = ["py.typed"]
 packages = [
     { include = "django_asgi_lifespan" },
     { include = "tests", format = "sdist" },
 ]
+package-mode = true
 
-[tool.poetry.dependencies]
-python = ">=3.10, <3.15"
-# this would be nice, but it is not supported by PyPI: ^4.2 || ^5.0.3
-Django = ">=4.2,<6, !=5.0.0,!=5.0.1,!=5.0.2"
-asgiref = "^3"
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.tests]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 # Formatting & Linting
@@ -83,7 +91,7 @@ granian = "^1.6.4"
 gunicorn = { version = "^23.0.0", platform = "linux" }
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
