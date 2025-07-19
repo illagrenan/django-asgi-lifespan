@@ -10,6 +10,8 @@ import pytest_asyncio
 from asgiref.testing import ApplicationCommunicator
 from django.test import AsyncClient
 
+from django_asgi_lifespan.handler import LifespanASGIHandler
+
 
 class LifespanAwareAsyncClient(AsyncClient):
     """
@@ -26,7 +28,7 @@ class LifespanAwareAsyncClient(AsyncClient):
         # Store the state separately to prevent it from being processed as a header.
         self.state = state
 
-    def _base_scope(self, **request):
+    def _base_scope(self, **request) -> dict:
         """
         Accepts request kwargs, passes them to the parent method, and then
         injects the lifespan state into the resulting scope.
@@ -44,12 +46,14 @@ def scope_state() -> dict:
 
 
 @pytest.fixture
-def async_client(scope_state):
+def async_client(scope_state: dict) -> LifespanAwareAsyncClient:
     return LifespanAwareAsyncClient(state=scope_state)
 
 
 @pytest_asyncio.fixture
-async def communicator(application, scope_state):
+async def communicator(
+    application: LifespanASGIHandler, scope_state: dict
+) -> ApplicationCommunicator:
     return ApplicationCommunicator(
         application=application,
         scope={"type": "lifespan", "state": scope_state},
