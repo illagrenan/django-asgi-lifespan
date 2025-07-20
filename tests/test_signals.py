@@ -8,11 +8,14 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from asgiref.testing import ApplicationCommunicator
 
+from django_asgi_lifespan.handler import LifespanASGIHandler
 from django_asgi_lifespan.signals import asgi_shutdown, asgi_startup
 
 
 @pytest.mark.asyncio
-async def test_lifespan_protocol_handler_sends_django_signals(application):
+async def test_lifespan_protocol_handler_sends_django_signals(
+    application: LifespanASGIHandler,
+) -> None:
     startup_handler = AsyncMock()
     shutdown_handler = AsyncMock()
 
@@ -53,7 +56,9 @@ async def test_lifespan_protocol_handler_sends_django_signals(application):
 
 
 @pytest.mark.asyncio
-async def test_lifespan_protocol_signal_handlers_can_be_sync_functions(application):
+async def test_lifespan_protocol_signal_handlers_can_be_sync_functions(
+    application: LifespanASGIHandler,
+) -> None:
     startup_handler = Mock()
     shutdown_handler = Mock()
 

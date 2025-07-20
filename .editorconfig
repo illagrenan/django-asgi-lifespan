@@ -18,7 +18,7 @@ indent_size = 4
 line_length = 88
 max_line_length = 88
 
-[*.{html,css,scss,json,yml}]
+[*.{html,css,scss,json,yml,yaml}]
 indent_style = space
 indent_size = 2
 
@@ -33,15 +33,11 @@ end_of_line = crlf
 max_line_length = off
 trim_trailing_whitespace = false
 
-[LICENSE]
-insert_final_newline = false
-
 [Makefile]
 indent_style = tab
 
 [*.y*ml]
 quote_type = double
 
-[{.travis.yml, package.json}]
-indent_size = 2
-indent_style = space
+[LICENSE]
+insert_final_newline = false

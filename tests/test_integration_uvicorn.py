@@ -7,6 +7,7 @@ import contextlib
 import threading
 import time
 from http import HTTPStatus
+from typing import Any, Generator
 
 import httpx
 import pytest
@@ -20,7 +21,7 @@ class Server(uvicorn.Server):
     """
 
     @contextlib.contextmanager
-    def run_in_thread(self):
+    def run_in_thread(self) -> Generator[None, None, None]:
         thread = threading.Thread(target=self.run)
         thread.start()
         try:
@@ -33,7 +34,7 @@ class Server(uvicorn.Server):
 
 
 @pytest.fixture(scope="session")
-def config():
+def config() -> Config:
     return Config(
         "tests.django_test_application.asgi:application",
         host="127.0.0.1",
@@ -44,14 +45,14 @@ def config():
 
 
 @pytest.fixture(scope="session")
-def server(config):
+def server(config: Config) -> Generator[None, None, None]:
     with Server(config=config).run_in_thread():
         yield
 
 
 @pytest.mark.parametrize("execution_number", range(3))
 @pytest.mark.asyncio
-async def test_uvicorn_reponds(server, execution_number):
+async def test_uvicorn_reponds(server: Any, execution_number: int) -> None:
     """A simple websocket test"""
     async with httpx.AsyncClient() as client:
         assert (

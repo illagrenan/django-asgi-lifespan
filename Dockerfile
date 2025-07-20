@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.12
+# syntax=docker/dockerfile:1.17
 # https://hub.docker.com/r/docker/dockerfile
 # ======================================================================================================================
 # Build Image:
@@ -12,7 +12,7 @@
 #   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
 #
 # ======================================================================================================================
-FROM python:3.13.2-bookworm
+FROM python:3.13.5-bookworm
 
 ARG POETRY_EXTRA_OPTIONS=--with=dev,tests
 ENV PYTHONFAULTHANDLER=1 \
@@ -24,7 +24,7 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_DEFAULT_TIMEOUT=60 \
     POETRY_NO_INTERACTION=1 \
     POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_VERSION=1.8.4 \
+    POETRY_VERSION=2.1.3 \
     POETRY_CACHE_DIR="/opt/poetry/.cache"
 SHELL ["/bin/bash", "-EeuxoC", "pipefail", "-c"]
 

@@ -26,7 +26,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 2.0.1
+          version: 2.1.3
           virtualenvs-create: true
           virtualenvs-in-project: true
           virtualenvs-path: .venv
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry install -vv --no-interaction
+          poetry install --with dev,tests -vv --no-interaction
 
       - name: Install Task
         uses: arduino/setup-task@v2
