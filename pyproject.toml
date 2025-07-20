@@ -1,6 +1,6 @@
 [project]
 name = "django-asgi-lifespan"
-version = "0.4.0"
+version = "0.4.1"
 description = "Django ASGI handler with Lifespan Protocol support."
 authors = [
     { name = "Václav Dohnal", email = "vaclav.dohnal@gmail.com" }
