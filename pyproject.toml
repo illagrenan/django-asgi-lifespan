@@ -87,7 +87,7 @@ ipdb = "^0.13.13"
 [tool.poetry.group.tests.dependencies]
 daphne = "^4.1.2"
 hypercorn = "^0.17.3"
-granian = "^1.6.4"
+granian = "^2.4.2"
 gunicorn = { version = "^23.0.0", platform = "linux" }
 
 [build-system]
