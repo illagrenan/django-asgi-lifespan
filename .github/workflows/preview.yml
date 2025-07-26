@@ -30,7 +30,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --group dev --group tests
+          uv sync --group dev
 
       - name: Install Task
         uses: arduino/setup-task@v2

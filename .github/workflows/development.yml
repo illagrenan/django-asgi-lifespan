@@ -42,7 +42,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          uv sync --group dev --group tests
+          uv sync --group dev
 
       - name: Install Django
         run: |
