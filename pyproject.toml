@@ -35,64 +35,53 @@ dependencies = [
     "asgiref>=3.0.0"
 ]
 
-[tool.poetry]
-include = ["py.typed"]
-packages = [
-    { include = "django_asgi_lifespan" },
-    { include = "tests", format = "sdist" },
+[dependency-groups]
+dev = [
+    # Formatting & Linting
+    "mypy>=1.17.0",
+    "ruff>=0.12.4",
+    "pyright>=1.1.403",
+    # Releases
+    "bump-my-version>=1.2.1",
+    "twine>=6.1.0",
+    "pytest-cov>=6.2.1",
+    "pytest-asyncio>=1.1.0",
+    "httpx>=0.28.1",
+    "uvicorn[standard]>=0.35.0",
+    "pytest-django>=4.11.1",
+    # Compatibility with Python 3.13
+    "uvloop>=0.21.0; sys_platform != 'win32' and python_version == '3.13'",
+    "httptools>=0.6.4",
+    # Documentation
+    "mkdocs>=1.6.1",
+    "mkdocs-include-markdown-plugin>=7.1.6",
+    "mkdocs-material>=9.6.15",
+    "mkdocstrings[python]>=0.29.1",
+    "mkdocs-material-extensions>=1.3.1",
+    "mkdocs-autorefs>=1.4.2",
+    "mkdocs-glightbox>=0.4.0",
+    # Misc
+    "ipython>=8.30.0",
+    "ipdb>=0.13.13",
+    # Tests
+    "daphne>=4.1.2",
+    "hypercorn>=0.17.3",
+    "granian>=1.6.4",
+    "gunicorn>=23.0.0; platform_system == 'Linux'",
+    "pytest>=8.4.1",
 ]
-package-mode = true
-
-[tool.poetry.group.dev]
-optional = true
-
-[tool.poetry.group.tests]
-optional = true
-
-[tool.poetry.group.dev.dependencies]
-# Formatting & Linting
-mypy = "^1.17.0"
-ruff = "^0.12.4"
-pyright = "^1.1.403"
-
-# Releases
-twine = "^6.1.0"
-bump-my-version = "^1.2.1"
-
-# Tests
-pytest = "^8.4.1"
-pytest-cov = "^6.2.1"
-pytest-asyncio = "^1.1.0"
-httpx = "^0.28.1"
-uvicorn = {extras = ["standard"], version = "^0.35.0"}
-pytest-django = "^4.11.1"
-
-# Compatibility with Python 3.13
-uvloop = { version = "0.21.0", markers = "sys_platform != 'win32' and python_version == '3.13'" }
-httptools = "^0.6.4"
-
-# Documentation
-mkdocs = "^1.6.1"
-mkdocs-include-markdown-plugin = "^7.1.6"
-mkdocs-material = "^9.6.15"
-mkdocstrings = {extras = ["python"], version = "^0.29.1"}
-mkdocs-material-extensions = "^1.3.1"
-mkdocs-autorefs = "^1.4.2"
-mkdocs-glightbox = "^0.4.0"
-
-# Misc
-ipython = "^8.30.0"
-ipdb = "^0.13.13"
-
-[tool.poetry.group.tests.dependencies]
-daphne = "^4.1.2"
-hypercorn = "^0.17.3"
-granian = "^1.6.4"
-gunicorn = { version = "^23.0.0", platform = "linux" }
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.8.0,<0.9"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+# Specify that the module is in the root directory, not src/
+module-root = "."
+# Include py.typed file in the package
+source-include = ["django_asgi_lifespan/py.typed"]
+# Include tests in source distribution only
+sdist-include = ["tests/**"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"

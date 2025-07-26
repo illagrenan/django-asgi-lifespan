@@ -17,7 +17,7 @@ tasks:
       - pytests
     desc: Run pytests
     cmds:
-      - poetry run pytest
+      - uv run pytest
     silent: false
 
   coverage:
@@ -101,13 +101,13 @@ tasks:
   build:
     desc: Build the package
     cmds:
-      - poetry build
+      - uv build
     silent: false
 
   build_check:
     desc: Check distribution
     cmds:
-      - twine check dist/*
+      - uv run twine check dist/*
     silent: false
 
   test_install:
