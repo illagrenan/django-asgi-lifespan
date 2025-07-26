@@ -1,5 +1,17 @@
-
 # syntax=docker/dockerfile:1.17
+# https://hub.docker.com/r/docker/dockerfile
+# ======================================================================================================================
+# Build Image:
+# ------------
+#
+#   ...\> docker build -f ./Dockerfile -t illagrenan/django-asgi-lifespan .
+#
+# Run Image:
+# ----------
+#
+#   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
+#
+# ======================================================================================================================
 FROM python:3.13.5-bookworm
 
 # Install uv
