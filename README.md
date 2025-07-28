@@ -30,7 +30,7 @@ async def example_view(request) -> HttpResponse:
 
 ## Quickstart
 
-1. Python `^3.10 || ^3.11 || ^3.12 || ^3.13` and Django `^4.2 || ^5.0.3 || ^5.1 || ^5.2` are supported. To install this package, run:
+1. **Requirements**: Python `>=3.10, <3.14` and Django `>=4.2,<6` (excluding `5.0.0 .. 5.0.2`). Install the package:
     ```console linenums="0"
     uv add django-asgi-lifespan
     ```
