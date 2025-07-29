@@ -18,11 +18,11 @@ def test_custom_get_asgi_application_returns_asgi_handler() -> None:
 
 @patch("django_asgi_lifespan.asgi.django.setup")
 def test_custom_get_asgi_application_returns_asgi_handler_calls_django_setup(
-    mockend_django_setup: MagicMock,
+    mocked_django_setup: MagicMock,
 ) -> None:
-    assert not mockend_django_setup.called
+    assert not mocked_django_setup.called
     get_asgi_application()
-    assert mockend_django_setup.called
+    assert mocked_django_setup.called
 
 
 def test_signals_are_defined() -> None:
