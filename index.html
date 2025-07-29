@@ -775,7 +775,7 @@
 <span class="normal"><a href="#__codelineno-0-2">2</a></span>
 <span class="normal"><a href="#__codelineno-0-3">3</a></span>
 <span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">example_view</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HttpResponse</span><span class="p">:</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="c1"># The client is instanciated just once when the application starts,</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="c1"># The client is instantiated just once when the application starts,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="c1"># and closed when the server shuts down</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="hll">    <span class="n">httpx_client</span><span class="p">:</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;httpx_client&quot;</span><span class="p">]</span>
 </span></span></code></pre></div></td></tr></table></div>
@@ -789,7 +789,7 @@
 <h3 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
-<p>Python <code>^3.10 || ^3.11 || ^3.12 || ^3.13</code> and Django <code>^4.2 || ^5.0.3 || ^5.1 || ^5.2</code> are supported. To install this package, run:
+<p><strong>Requirements</strong>: Python <code>&gt;=3.10, &lt;3.14</code> and Django <code>&gt;=4.2,&lt;6</code> (excluding <code>5.0.0 .. 5.0.2</code>). Install the package:
     <div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="go">uv add django-asgi-lifespan</span>
 </span></code></pre></div></p>
 <p><em>or</em></p>
