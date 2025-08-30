@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from django.test import AsyncClient
+
+from django_asgi_lifespan.types import State
 
 
 class LifespanAwareAsyncClient(AsyncClient):
@@ -16,18 +20,20 @@ class LifespanAwareAsyncClient(AsyncClient):
         https://github.com/django/django/commit/083e6239538cbc34ae9781c2e70a8a8dbfcf2817
     """
 
-    def __init__(self, state: dict, **defaults):
+    state: State
+
+    def __init__(self, *, state: State, **defaults: Any) -> None:
         super().__init__(**defaults)
         # Store the state separately to prevent it from being processed as a header.
         self.state = state
 
-    def _base_scope(self, **request) -> dict:
+    def _base_scope(self, **request: Any) -> dict[str, Any]:
         """
         Accepts request kwargs, passes them to the parent method, and then
         injects the lifespan state into the resulting scope.
         """
         # Get the default scope from the parent class, passing along all request kwargs.
-        scope = super()._base_scope(**request)
+        scope: dict[str, Any] = super()._base_scope(**request)
         scope["state"] = self.state
 
         return scope
