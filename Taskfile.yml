@@ -38,7 +38,7 @@ tasks:
     silent: false
 
   mypy:
-    desc: Check setup
+    desc: Type check with mypy and pyright
     cmds:
       - mypy {{.SOURCES}}
       - pyright ./example/
@@ -51,7 +51,7 @@ tasks:
     silent: false
 
   lint:
-    desc: Check setup
+    desc: Run linters and type checks
     cmds:
       - task: mypy
       - task: ruff
@@ -60,13 +60,13 @@ tasks:
     silent: false
 
   isort:
-    desc: Optimize imports
+    desc: Check import order and unused imports
     cmds:
       - ruff check --select I,F401 {{.SOURCES}}
     silent: false
 
   isort_check:
-    desc: Check isort
+    desc: Fix import order and remove unused imports (auto-fix)
     cmds:
       - ruff check --select I,F401 --fix {{.SOURCES}}
     silent: false
@@ -74,26 +74,26 @@ tasks:
   black:
     aliases:
       - fmt
-    desc: Format using black
+    desc: Format code (ruff format)
     cmds:
       - ruff format {{.SOURCES}}
     silent: false
 
   black_check:
-    desc: Check black formatting
+    desc: Check code formatting
     cmds:
       - ruff format --check {{.SOURCES}}
     silent: false
 
   format:
-    desc: Check setup
+    desc: Format code and check import order
     cmds:
       - task: isort
       - task: black
     silent: false
 
   doc:
-    desc: Check distribution
+    desc: Build documentation with MkDocs
     cmds:
       - mkdocs build
     silent: false
@@ -105,7 +105,7 @@ tasks:
     silent: false
 
   build_check:
-    desc: Check distribution
+    desc: Check built distributions with Twine
     cmds:
       - uv run twine check dist/*
     silent: false
