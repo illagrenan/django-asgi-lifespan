@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 0.5.0
 
+### Added
+
+- Testing: Introduced `django_asgi_lifespan.testing.LifespanAwareAsyncClient` to correctly inject `scope["state"]` during async test requests. This prevents the `state` from being treated as an HTTP header after Django's internal change (see https://github.com/django/django/commit/083e6239538cbc34ae9781c2e70a8a8dbfcf2817). Implements the behavior discussed in issue #162. See docs/“Testing (lifespan-aware)” for usage.
+
 ### Changed
 
 - **BREAKING**: Migrated build system from Poetry to uv.

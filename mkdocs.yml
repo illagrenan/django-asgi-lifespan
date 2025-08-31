@@ -16,6 +16,7 @@ nav:
       - State manager (preferred): how_to_use/context_manager.md
       - Lifespan signals (low-level): how_to_use/signals.md
       - ASGI servers compatibility: asgi.md
+  - Testing: testing.md
   - Development:
       - development.md
       - Contributing: contributing.md

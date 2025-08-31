@@ -64,3 +64,10 @@ Please note that this documentation is **not versioned**. The reference for the 
         show_root_heading: true
         show_source: true
         show_symbol_type_heading: true
+
+::: django_asgi_lifespan.testing
+    options:
+        show_root_full_path: false
+        show_root_heading: true
+        show_source: true
+        show_symbol_type_heading: true
