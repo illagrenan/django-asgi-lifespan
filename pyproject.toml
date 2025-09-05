@@ -37,8 +37,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    # Formatting & Linting
-    "mypy>=1.17.0",
+    "mypy>=1.17.1",
     "ruff>=0.12.4",
     "pyright>=1.1.403",
 
