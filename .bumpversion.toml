@@ -1,3 +1,25 @@
+# +-----------------------------------------------------------------------+
+# |                    Bump My Version Configuration
+# +-----------------------------------------------------------------------+
+# Reference: https://callowayproject.github.io/bump-my-version/
+# +-----------------------------------------------------------------------+
+#
+# To release a new version:
+#
+#   > uv run bump-my-version bump (major|minor|patch) --commit --tag -v
+#   > git push -v --follow-tags
+#
+# We use https://semver.org/
+#
+# Or set an exact version manually:
+#
+#   > uv run bump-my-version bump --new-version 1.5.0 --commit --tag -v
+#
+# Dry run (see changes without committing):
+#   > uv run bump-my-version bump patch --dry-run -vv --allow-dirty
+#
+# +-----------------------------------------------------------------------+
+
 [tool.bumpversion]
 current_version = "0.4.1"
 
