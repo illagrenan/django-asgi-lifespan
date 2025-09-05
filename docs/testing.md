@@ -2,10 +2,6 @@
 
 Django 5.2 introduced internal changes in `django.test.AsyncClient` that causes the ASGI scope `state` to be misinterpreted as HTTP headers when passed via request kwargs. This package provides a small helper: `django_asgi_lifespan.testing.LifespanAwareAsyncClient`.
 
-!!! note
-
-    This is not a permanent solution and help is wanted. The best way to fix this would be to address it in Django itself, but the developer of this package currently does not have time for that.
-
 Use it in your tests to ensure `scope["state"]` is correctly injected into the ASGI scope and not treated as headers:
 
 ```python
