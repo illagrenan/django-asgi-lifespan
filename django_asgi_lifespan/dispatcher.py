@@ -33,7 +33,7 @@ class LifespanEventDispatcher:
             send_lifespan_signal_collecting_contexts(signals.asgi_lifespan, scope)
         )
 
-        done, _ = await asyncio.wait(
+        done, _ = await asyncio.wait(  # noqa: RUF059
             [send_compat_task, send_collecting_task],
             return_when=asyncio.ALL_COMPLETED,
         )
