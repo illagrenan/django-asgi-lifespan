@@ -23,14 +23,14 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.12
+    rev: v0.13.1
     hooks:
       - id: ruff
         files: ^django_asgi_lifespan/
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.8.15
+    rev: 0.8.18
     hooks:
       - id: uv-lock
         stages: [commit-msg]
