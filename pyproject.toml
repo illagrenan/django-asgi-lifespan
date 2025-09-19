@@ -150,7 +150,9 @@ ignore = [
     "ISC001", # implicit concatenation of string on one line
     "TC001",
     "TC002",
-    "TC003"
+    "TC003",
+    "TC006",
+    "TC007"
 ]
 
 [tool.mypy]
