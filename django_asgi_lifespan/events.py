@@ -1,13 +1,11 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 from __future__ import annotations
 
 import inspect
 import logging
+from collections.abc import Callable
 from contextlib import AbstractAsyncContextManager
 from dataclasses import dataclass
-from typing import Any, Callable, Final, List, Tuple
+from typing import Any, Final
 
 from asgiref.typing import LifespanScope
 from django.dispatch import Signal
@@ -52,7 +50,7 @@ async def send_lifespan_signal_compat(*, signal: Signal, scope: LifespanScope) -
 
 async def send_lifespan_signal_collecting_contexts(
     signal: CompatAsyncSignal, scope: LifespanScope
-) -> List[Callable[[], AbstractAsyncContextManager[State]]]:
+) -> list[Callable[[], AbstractAsyncContextManager[State]]]:
     """
     Dispatches the given signal. Returns a list of async context managers.
     """
@@ -67,8 +65,8 @@ async def send_lifespan_signal_collecting_contexts(
     )
 
     # List of tuple pairs [(receiver, response), ...].
-    receiver_responses: List[
-        Tuple[Any, Callable[[], AbstractAsyncContextManager[State]]]
+    receiver_responses: list[
+        tuple[Any, Callable[[], AbstractAsyncContextManager[State]]]
     ] = await signal.compat_asend_async_only(
         LifespanSender, scope=scope, state=scope["state"]
     )

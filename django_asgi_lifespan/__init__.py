@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 """Django ASGI handler with Lifespan Protocol support."""
 
 from __future__ import annotations

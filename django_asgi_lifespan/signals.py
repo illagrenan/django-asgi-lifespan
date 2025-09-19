@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 """ASGI lifespan Django signals for server startup and shutdown events."""
 
 from __future__ import annotations

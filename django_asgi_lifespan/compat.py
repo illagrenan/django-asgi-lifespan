@@ -1,11 +1,9 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 from __future__ import annotations
 
 import asyncio
 import logging
-from typing import Any, Awaitable, Callable, Final, List, Tuple
+from collections.abc import Awaitable, Callable
+from typing import Any, Final
 
 import django
 from asgiref.sync import iscoroutinefunction
@@ -18,7 +16,7 @@ logger: Final = logging.getLogger(__name__)
 class CompatAsyncSignal(Signal):
     def _get_async_only_live_receivers(
         self, sender: Any
-    ) -> List[Callable[..., Awaitable[Any]]]:
+    ) -> list[Callable[..., Awaitable[Any]]]:
         if not django.get_version().startswith("4."):
             raise ValueError("Unsupported Django version")
 
@@ -30,7 +28,7 @@ class CompatAsyncSignal(Signal):
 
     async def compat_asend_async_only(
         self, sender: Any, **named: Any
-    ) -> List[Tuple[Any, Any]]:
+    ) -> list[tuple[Any, Any]]:
         if (
             not self.receivers
             or self.sender_receivers_cache.get(sender) is NO_RECEIVERS

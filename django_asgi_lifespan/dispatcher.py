@@ -1,13 +1,10 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 from __future__ import annotations
 
 import asyncio
 import logging
 from collections import ChainMap
 from contextlib import AsyncExitStack
-from typing import Final, List
+from typing import Final
 
 from asgiref.typing import LifespanScope
 
@@ -51,7 +48,7 @@ class LifespanEventDispatcher:
             logger.warning("Missing state in scope.")
         else:
             # noinspection PyTypeChecker
-            context_states: List[State] = await asyncio.gather(
+            context_states: list[State] = await asyncio.gather(
                 *(
                     self._exit_stack.enter_async_context(single_context_manager())
                     for single_context_manager in context_managers

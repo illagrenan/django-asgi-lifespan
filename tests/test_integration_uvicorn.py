@@ -1,13 +1,11 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 from __future__ import annotations
 
 import contextlib
 import threading
 import time
+from collections.abc import Generator
 from http import HTTPStatus
-from typing import Any, Generator
+from typing import Any
 
 import httpx
 import pytest

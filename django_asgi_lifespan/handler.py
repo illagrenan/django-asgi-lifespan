@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 """Subclass of Django ASGIHandler with ASGI Lifespan support."""
 
 from __future__ import annotations
