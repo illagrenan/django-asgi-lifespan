@@ -1,10 +1,8 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 import logging
+from collections.abc import Callable
 from contextlib import AbstractAsyncContextManager
 from dataclasses import dataclass
-from typing import Callable, Final
+from typing import Final
 
 from django_asgi_lifespan.signals import asgi_lifespan
 from django_asgi_lifespan.types import State

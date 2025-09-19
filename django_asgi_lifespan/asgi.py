@@ -1,6 +1,3 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 """Public function for ASGI Application with custom ASGI handler."""
 
 from __future__ import annotations

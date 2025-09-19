@@ -1,8 +1,6 @@
-# -*- encoding: utf-8 -*-
-# ! python3
-
 import logging
-from typing import Awaitable, Callable, Final
+from collections.abc import Awaitable, Callable
+from typing import Final
 
 from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 from django.core.handlers.asgi import ASGIRequest
