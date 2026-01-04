@@ -35,7 +35,7 @@ class CompatAsyncSignal(Signal):
         ):
             return []
 
-        if django.get_version().startswith("5."):
+        if django.get_version().startswith(("5.", "6.")):
             # Ignore sync receivers
             _, async_receivers = self._live_receivers(sender)
         elif django.get_version().startswith("4.2."):

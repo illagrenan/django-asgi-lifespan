@@ -9,7 +9,7 @@ urls = { "homepage" = "https://github.com/illagrenan/django-asgi-lifespan" }
 license = "MIT"
 license-files = ["LICENSE"]
 readme = "README.md"
-requires-python = ">=3.10, <3.14"
+requires-python = ">=3.10, <3.15"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -19,19 +19,22 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: 3 :: Only",
     "Operating System :: OS Independent",
     "Environment :: Web Environment",
     "Framework :: AsyncIO",
     "Framework :: Django",
-    "Framework :: Django :: 4",
+    "Framework :: Django :: 4.2",
     "Framework :: Django :: 5.0",
-    "Framework :: Django :: 5.1"
+    "Framework :: Django :: 5.1",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
 ]
 
 dependencies = [
     # this would be nice, but it is not supported by PyPI: ^4.2 || ^5.0.3
-    "Django>=4.2,<6,!=5.0.0,!=5.0.1,!=5.0.2",
+    "Django>=4.2,<6.1,!=5.0.0,!=5.0.1,!=5.0.2",
     "asgiref>=3.0.0"
 ]
 
@@ -71,7 +74,7 @@ dev = [
 ]
 
 [build-system]
-requires = ["uv_build>=0.8.0,<0.10"]
+requires = ["uv_build>=0.9.21,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
