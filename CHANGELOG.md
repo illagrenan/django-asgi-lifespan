@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.5.1] - 2026-01-04
+
 ### Added
 
 - Add support for Django 6.0 and include it in the testing matrix.
