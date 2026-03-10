@@ -10,4 +10,4 @@ Thanks to [this great answer on StackOverflow](https://stackoverflow.com/a/72634
 
 # Package and repository structure
 
-This package is based on [waynerv/cookiecutter-pypackage](https://github.com/waynerv/cookiecutter-pypackage) ([Cookiecutter](https://github.com/audreyr/cookiecutter) template). The main difference from the original template is that this project does not use [Pre-commit hooks](https://pre-commit.com/). All dev tools can be run manually via [Taskfiles](https://github.com/illagrenan/django-asgi-lifespan/blob/main/Taskfile.yml).
+This package is based on [waynerv/cookiecutter-pypackage](https://github.com/waynerv/cookiecutter-pypackage) ([Cookiecutter](https://github.com/audreyr/cookiecutter) template). Dev tools can be run manually via [Taskfiles](https://github.com/illagrenan/django-asgi-lifespan/blob/main/Taskfile.yml) or automatically via [Pre-commit hooks](https://pre-commit.com/).
