@@ -41,9 +41,16 @@ jobs:
         run: |
           uv run task lint
 
+      - name: Get certifi CA bundle path
+        id: certifi
+        run: |
+          echo "path=$(uv run python -m certifi)" >> "$GITHUB_OUTPUT"
+
       - name: Run unittests
         run: |
           uv run task coverage
+        env:
+          SSL_CERT_FILE: ${{ steps.certifi.outputs.path }}
 
       - name: Build wheels and source tarball
         run: |
