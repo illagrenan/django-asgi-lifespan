@@ -16,7 +16,7 @@ logger: Final = logging.getLogger(__name__)
 @asynccontextmanager
 async def httpx_lifespan_manager() -> LifespanManager:
     logger.info("Lifespan: Initializing HTTPX client.")
-    state = {"httpx_client_from_user": httpx.AsyncClient(http2=False)}
+    state = {"httpx_client_from_user": httpx.AsyncClient(http2=False, verify=False)}
 
     try:
         yield state
@@ -43,7 +43,7 @@ class ASGILifespanSignalHandler:
 
     async def startup(self, **kwargs):
         logger.info("Lifespan->Startup. Initializing HTTPX client.")
-        self.app_config.httpx_client = httpx.AsyncClient(http2=False)
+        self.app_config.httpx_client = httpx.AsyncClient(http2=False, verify=False)
 
         return "this is return value from startup handler"
 
