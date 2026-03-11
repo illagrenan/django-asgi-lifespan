@@ -4,7 +4,7 @@
 2. Document all changes in [the changelog](changelog.md).
 3. Run the following command locally:
     ``` console linenums="0"
-    poetry run bump-my-version bump major|minor|patch \
+    uv run bump-my-version bump major|minor|patch \
       --verbose --allow-dirty --dry-run
     ```
    This uses [bump-my-version](https://github.com/callowayproject/bump-my-version).

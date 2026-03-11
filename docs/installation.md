@@ -2,6 +2,12 @@
 
 To install Django ASGI Lifespan, run following command in your terminal:
 
+=== ":simple-astral: uv"
+
+    ``` console linenums="0"
+    uv add django-asgi-lifespan
+    ```
+
 === ":simple-poetry: Poetry"
 
     ``` console linenums="0"
@@ -29,7 +35,7 @@ You can either clone the public repository:
  git clone git://github.com/illagrenan/django-asgi-lifespan
 ```
 
-Or download the [tarball](https://github.com/illagrenan/django-asgi-lifespan/tarball/master):
+Or download the [tarball](https://github.com/illagrenan/django-asgi-lifespan/tarball/main):
 
 ``` console linenums="0"
 curl --proto '=https' --tlsv1.3 -fsSL \

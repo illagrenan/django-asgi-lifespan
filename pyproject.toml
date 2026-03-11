@@ -151,7 +151,7 @@ select = [
     "PERF", # perflint
     "C90", # mccabe - Cyclomatic complexity
     "Q", # flake8-quotes
-    "TCH", # flake8-type-checking
+    "TC", # flake8-type-checking
     "UP", # pyupgrade
 ]
 ignore = [

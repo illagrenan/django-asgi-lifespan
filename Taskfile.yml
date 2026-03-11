@@ -23,7 +23,7 @@ tasks:
   coverage:
     desc: Run coverage
     cmds:
-      - pytest --cov=./django_asgi_lifespan/ --cov-branch --cov-report=xml --cov-report=term-missing ./tests/
+      - uv run pytest --cov=./django_asgi_lifespan/ --cov-branch --cov-report=xml --cov-report=term-missing ./tests/
     silent: false
 
   clean:
@@ -40,14 +40,14 @@ tasks:
   mypy:
     desc: Type check with mypy and pyright
     cmds:
-      - mypy {{.SOURCES}}
-      - pyright ./example/
+      - uv run mypy {{.SOURCES}}
+      - uv run pyright ./example/
     silent: false
 
   ruff:
     desc: Run ruff
     cmds:
-      - ruff check {{.SOURCES}}
+      - uv run ruff check {{.SOURCES}}
     silent: false
 
   lint:
@@ -60,15 +60,15 @@ tasks:
     silent: false
 
   isort:
-    desc: Check import order and unused imports
+    desc: Fix import order and remove unused imports (auto-fix)
     cmds:
-      - ruff check --select I,F401 {{.SOURCES}}
+      - uv run ruff check --select I,F401 --fix {{.SOURCES}}
     silent: false
 
   isort_check:
-    desc: Fix import order and remove unused imports (auto-fix)
+    desc: Check import order and unused imports
     cmds:
-      - ruff check --select I,F401 --fix {{.SOURCES}}
+      - uv run ruff check --select I,F401 {{.SOURCES}}
     silent: false
 
   black:
@@ -76,13 +76,13 @@ tasks:
       - fmt
     desc: Format code (ruff format)
     cmds:
-      - ruff format {{.SOURCES}}
+      - uv run ruff format {{.SOURCES}}
     silent: false
 
   black_check:
     desc: Check code formatting
     cmds:
-      - ruff format --check {{.SOURCES}}
+      - uv run ruff format --check {{.SOURCES}}
     silent: false
 
   format:
@@ -95,7 +95,7 @@ tasks:
   doc:
     desc: Build documentation with MkDocs
     cmds:
-      - mkdocs build
+      - uv run mkdocs build
     silent: false
 
   build:
@@ -114,11 +114,9 @@ tasks:
     desc: Try to install local dist
     vars:
       PROJECT_NAME: django-asgi-lifespan
-    env:
-      PIP_DISABLE_PIP_VERSION_CHECK: 1
     deps: [ build ]
     cmds:
-      - pip uninstall {{.PROJECT_NAME}} --yes
-      - pip install --no-cache-dir --no-index --find-links=file:./dist {{.PROJECT_NAME}}
-      - pip uninstall {{.PROJECT_NAME}} --yes
+      - uv pip uninstall {{.PROJECT_NAME}}
+      - uv pip install --no-cache-dir --no-index --find-links=file:./dist {{.PROJECT_NAME}}
+      - uv pip uninstall {{.PROJECT_NAME}}
     silent: false
