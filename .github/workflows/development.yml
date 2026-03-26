@@ -86,7 +86,7 @@ jobs:
         run: |
           uv run task build_check
 
-      - uses: codecov/codecov-action@v5
+      - uses: codecov/codecov-action@v6
         with:
           fail_ci_if_error: true
           files: coverage.xml
