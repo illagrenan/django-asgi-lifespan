@@ -12,7 +12,7 @@
 #   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
 #
 # ======================================================================================================================
-FROM python:3.14.3-bookworm
+FROM python:3.15.0a8-bookworm
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
