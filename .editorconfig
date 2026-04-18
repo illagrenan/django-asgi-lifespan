@@ -36,7 +36,7 @@ trim_trailing_whitespace = false
 [Makefile]
 indent_style = tab
 
-[*.y*ml]
+[*.{yml,yaml}]
 quote_type = double
 
 [LICENSE]

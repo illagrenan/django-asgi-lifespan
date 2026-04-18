@@ -22,7 +22,7 @@ logger: Final = logging.getLogger(__name__)
 class LifespanEventDispatcher:
     _exit_stack: AsyncExitStack
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._exit_stack = AsyncExitStack()
 
     async def startup(self, scope: LifespanScope) -> None:

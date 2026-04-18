@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.20
+# syntax=docker/dockerfile:1.23
 # https://hub.docker.com/r/docker/dockerfile
 # ======================================================================================================================
 # Build Image:
@@ -12,7 +12,7 @@
 #   ...\> docker run -p 127.0.0.1:8000:8000/tcp --rm -it illagrenan/django-asgi-lifespan
 #
 # ======================================================================================================================
-FROM python:3.14.3-bookworm
+FROM python:3.14.3-trixie
 
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
@@ -48,7 +48,7 @@ RUN --mount=type=cache,target=/opt/.cache/uv \
         --all-groups \
         --no-editable
 
-EXPOSE 8000
+EXPOSE 8000/tcp
 CMD [ "uv", "run", "gunicorn", \
       "django_test_application.asgi:application", \
       "-b", "0.0.0.0:8000", \
