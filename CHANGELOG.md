@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Enable mypy strict mode and add missing type annotations across the codebase (2026-04-18)
+- Expand ruff lint rules and update all development dependencies (2026-04-18)
+- Update Dockerfile base image from Debian bookworm to trixie (2026-04-18)
+
 ## [0.5.1] - 2026-01-04
 
 ### Added
