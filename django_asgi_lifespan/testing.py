@@ -7,7 +7,7 @@ from django.test import AsyncClient
 from django_asgi_lifespan.types import State
 
 
-class LifespanAwareAsyncClient(AsyncClient):
+class LifespanAwareAsyncClient(AsyncClient):  # type: ignore[misc]
     """
     A custom AsyncClient that correctly handles the 'state' parameter
     for lifespan-aware testing in Django 5.2+ without it being

@@ -13,7 +13,7 @@ from django.dispatch.dispatcher import NO_RECEIVERS
 logger: Final = logging.getLogger(__name__)
 
 
-class CompatAsyncSignal(Signal):
+class CompatAsyncSignal(Signal):  # type: ignore[misc]
     def _get_async_only_live_receivers(
         self, sender: Any
     ) -> list[Callable[..., Awaitable[Any]]]:

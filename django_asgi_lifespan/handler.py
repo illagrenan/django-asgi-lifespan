@@ -24,12 +24,12 @@ logger: Final = logging.getLogger(__name__)
 __all__ = ["LifespanASGIHandler"]
 
 
-class LifespanASGIHandler(ASGIHandler):
+class LifespanASGIHandler(ASGIHandler):  # type: ignore[misc]
     """A subclass of ASGIHandler that supports the ASGI Lifespan protocol."""
 
     _lifespan_event_dispatcher: LifespanEventDispatcher
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._lifespan_event_dispatcher = LifespanEventDispatcher()
 

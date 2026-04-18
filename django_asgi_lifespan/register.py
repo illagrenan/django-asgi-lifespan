@@ -2,7 +2,7 @@ import logging
 from collections.abc import Callable
 from contextlib import AbstractAsyncContextManager
 from dataclasses import dataclass
-from typing import Final
+from typing import Any, Final
 
 from django_asgi_lifespan.signals import asgi_lifespan
 from django_asgi_lifespan.types import State
@@ -14,7 +14,9 @@ logger: Final = logging.getLogger(__name__)
 class LifespanContextManagerSignalWrapper:
     context_manager: Callable[[], AbstractAsyncContextManager[State]]
 
-    async def receiver(self, **_) -> Callable[[], AbstractAsyncContextManager[State]]:
+    async def receiver(
+        self, **_: Any
+    ) -> Callable[[], AbstractAsyncContextManager[State]]:
         return self.context_manager
 
 
