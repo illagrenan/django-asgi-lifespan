@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -1111,7 +1111,7 @@
 </span></span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="n">external_api_response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">httpx_client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://www.example.com/"</span><span class="p">)</span>
 </span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a>
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a>    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span>
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">external_api_response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">42</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># pyright: ignore</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">external_api_response</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">42</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>  <span class="c1"># pyright: ignore[reportOptionalMemberAccess, reportArgumentType]</span>
 </span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/plain"</span><span class="p">,</span>
 </span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="p">)</span>
 </span></code></pre></div></td></tr></tbody></table></div>
