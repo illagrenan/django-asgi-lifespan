@@ -6,6 +6,7 @@
 !pyproject.toml
 !uv.lock
 !README.md
+!LICENSE
 
 !django_asgi_lifespan/**/*.py
 !tests/**/*.py
