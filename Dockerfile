@@ -38,7 +38,7 @@ RUN --mount=type=cache,target=/opt/.cache/uv \
         --no-install-project
 
 # Copy source and install local package in development mode
-COPY pyproject.toml uv.lock README.md /usr/src/app/
+COPY pyproject.toml uv.lock README.md LICENSE /usr/src/app/
 COPY ./django_asgi_lifespan /usr/src/app/django_asgi_lifespan/
 COPY ./tests /usr/src/app/tests/
 
