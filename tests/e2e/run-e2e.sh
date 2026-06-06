@@ -70,5 +70,10 @@ run_server hypercorn "/client-from-app-config" \
     uv run hypercorn --bind 0.0.0.0:8080 \
     django_test_application.asgi:application
 
+run_server granian "/client-from-app-config /client-from-scope-state" \
+    uv run granian --interface asgi \
+    --host 0.0.0.0 --port 8080 \
+    django_test_application.asgi:application
+
 echo
 echo ">> All servers passed"
