@@ -26,6 +26,12 @@ tasks:
       - uv run pytest --cov=./django_asgi_lifespan/ --cov-branch --cov-report=xml --cov-report=term-missing ./tests/
     silent: false
 
+  e2e:
+    desc: Run Dockerized ASGI server e2e smoke tests (requires Docker)
+    cmds:
+      - bash ./tests/e2e/run-e2e.sh
+    silent: false
+
   clean:
     desc: Clean build files
     cmds:
