@@ -39,6 +39,11 @@ jobs:
         shell: bash
     runs-on: ${{ matrix.os }}
 
+    env:
+      # `uv run` syncs the environment from uv.lock before running, which would
+      # reinstall the locked Django over the matrix version installed below.
+      UV_NO_SYNC: "1"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -60,7 +65,20 @@ jobs:
 
       - name: Install Django
         run: |
-          uv pip install --upgrade django==${{ matrix.django-version }}
+          uv pip install --upgrade "django==$DJANGO_VERSION"
+          uv run python - <<'EOF'
+          import os
+
+          import django
+
+          expected = os.environ["DJANGO_VERSION"].removesuffix(".*")
+          actual = django.get_version()
+
+          if actual != expected and not actual.startswith(f"{expected}."):
+              raise SystemExit(f"Expected Django {expected}, got {actual}")
+          EOF
+        env:
+          DJANGO_VERSION: ${{ matrix.django-version }}
 
       - name: Install Task
         uses: arduino/setup-task@v3
