@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add support for Django 6.1 and include it in the testing matrix.
 
+### Changed
+
+- Remove the upper bound on the Django version, so new Django releases are not blocked.
+
 ### Fixed
 
 - Run the CI test matrix against the Django version each cell installs. `uv run`
