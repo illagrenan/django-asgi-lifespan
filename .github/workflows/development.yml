@@ -13,13 +13,17 @@ jobs:
     strategy:
       matrix:
         python-version: [ "3.10", "3.11", "3.12", "3.13", "3.14" ]
-        django-version: [ "4.2.*", "5.0.*", "5.1.*", "5.2.*", "6.0.*"]
+        django-version: [ "4.2.*", "5.0.*", "5.1.*", "5.2.*", "6.0.*", "6.1.*"]
         os: [ ubuntu-latest, macos-latest, windows-latest ]
         exclude:
           - python-version: "3.10"
             django-version: "6.0.*"
+          - python-version: "3.10"
+            django-version: "6.1.*"
           - python-version: "3.11"
             django-version: "6.0.*"
+          - python-version: "3.11"
+            django-version: "6.1.*"
           - python-version: "3.13"
             django-version: "4.2.*"
           - python-version: "3.13"
@@ -34,6 +38,11 @@ jobs:
       run:
         shell: bash
     runs-on: ${{ matrix.os }}
+
+    env:
+      # `uv run` syncs the environment from uv.lock before running, which would
+      # reinstall the locked Django over the matrix version installed below.
+      UV_NO_SYNC: "1"
 
     steps:
       - name: Checkout repository
@@ -56,7 +65,20 @@ jobs:
 
       - name: Install Django
         run: |
-          uv pip install --upgrade django==${{ matrix.django-version }}
+          uv pip install --upgrade "django==$DJANGO_VERSION"
+          uv run python - <<'EOF'
+          import os
+
+          import django
+
+          expected = os.environ["DJANGO_VERSION"].removesuffix(".*")
+          actual = django.get_version()
+
+          if actual != expected and not actual.startswith(f"{expected}."):
+              raise SystemExit(f"Expected Django {expected}, got {actual}")
+          EOF
+        env:
+          DJANGO_VERSION: ${{ matrix.django-version }}
 
       - name: Install Task
         uses: arduino/setup-task@v3
