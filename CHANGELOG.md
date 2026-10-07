@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+
+- Compare Django versions as tuples instead of string prefixes, so year-based
+  releases (Django 2028 and later) no longer raise `NotImplementedError` at startup.
+
 ## [0.5.3] - 2026-09-27
 
 ### Added
