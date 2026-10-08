@@ -730,6 +730,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -767,7 +784,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1195,6 +1212,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Unreleased">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1232,7 +1266,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#fixed" class="md-nav__link">
+  <a href="#fixed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Fixed
@@ -1599,6 +1633,11 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <h3 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">¶</a></h3>
+<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">¶</a></h4>
+<ul>
+<li>Compare Django versions as tuples instead of string prefixes, so year-based
+  releases (Django 2028 and later) no longer raise <code>NotImplementedError</code> at startup.</li>
+</ul>
 <h3 id="053-2026-09-27">[0.5.3] - 2026-09-27<a class="headerlink" href="#053-2026-09-27" title="Permanent link">¶</a></h3>
 <h4 id="added">Added<a class="headerlink" href="#added" title="Permanent link">¶</a></h4>
 <ul>
@@ -1608,7 +1647,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <ul>
 <li>Remove the upper bound on the Django version, so new Django releases are not blocked.</li>
 </ul>
-<h4 id="fixed">Fixed<a class="headerlink" href="#fixed" title="Permanent link">¶</a></h4>
+<h4 id="fixed_1">Fixed<a class="headerlink" href="#fixed_1" title="Permanent link">¶</a></h4>
 <ul>
 <li>Run the CI test matrix against the Django version each cell installs. <code>uv run</code>
   restored the locked Django version beforehand, so every cell tested the same one.</li>
