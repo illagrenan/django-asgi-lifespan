@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.5.4] - 2026-10-22
+
+### Added
+
+- Add support for Python 3.15 and include it in the testing matrix (with Django 6.1).
+
+### Changed
+
+- Remove the upper bound on the Python version, so new Python releases are not blocked.
+
 ### Fixed
 
 - Compare Django versions as tuples instead of string prefixes, so year-based
